@@ -122,6 +122,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         txtGhiChu.setText("");
         radCoMat.setSelected(false);
         radCoPhep.setSelected(false);
+        
     }
     
     /**

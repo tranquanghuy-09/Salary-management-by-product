@@ -6,6 +6,7 @@ package dao;
 
 import connectDB.ConnectDB;
 import entity.NhanVien;
+import entity.PhieuChamCongNV;
 import entity.PhongBan;
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author huylauri
  */
 public class NhanVienDao {
+
     PhongBanDao phongBanDao = new PhongBanDao();
 
     private NhanVien taoNhanVien(ResultSet rs) throws Exception {
@@ -27,9 +29,9 @@ public class NhanVienDao {
         nv.setMaNhanVien(rs.getString("MaNhanVien"));
         nv.setTenNhanVien(rs.getString("TenNhanVien"));
         nv.setNgaySinh(rs.getDate("NgaySinh"));
-        if(rs.getInt("GioiTinh") == 1){
+        if (rs.getInt("GioiTinh") == 1) {
             nv.setGioiTinh(true);
-        }else{
+        } else {
             nv.setGioiTinh(false);
         }
         nv.setDiaChi(rs.getString("DiaChi"));
@@ -84,7 +86,7 @@ public class NhanVienDao {
             stmt.setString(2, nv.getPhongBan().getMaPhongBan());
             stmt.setString(3, nv.getTenNhanVien());
             stmt.setDate(4, nv.getNgaySinh());
-            stmt.setInt(5, nv.isGioiTinh()?1:0);
+            stmt.setInt(5, nv.isGioiTinh() ? 1 : 0);
             stmt.setString(6, nv.getDiaChi());
             stmt.setString(7, nv.getSoDienThoai());
             stmt.setString(8, nv.getEmail());
@@ -103,6 +105,73 @@ public class NhanVienDao {
             // TODO: handle exception
             e.printStackTrace();
             con.rollback();
+        }
+        return false;
+    }
+
+    //Lấy mã Nhân viên mới nhất cộng thêm 1 để làm mã Nhân viên mới
+    public String taoMaNhanVienMoi() throws Exception {
+        String query = "select Max([MaNhanVien]) from [dbo].[NHANVIEN]";
+        Connection con = ConnectDB.getInstance().getConnection();
+        PreparedStatement stmt1 = con.prepareStatement(query);
+        boolean hasResultSet = stmt1.execute();
+        if (hasResultSet) {
+            ResultSet rs = stmt1.getResultSet();
+            if (rs.next()) {
+                String maxIdString = rs.getString(1);
+                int maxId = Integer.parseInt(maxIdString.substring(3));
+                String maNhanVien = String.format("NV_%04d", maxId + 1);
+                return maNhanVien;
+            }
+        }
+        return null;
+    }
+    
+    //Thêm một nhân viên mới
+    public boolean themNhanVien2(NhanVien nv) throws Exception {
+        String query = "select Max([MaNhanVien]) from [dbo].[NHANVIEN]";
+        Connection con = ConnectDB.getInstance().getConnection();
+        PreparedStatement stmt1 = con.prepareStatement(query);
+        boolean hasResultSet = stmt1.execute();
+        if (hasResultSet) {
+            ResultSet rs = stmt1.getResultSet();
+            System.out.println(rs);
+            if (rs.next()) {
+                String maxIdString = rs.getString(1);
+                int maxId = Integer.parseInt(maxIdString.substring(3));
+                String maNhanVien = String.format("NV_%04d", maxId + 1);
+
+                String sql = "INSERT INTO [dbo].[NHANVIEN]\n"
+                        + "           ([MaNhanVien],[MaPhongBan],[TenNhanVien],[NgaySinh],[GioiTinh],[DiaChi],[SoDienThoai],[Email],[CMND],[NgayBatDau],[ChucVu],[HeSoLuong],[LuongCoBan],[PhuCap])\n"
+                        + "     VALUES\n"
+                        + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?)\n";
+                try {
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    stmt.setString(1, maNhanVien);
+                    stmt.setString(2, nv.getPhongBan().getMaPhongBan());
+                    stmt.setString(3, nv.getTenNhanVien());
+                    stmt.setDate(4, nv.getNgaySinh());
+                    stmt.setInt(5, nv.isGioiTinh() ? 1 : 0);
+                    stmt.setString(6, nv.getDiaChi());
+                    stmt.setString(7, nv.getSoDienThoai());
+                    stmt.setString(8, nv.getEmail());
+                    stmt.setString(9, nv.getCmnd());
+                    stmt.setDate(10, (Date) nv.getNgayBatDau());
+                    stmt.setString(11, nv.getChucVu());
+                    stmt.setDouble(12, nv.getHeSoLuong());
+                    stmt.setDouble(13, nv.getLuongCoBan());
+                    stmt.setDouble(14, nv.getPhuCap());
+
+                    stmt.executeUpdate();
+                    con.commit();
+                    return true;
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                    con.rollback();
+                }
+            }
         }
         return false;
     }
@@ -128,7 +197,7 @@ public class NhanVienDao {
         }
         return null;
     }
-    
+
     //Lấy danh sách nhân viên theo tên phòng ban
     public List<NhanVien> layDSNhanVien(String tenPhongBan) throws Exception {
         String sql = "SELECT   NHANVIEN.*\n"
