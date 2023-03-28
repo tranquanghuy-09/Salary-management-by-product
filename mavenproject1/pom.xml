@@ -48,4 +48,5 @@
         <maven.compiler.target>17</maven.compiler.target>
         <exec.mainClass>com.mycompany.mavenproject1.Mavenproject1</exec.mainClass>
     </properties>
+    <name>QLLuongSP</name>
 </project>
