@@ -82,7 +82,7 @@
               <Font name="Times New Roman" size="24" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; C&#xd4;NG NH&#xc2;N H&#xc0;NH CH&#xcd;NH"/>
+            <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; NH&#xc2;N VI&#xca;N H&#xc0;NH CH&#xcd;NH"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">

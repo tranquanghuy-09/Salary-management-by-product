@@ -62,7 +62,7 @@ public class QL_NhanVien_GUI extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ CÔNG NHÂN HÀNH CHÍNH");
+        jLabel1.setText("QUẢN LÝ NHÂN VIÊN HÀNH CHÍNH");
 
         jPanel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 

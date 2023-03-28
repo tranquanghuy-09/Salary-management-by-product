@@ -225,7 +225,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private void jmnCongNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnCongNhanMouseClicked
         // TODO add your handling code here:
         new QL_CongNhan_GUI().setVisible(true);
-        System.out.println("ChanhAnC");
+
     }//GEN-LAST:event_jmnCongNhanMouseClicked
 
     /**
