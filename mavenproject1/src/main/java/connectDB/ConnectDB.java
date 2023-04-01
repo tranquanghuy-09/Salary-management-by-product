@@ -19,7 +19,7 @@ public class ConnectDB {
 
 	private ConnectDB() {
 		try {
-			String url = "jdbc:sqlserver://localhost:1433;databaseName=;trustServerCertificate=true";
+			String url = "jdbc:sqlserver://localhost:1433;databaseName=;trusterverCertificate=true";
 			connection = DriverManager.getConnection(url , "sa", "sapassword");
 		}catch (Exception e) {
 			e.printStackTrace();
