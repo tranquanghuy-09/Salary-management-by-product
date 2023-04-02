@@ -189,8 +189,6 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         lblPhongBan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPhongBan.setText("Phòng ban:");
 
-        cmbPhongBan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Phòng Kế toán", "Phòng Kinh doanh", "Phòng Quản lý", "Phòng Marketing" }));
-
         lblPhuCap.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPhuCap.setText("Phụ cấp:");
 
