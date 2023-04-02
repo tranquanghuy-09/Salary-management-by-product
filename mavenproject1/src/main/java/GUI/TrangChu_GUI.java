@@ -1,10 +1,5 @@
 package GUI;
 
-import java.awt.Component;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.codehaus.groovy.tools.groovydoc.Main;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,18 +7,24 @@ import org.codehaus.groovy.tools.groovydoc.Main;
 
 /**
  *
- * @author duy19
+ * @author huylauri
  */
 public class TrangChu_GUI extends javax.swing.JFrame {
-    QL_NhanVien_GUI qlnv ;
-    TrangChu_GUI trangChu ;
+
+    private FrmQuanLyNhanVien frmQuanLyNhanVien;
+    private FrmChamCongNhanVien frmChamCongNhanVien;
+    private FrmTinhLuongNhanVien frmTinhLuongNhanVien;
+
     /**
      * Creates new form TrangChu_GUI1
      */
     public TrangChu_GUI() {
         initComponents();
-    }
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        this.setSize(1280,720);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,22 +34,23 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tblMain = new javax.swing.JTabbedPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jmnNhanVien = new javax.swing.JMenuItem();
-        jmnCongNhan = new javax.swing.JMenuItem();
+        tabNoiDung = new javax.swing.JTabbedPane();
+        lblTenChuongTrinh = new javax.swing.JLabel();
+        mnuChinh = new javax.swing.JMenuBar();
+        mnTrangChu = new javax.swing.JMenu();
+        mnDanhMuc = new javax.swing.JMenu();
+        mniDMNhanVien = new javax.swing.JMenuItem();
+        mniCongNhan = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        mniChamCongNhanVien = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        mniTinhLuongNhanVien = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        mniTimKiem = new javax.swing.JMenu();
+        mniTKNhanVien = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -60,27 +62,65 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
-        jMenu1.setText("Trang Chủ");
-        jMenuBar1.add(jMenu1);
+        lblTenChuongTrinh.setBackground(new java.awt.Color(255, 255, 204));
+        lblTenChuongTrinh.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTenChuongTrinh.setForeground(new java.awt.Color(255, 51, 0));
+        lblTenChuongTrinh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTenChuongTrinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/anh-trangchu.jpeg"))); // NOI18N
+        lblTenChuongTrinh.setText("CHƯƠNG TRÌNH QUẢN LÝ LƯƠNG SẢN PHẨM");
+        lblTenChuongTrinh.setToolTipText("");
+        lblTenChuongTrinh.setFocusable(false);
+        lblTenChuongTrinh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblTenChuongTrinh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        tabNoiDung.addTab("Trang chính", lblTenChuongTrinh);
 
-        jMenu2.setText("Quản Lý");
+        mnuChinh.setBackground(new java.awt.Color(0, 0, 0));
+        mnuChinh.setToolTipText("");
+        mnuChinh.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        jmnNhanVien.setText("Nhân viên");
-        jmnNhanVien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmnNhanVienActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jmnNhanVien);
-
-        jmnCongNhan.setText("Công nhân");
-        jmnCongNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+        mnTrangChu.setBackground(new java.awt.Color(0, 0, 0));
+        mnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/HOME.png"))); // NOI18N
+        mnTrangChu.setText("Trang Chủ");
+        mnTrangChu.setFocusable(false);
+        mnTrangChu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnTrangChu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jmnCongNhanMouseClicked(evt);
+                mnTrangChuMouseClicked(evt);
             }
         });
-        jMenu2.add(jmnCongNhan);
+        mnuChinh.add(mnTrangChu);
+
+        mnDanhMuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-danhmuc.png"))); // NOI18N
+        mnDanhMuc.setText("Danh mục");
+        mnDanhMuc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnDanhMuc.setIconTextGap(0);
+
+        mniDMNhanVien.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        mniDMNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniDMNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-Nhanvien.png"))); // NOI18N
+        mniDMNhanVien.setText("Nhân viên");
+        mniDMNhanVien.setToolTipText("");
+        mniDMNhanVien.setDisabledIcon(null);
+        mniDMNhanVien.setDisabledSelectedIcon(null);
+        mniDMNhanVien.setIconTextGap(0);
+        mniDMNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        mniDMNhanVien.setPreferredSize(new java.awt.Dimension(215, 25));
+        mniDMNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDMNhanVienActionPerformed(evt);
+            }
+        });
+        mnDanhMuc.add(mniDMNhanVien);
+
+        mniCongNhan.setText("Công nhân");
+        mniCongNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mniCongNhanMouseClicked(evt);
+            }
+        });
+        mnDanhMuc.add(mniCongNhan);
 
         jMenuItem3.setText("Sản phẩm");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -88,58 +128,77 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        mnDanhMuc.add(jMenuItem3);
 
         jMenuItem4.setText("Công đoạn");
-        jMenu2.add(jMenuItem4);
+        mnDanhMuc.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu2);
+        mnuChinh.add(mnDanhMuc);
 
-        jMenu3.setText("Danh Mục");
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xuly.png"))); // NOI18N
+        jMenu3.setText("Xử lý");
+        jMenu3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenu3.setIconTextGap(0);
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem5.setText("Phân công");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
         jMenu3.add(jMenuItem5);
 
-        jMenuItem6.setText("Chấm công nhân viên");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        mniChamCongNhanVien.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mniChamCongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcong.png"))); // NOI18N
+        mniChamCongNhanVien.setText("Chấm công nhân viên");
+        mniChamCongNhanVien.setAutoscrolls(true);
+        mniChamCongNhanVien.setBorder(null);
+        mniChamCongNhanVien.setIconTextGap(0);
+        mniChamCongNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        mniChamCongNhanVien.setName(""); // NOI18N
+        mniChamCongNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                mniChamCongNhanVienActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem6);
+        jMenu3.add(mniChamCongNhanVien);
 
         jMenuItem7.setText("Chấm công công nhân");
         jMenu3.add(jMenuItem7);
 
-        jMenuItem8.setText("Tính lương nhân viên");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        mniTinhLuongNhanVien.setText("Tính lương nhân viên");
+        mniTinhLuongNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                mniTinhLuongNhanVienActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem8);
+        jMenu3.add(mniTinhLuongNhanVien);
 
         jMenuItem9.setText("Tính lương công nhân");
         jMenu3.add(jMenuItem9);
 
-        jMenuBar1.add(jMenu3);
+        mnuChinh.add(jMenu3);
 
-        jMenu4.setText("Tìm Kiếm");
+        mniTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-timkiem2.png"))); // NOI18N
+        mniTimKiem.setText("Tìm Kiếm");
+        mniTimKiem.setAutoscrolls(true);
+        mniTimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mniTimKiem.setFocusPainted(true);
+        mniTimKiem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mniTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        mniTimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jMenuItem10.setText("Nhân viên");
-        jMenu4.add(jMenuItem10);
+        mniTKNhanVien.setText("Nhân viên");
+        mniTKNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniTKNhanVienActionPerformed(evt);
+            }
+        });
+        mniTimKiem.add(mniTKNhanVien);
 
         jMenuItem11.setText("Công nhân");
-        jMenu4.add(jMenuItem11);
+        mniTimKiem.add(jMenuItem11);
 
-        jMenuBar1.add(jMenu4);
+        mnuChinh.add(mniTimKiem);
 
         jMenu5.setText("Thống Kê");
+        jMenu5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jMenuItem12.setText("Tiền lương");
         jMenu5.add(jMenuItem12);
@@ -150,7 +209,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenuItem14.setText("Xuất phiếu lương");
         jMenu5.add(jMenuItem14);
 
-        jMenuBar1.add(jMenu5);
+        mnuChinh.add(jMenu5);
 
         jMenu6.setText("Tài Khoản");
 
@@ -163,64 +222,83 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenuItem17.setText("Đăng xuất");
         jMenu6.add(jMenuItem17);
 
-        jMenuBar1.add(jMenu6);
+        mnuChinh.add(jMenu6);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(mnuChinh);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tblMain, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(30, 30, 30)
+                .addComponent(tabNoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tblMain, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(tabNoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
+                .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jmnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnNhanVienActionPerformed
-        // TODO add your handling code here:
-         try {
-              qlnv = new QL_NhanVien_GUI();
-       tblMain.removeAll();
-            tblMain.addTab("Quản lý nhân viên", qlnv);
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        tblMain.setSelectedComponent(qlnv);
-    }//GEN-LAST:event_jmnNhanVienActionPerformed
+    private void mniDMNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDMNhanVienActionPerformed
+        // TODO add your handling code here
+        frmQuanLyNhanVien = new FrmQuanLyNhanVien();
+        tabNoiDung.removeAll();
+        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
+        tabNoiDung.addTab("Quản lý nhân viên", frmQuanLyNhanVien);
+        tabNoiDung.setSelectedComponent(frmQuanLyNhanVien);
+    }//GEN-LAST:event_mniDMNhanVienActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void mniChamCongNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChamCongNhanVienActionPerformed
+        frmChamCongNhanVien = new FrmChamCongNhanVien();
+        tabNoiDung.removeAll();
+        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
+        tabNoiDung.addTab("Chấm công nhân viên", frmChamCongNhanVien);
+        tabNoiDung.setSelectedComponent(frmChamCongNhanVien);
+    }//GEN-LAST:event_mniChamCongNhanVienActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    private void mniTinhLuongNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTinhLuongNhanVienActionPerformed
+        frmTinhLuongNhanVien = new FrmTinhLuongNhanVien();
+        tabNoiDung.removeAll();
+        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
+        tabNoiDung.addTab("Tính lương nhân viên", frmTinhLuongNhanVien);
+        tabNoiDung.setSelectedComponent(frmTinhLuongNhanVien);
+    }//GEN-LAST:event_mniTinhLuongNhanVienActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jmnCongNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmnCongNhanMouseClicked
+    private void mniCongNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mniCongNhanMouseClicked
         // TODO add your handling code here:
         new QL_CongNhan_GUI().setVisible(true);
 
-    }//GEN-LAST:event_jmnCongNhanMouseClicked
+    }//GEN-LAST:event_mniCongNhanMouseClicked
+
+    private void mniTKNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTKNhanVienActionPerformed
+        // TODO add your handling code here:
+        
+//        pnlMain.removeAll();
+//        pnlMain.add(qlnv);
+//                qlnv.setVisible(true);
+
+//        pnlMain.revalidate();
+//        pnlMain.repaint();
+//        qlnv.revalidate();
+//        qlnv.repaint();
+//        pack();
+
+    }//GEN-LAST:event_mniTKNhanVienActionPerformed
+
+    private void mnTrangChuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnTrangChuMouseClicked
+        tabNoiDung.removeAll();
+        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
+    }//GEN-LAST:event_mnTrangChuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -251,6 +329,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new TrangChu_GUI().setVisible(true);
             }
@@ -258,14 +337,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
@@ -276,12 +350,18 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JMenuItem jmnCongNhan;
-    private javax.swing.JMenuItem jmnNhanVien;
-    private javax.swing.JTabbedPane tblMain;
+    private javax.swing.JLabel lblTenChuongTrinh;
+    private javax.swing.JMenu mnDanhMuc;
+    private javax.swing.JMenu mnTrangChu;
+    private javax.swing.JMenuItem mniChamCongNhanVien;
+    private javax.swing.JMenuItem mniCongNhan;
+    private javax.swing.JMenuItem mniDMNhanVien;
+    private javax.swing.JMenuItem mniTKNhanVien;
+    private javax.swing.JMenu mniTimKiem;
+    private javax.swing.JMenuItem mniTinhLuongNhanVien;
+    private javax.swing.JMenuBar mnuChinh;
+    private javax.swing.JTabbedPane tabNoiDung;
     // End of variables declaration//GEN-END:variables
 }

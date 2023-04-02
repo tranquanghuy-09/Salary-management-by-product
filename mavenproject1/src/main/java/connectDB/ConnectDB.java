@@ -13,35 +13,39 @@ import java.sql.SQLException;
  * @author duy19
  */
 public class ConnectDB {
-    private static ConnectDB instance;
 
-	private Connection connection;
+    private static ConnectDB instance = new ConnectDB();
+    private Connection con;
 
-	private ConnectDB() {
-		try {
-			String url = "jdbc:sqlserver://localhost:1433;databaseName=;trustServerCertificate=true";
-			connection = DriverManager.getConnection(url , "sa", "sapassword");
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    private ConnectDB() {
+        String dbURL = "jdbc:sqlserver://localhost:1434;encrypt=true;databaseName=QuanLy_LuongSanPham;user=sa;password=quanghuy09;"
+                +  "encrypt=true;trustServerCertificate=true;sslProtocol=TLSv1.2";
+        try {
+            con = DriverManager.getConnection(dbURL);
+            con.setAutoCommit(false);
+            System.out.println("DA KET NOI THANH CONG VAO CSDL");
+        } catch (SQLException e) {
+            System.out.println("KET NOI KHONG THANH CONG");
+            e.printStackTrace();
+        }
+    }
 
-	public Connection getConnection() {
-		return connection;
-	}
-	
-	public synchronized static ConnectDB getInstance() {
-		if(instance == null)
-			instance = new ConnectDB();
-		return instance;
-	}
+    public synchronized static ConnectDB getInstance() {
+        if (instance == null) {
+            instance = new ConnectDB();
+        }
+        return instance;
+    }
 
-	public void close() {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+    public Connection getConnection() {
+        return con;
+    }
 
+    public void disconnect() throws SQLException {
+        con.close();
+    }
+
+//    public static void main(String[] args) {
+//        Connection con = ConnectDB.getInstance().getConnection();
+//    }
 }
