@@ -171,6 +171,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
 
         lblTieuDe.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTieuDe.setForeground(new java.awt.Color(51, 0, 255));
+        lblTieuDe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTieuDe.setText("CHẤM CÔNG NHÂN VIÊN HÀNH CHÍNH");
 
         pnlThongTinChamCong.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin chấm công", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -459,17 +460,11 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         pnlDsChamCong.setLayout(pnlDsChamCongLayout);
         pnlDsChamCongLayout.setHorizontalGroup(
             pnlDsChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDsChamCongLayout.createSequentialGroup()
-                .addContainerGap(72, Short.MAX_VALUE)
-                .addComponent(scrDsChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+            .addComponent(scrDsChamCong)
         );
         pnlDsChamCongLayout.setVerticalGroup(
             pnlDsChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDsChamCongLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrDsChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(scrDsChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
         );
 
         pnlLocDsNhanVien.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc danh sách nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -549,9 +544,10 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(pnlNutChucNang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -562,9 +558,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
                                 .addComponent(pnlDsNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(pnlDsChamCong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(448, 448, 448)
-                        .addComponent(lblTieuDe)))
+                    .addComponent(lblTieuDe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -600,6 +594,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_radCoPhepActionPerformed
 
     private void btnChamCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChamCongActionPerformed
+        int row = tblDsNhanVien.getSelectedRow();
         NhanVien nhanVien = new NhanVien();
         try {
             nhanVien = nhanVienDao.layNVTheoMa(txtMaNhanVien.getText());
@@ -613,8 +608,10 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         }else{
             heSoLuong = (float) 1.2;
         }
-        LocalDate currentDate = LocalDate.now();
-        Date ngayChamCong = Date.valueOf(currentDate);
+//        LocalDate currentDate = LocalDate.now();
+        LocalDate date = LocalDate.of(2023, 1, 2);
+//        Date ngayChamCong = Date.valueOf(currentDate);
+        Date ngayChamCong = Date.valueOf(date);
         int coMat = radCoMat.isSelected()?1:0;
         int coPhep =  radCoPhep.isSelected()?1:0;
         PhieuChamCongNV phieuChamCongNV = new PhieuChamCongNV(nhanVien, caLam, heSoLuong, coMat,
@@ -623,10 +620,11 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
             if(phieuChamCongNVDao.themPhieuChamCongNV(phieuChamCongNV)){
                 System.out.println("Chấm công thành công");
                 System.out.println(phieuChamCongNV);
-                JOptionPane.showMessageDialog(this, "Chấm công thành công");
+//                JOptionPane.showMessageDialog(this, "Chấm công thành công");
                 loadDataTblDsChamCong();
                 xoaRong();
                 tblDsNhanVien.clearSelection();
+                modelDsNhanVien.removeRow(row);
             }else{
                 System.out.println("Lỗi");
             }

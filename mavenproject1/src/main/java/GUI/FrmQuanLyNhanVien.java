@@ -20,15 +20,28 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author huylauri
  */
 public class FrmQuanLyNhanVien extends javax.swing.JPanel {
+
     private NhanVienDao nhanVienDao = new NhanVienDao();
     private PhongBanDao phongBanDao = new PhongBanDao();
     private DefaultTableModel model;
+
     /**
      * Creates new form pnlQuanLyNhanVien
      */
@@ -36,12 +49,12 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         initComponents();
         initTable();
         loadDataToTable();
-        
+
     }
 
     public void loadDataToTable() {
         try {
-            
+
             List<NhanVien> list = nhanVienDao.layDSNhanVien();
             model.setRowCount(0);
             for (NhanVien nv : list) {
@@ -49,7 +62,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
                     Double luongCoban = nv.getLuongCoBan();
                     DecimalFormat decimalFormat = new DecimalFormat("#");
                     model.addRow(new Object[]{
-                        nv.getMaNhanVien(), nv.getTenNhanVien(), nv.isGioiTinh()?"Nam":"Nữ", nv.getNgaySinh(), nv.getSoDienThoai(),
+                        nv.getMaNhanVien(), nv.getTenNhanVien(), nv.isGioiTinh() ? "Nam" : "Nữ", nv.getNgaySinh(), nv.getSoDienThoai(),
                         nv.getPhongBan().getTenPhongBan(), nv.getChucVu(), nv.getHeSoLuong(), decimalFormat.format(luongCoban), nv.getPhuCap()
                     });
                 }
@@ -61,12 +74,12 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
 
     private void initTable() {
         model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại", 
+        model.setColumnIdentifiers(new String[]{"Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Số điện thoại",
             "Phòng ban", "Chức vụ", "Hệ số lương", "Lương cơ bản", "Phụ cấp"});
         tblDSNhanVien.setModel(model);
     }
-    
-    private void xoaRong(){
+
+    private void xoaRong() {
         txtMaNhanVien.setText("");
         txtHoTen.setText("");
         cmbGioiTinh.setSelectedIndex(0);
@@ -82,7 +95,16 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         txtPhuCap.setText("");
         txtHeSoLuong.setText("");
     }
-    
+
+    public void openFile(String file) {
+        try {
+            File path = new File(file);
+            Desktop.getDesktop().open(path);
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -413,7 +435,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         pnlNutChucNangLayout.setHorizontalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNutChucNangLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(141, Short.MAX_VALUE)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -425,7 +447,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
                 .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         pnlNutChucNangLayout.setVerticalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,17 +487,11 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1060, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+            .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -528,21 +544,21 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         }
         String txtGT = (String) cmbGioiTinh.getSelectedItem();
         boolean gt = txtGT.equalsIgnoreCase("Nam");
-        NhanVien nv = new NhanVien(txtMaNhanVien.getText(), txtHoTen.getText(), new java.sql.Date(dchNgaySinh.getDate().getTime()),gt,
+        NhanVien nv = new NhanVien(txtMaNhanVien.getText(), txtHoTen.getText(), new java.sql.Date(dchNgaySinh.getDate().getTime()), gt,
                 txtDiaChi.getText(), txtSoDienThoai.getText(), txtEmail.getText(), txtCmnd.getText(), new java.sql.Date(dchNgayBatDau.getDate().getTime()),
-                txtChucVu.getText(), Double.valueOf(txtHeSoLuong.getText()), Double.valueOf(txtLuongCoBan.getText()), 
+                txtChucVu.getText(), Double.valueOf(txtHeSoLuong.getText()), Double.valueOf(txtLuongCoBan.getText()),
                 Double.valueOf(txtPhuCap.getText()), phongBan);
-        
+
         try {
-            if(nhanVienDao.themNhanVien(nv)){
+            if (nhanVienDao.themNhanVien(nv)) {
                 System.out.println("Thêm nhân viên thành công");
                 JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
                 loadDataToTable();
                 xoaRong();
-            }else{
+            } else {
                 System.out.println("Lỗi");
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -567,7 +583,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
             NhanVien nv = nhanVienDao.layNVTheoMa(maNVChon);
             txtMaNhanVien.setText(nv.getMaNhanVien());
             txtHoTen.setText(nv.getTenNhanVien());
-            cmbGioiTinh.setSelectedIndex(nv.isGioiTinh()?0:1);
+            cmbGioiTinh.setSelectedIndex(nv.isGioiTinh() ? 0 : 1);
             dchNgaySinh.setDate(nv.getNgaySinh());
             txtCmnd.setText(nv.getCmnd());
             txtSoDienThoai.setText(nv.getSoDienThoai());
@@ -595,18 +611,18 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         int row = tblDSNhanVien.getSelectedRow();
         String maNhanVienXoa = model.getValueAt(row, 0).toString();
         try {
-            if(nhanVienDao.xoaNhanVien(maNhanVienXoa)){
+            if (nhanVienDao.xoaNhanVien(maNhanVienXoa)) {
                 JOptionPane.showMessageDialog(this, "Xoá Nhân viên thành công!");
                 model.removeRow(row);
-            }else{
+            } else {
                 System.out.println("Xoá nhân viên không thành công");
             }
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
         xoaRong();
-        
-        
+
+
     }//GEN-LAST:event_btnThoiViecActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -628,7 +644,42 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
-        
+        try {
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.showSaveDialog(this);
+            File saveFile = jFileChooser.getSelectedFile();
+
+            if (saveFile != null) {
+                saveFile = new File(saveFile.toString() + ".xlsx");
+                Workbook wb = new XSSFWorkbook();
+                Sheet sheet = wb.createSheet("NhanVien");
+
+                Row rowCol = sheet.createRow(0);
+                for (int i = 0; i < tblDSNhanVien.getColumnCount(); i++) {
+                    Cell cell = rowCol.createCell(i);
+                    cell.setCellValue(tblDSNhanVien.getColumnName(i));
+                }
+
+                for (int j = 0; j < tblDSNhanVien.getRowCount(); j++) {
+                    Row row = sheet.createRow(j + 1);
+                    for (int k = 0; k < tblDSNhanVien.getColumnCount(); k++) {
+                        Cell cell = row.createCell(k);
+                        if (tblDSNhanVien.getValueAt(j, k) != null) {
+                            cell.setCellValue(tblDSNhanVien.getValueAt(j, k).toString());
+                        }
+                    }
+                }
+                FileOutputStream out = new FileOutputStream(new File(saveFile.toString()));
+                wb.write(out);
+                wb.close();
+                out.close();
+                openFile(saveFile.toString());
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex);
+        } catch (IOException io) {
+            System.out.println(io);
+        }
     }//GEN-LAST:event_btnXuatExcelActionPerformed
 
 
