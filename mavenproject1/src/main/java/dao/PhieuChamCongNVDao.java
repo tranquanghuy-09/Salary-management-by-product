@@ -66,13 +66,8 @@ public class PhieuChamCongNVDao {
             System.out.println(rs);
             if (rs.next()) {
                 String maxIdString = rs.getString(1);
-                if(maxIdString == null){
-                    maxIdString = "CCNV-000000";
-                }
-                    
                 int maxId = Integer.parseInt(maxIdString.substring(5));
                 String maPhieuChamCong = String.format("CCNV-%06d", maxId + 1);
-                
 //                java.util.Date utilNgayChamCong = phieuChamCongNV.getNgayChamCong();
 //                java.sql.Date sqlNgayChamCong = new java.sql.Date(utilNgayChamCong.getTime());
 

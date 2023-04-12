@@ -8,11 +8,12 @@ import dao.NhanVienDao;
 import dao.PhongBanDao;
 import entity.NhanVien;
 import entity.PhongBan;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -33,20 +34,9 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
      */
     public FrmQuanLyNhanVien() {
         initComponents();
-        loadDataCmbPhongBan();
         initTable();
         loadDataToTable();
-        txtMaNhanVien.setEnabled(false);
-    }
-    
-    private void loadDataCmbPhongBan() {
-        try {
-            List<String> data = phongBanDao.layDsTenPhongBan();
-            DefaultComboBoxModel<String> newModel = new DefaultComboBoxModel<>(data.toArray((new String[data.size()])));
-            cmbPhongBan.setModel(newModel);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmChamCongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     public void loadDataToTable() {
@@ -423,7 +413,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         pnlNutChucNangLayout.setHorizontalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNutChucNangLayout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -435,7 +425,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
                 .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlNutChucNangLayout.setVerticalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,11 +465,17 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1060, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -522,37 +518,31 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPhuCapActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        try {                                        
-            String maNhanVienMoi = nhanVienDao.taoMaNhanVienMoi();
-            System.out.println(maNhanVienMoi);
-            
-            PhongBan phongBan = new PhongBan();
-            String tenPB = cmbPhongBan.getSelectedItem().toString();
-            try {
-                phongBan = phongBanDao.layPBTheoTen(tenPB);
-            } catch (Exception ex) {
-                Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+
+        PhongBan phongBan = new PhongBan();
+        String tenPB = cmbPhongBan.getSelectedItem().toString();
+        try {
+            phongBan = phongBanDao.layPBTheoTen(tenPB);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String txtGT = (String) cmbGioiTinh.getSelectedItem();
+        boolean gt = txtGT.equalsIgnoreCase("Nam");
+        NhanVien nv = new NhanVien(txtMaNhanVien.getText(), txtHoTen.getText(), new java.sql.Date(dchNgaySinh.getDate().getTime()),gt,
+                txtDiaChi.getText(), txtSoDienThoai.getText(), txtEmail.getText(), txtCmnd.getText(), new java.sql.Date(dchNgayBatDau.getDate().getTime()),
+                txtChucVu.getText(), Double.valueOf(txtHeSoLuong.getText()), Double.valueOf(txtLuongCoBan.getText()), 
+                Double.valueOf(txtPhuCap.getText()), phongBan);
+        
+        try {
+            if(nhanVienDao.themNhanVien(nv)){
+                System.out.println("Thêm nhân viên thành công");
+                JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
+                loadDataToTable();
+                xoaRong();
+            }else{
+                System.out.println("Lỗi");
             }
-            String txtGT = (String) cmbGioiTinh.getSelectedItem();
-            boolean gt = txtGT.equalsIgnoreCase("Nam");
-            NhanVien nv = new NhanVien(maNhanVienMoi, txtHoTen.getText(), new java.sql.Date(dchNgaySinh.getDate().getTime()),gt,
-                    txtDiaChi.getText(), txtSoDienThoai.getText(), txtEmail.getText(), txtCmnd.getText(), new java.sql.Date(dchNgayBatDau.getDate().getTime()),
-                    txtChucVu.getText(), Double.valueOf(txtHeSoLuong.getText()), Double.valueOf(txtLuongCoBan.getText()),
-                    Double.valueOf(txtPhuCap.getText()), phongBan);
             
-            try {
-                if(nhanVienDao.themNhanVien(nv)){
-                    System.out.println("Thêm nhân viên thành công");
-                    JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
-                    loadDataToTable();
-                    xoaRong();
-                }else{
-                    System.out.println("Lỗi");
-                }
-                
-            } catch (Exception ex) {
-                Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
-            }
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
