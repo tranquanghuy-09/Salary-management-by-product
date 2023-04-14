@@ -145,7 +145,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                 tongLuong += luong;
             }
         } catch (Exception ex) {
-            Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
         return tongLuong;
     }
