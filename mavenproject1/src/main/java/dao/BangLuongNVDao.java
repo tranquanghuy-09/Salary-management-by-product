@@ -7,7 +7,6 @@ package dao;
 import connectDB.ConnectDB;
 import entity.BangLuongNhanVien;
 import entity.NhanVien;
-import entity.PhieuChamCongNV;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,7 +29,7 @@ public class BangLuongNVDao {
         bangLuongNhanVien.setNhanVien(nv);
         bangLuongNhanVien.setNamLuong(rs.getInt("NamLuong"));
         bangLuongNhanVien.setThangLuong(rs.getInt("ThangLuong"));
-        bangLuongNhanVien.setSoNgayLam(rs.getInt("SoNgayLam"));
+        bangLuongNhanVien.setSoNgayLam(rs.getDouble("SoNgayLam"));
         bangLuongNhanVien.setTongLuong(rs.getDouble("TongLuong"));
         bangLuongNhanVien.setNgayLapPhieuLuong(rs.getDate("NgayLapPhieuLuong"));
         return bangLuongNhanVien;
@@ -82,7 +81,7 @@ public class BangLuongNVDao {
                     stmt.setString(2, bangLuongNhanVien.getNhanVien().getMaNhanVien());
                     stmt.setInt(3, bangLuongNhanVien.getNamLuong());
                     stmt.setInt(4, bangLuongNhanVien.getThangLuong());
-                    stmt.setInt(5, bangLuongNhanVien.getSoNgayLam());
+                    stmt.setDouble(5, bangLuongNhanVien.getSoNgayLam());
                     stmt.setFloat(6, (float) bangLuongNhanVien.getTongLuong());
 
                     stmt.executeUpdate();

@@ -15,14 +15,14 @@ public class BangLuongNhanVien {
     private NhanVien nhanVien;
     private int namLuong;
     private int thangLuong;
-    private int soNgayLam;
+    private double soNgayLam;
     private double tongLuong;
     private Date ngayLapPhieuLuong;
 
     public BangLuongNhanVien() {
     }
 
-    public BangLuongNhanVien(String maBangLuong, NhanVien nhanVien, int namLuong, int thangLuong, int soNgayLam, double tongLuong, Date ngayLapPhieuLuong) {
+    public BangLuongNhanVien(String maBangLuong, NhanVien nhanVien, int namLuong, int thangLuong, double soNgayLam, double tongLuong, Date ngayLapPhieuLuong) {
         this.maBangLuong = maBangLuong;
         this.nhanVien = nhanVien;
         this.namLuong = namLuong;
@@ -32,13 +32,12 @@ public class BangLuongNhanVien {
         this.ngayLapPhieuLuong = ngayLapPhieuLuong;
     }
 
-    public BangLuongNhanVien(NhanVien nhanVien, int namLuong, int thangLuong, int soNgayLam, double tongLuong, Date ngayLapPhieuLuong) {
+    public BangLuongNhanVien(NhanVien nhanVien, int namLuong, int thangLuong, double soNgayLam, double tongLuong) {
         this.nhanVien = nhanVien;
         this.namLuong = namLuong;
         this.thangLuong = thangLuong;
         this.soNgayLam = soNgayLam;
         this.tongLuong = tongLuong;
-        this.ngayLapPhieuLuong = ngayLapPhieuLuong;
     }
 
     public String getMaBangLuong() {
@@ -73,11 +72,11 @@ public class BangLuongNhanVien {
         this.thangLuong = thangLuong;
     }
 
-    public int getSoNgayLam() {
+    public double getSoNgayLam() {
         return soNgayLam;
     }
 
-    public void setSoNgayLam(int soNgayLam) {
+    public void setSoNgayLam(double soNgayLam) {
         this.soNgayLam = soNgayLam;
     }
 

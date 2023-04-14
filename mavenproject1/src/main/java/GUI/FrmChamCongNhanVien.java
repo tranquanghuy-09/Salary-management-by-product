@@ -93,7 +93,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
             for (PhieuChamCongNV chamCongNV : list) {
                 {
                     modelDsPhieuChamCongNV.addRow(new Object[]{
-                        chamCongNV.getMaChamCong(), chamCongNV.getNhanVien().getMaNhanVien(), chamCongNV.getNhanVien().getTenNhanVien(), chamCongNV.getNgayChamCong(), 
+                        chamCongNV.getMaChamCong(), chamCongNV.getNhanVien().getMaNhanVien(), chamCongNV.getNhanVien().getTenNhanVien(), chamCongNV.getNgayChamCong(),
                         chamCongNV.getCaLam(), chamCongNV.getTrangThai(), chamCongNV.getNghiPhep(), chamCongNV.getGhiChu()
                     });
                 }
@@ -111,8 +111,8 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         tblDsNhanVien.setModel(modelDsNhanVien);
         tblDsChamCong.setModel(modelDsPhieuChamCongNV);
     }
-    
-    private void xoaRong(){
+
+    private void xoaRong() {
         txtHoTen.setText("");
         Calendar calendar = Calendar.getInstance();
         dchNgayCham.setDate(calendar.getTime());
@@ -123,7 +123,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         radCoMat.setSelected(false);
         radCoPhep.setSelected(false);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -603,34 +603,38 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         }
         String caLam = cmbCaLam.getSelectedItem().toString();
         float heSoLuong;
-        if(caLam.equalsIgnoreCase("Ca sáng") || caLam.equalsIgnoreCase("Ca chiều")){
-            heSoLuong = (float) 1.0; 
-        }else{
+        if (caLam.equalsIgnoreCase("Ca sáng") || caLam.equalsIgnoreCase("Ca chiều")) {
+            heSoLuong = (float) 1.0;
+        } else {
             heSoLuong = (float) 1.15;
         }
 //        LocalDate currentDate = LocalDate.now();
         LocalDate date = LocalDate.of(2023, 1, 10);
 //        Date ngayChamCong = Date.valueOf(currentDate);
         Date ngayChamCong = Date.valueOf(date);
-        int coMat = radCoMat.isSelected()?1:0;
-        int coPhep =  radCoPhep.isSelected()?1:0;
-        PhieuChamCongNV phieuChamCongNV = new PhieuChamCongNV(nhanVien, caLam, heSoLuong, coMat,
-               coPhep, ngayChamCong, txtGhiChu.getText());
-        try {
-            if(phieuChamCongNVDao.themPhieuChamCongNV(phieuChamCongNV)){
-                System.out.println("Chấm công thành công");
-                System.out.println(phieuChamCongNV);
+        int coMat = radCoMat.isSelected() ? 1 : 0;
+        int coPhep = radCoPhep.isSelected() ? 1 : 0;
+        if (radCoMat.isSelected() == false && radCoPhep.isSelected() == false) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn Có mặt hoặc Có phép");
+        } else {
+            PhieuChamCongNV phieuChamCongNV = new PhieuChamCongNV(nhanVien, caLam, heSoLuong, coMat,
+                    coPhep, ngayChamCong, txtGhiChu.getText());
+            try {
+                if (phieuChamCongNVDao.themPhieuChamCongNV(phieuChamCongNV)) {
+                    System.out.println("Chấm công thành công");
+                    System.out.println(phieuChamCongNV);
 //                JOptionPane.showMessageDialog(this, "Chấm công thành công");
-                loadDataTblDsChamCong();
-                xoaRong();
-                tblDsNhanVien.clearSelection();
-                modelDsNhanVien.removeRow(row);
-            }else{
-                System.out.println("Lỗi");
+                    loadDataTblDsChamCong();
+                    xoaRong();
+                    tblDsNhanVien.clearSelection();
+                    modelDsNhanVien.removeRow(row);
+                } else {
+                    System.out.println("Lỗi");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }   
     }//GEN-LAST:event_btnChamCongActionPerformed
 
     private void btnBoChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoChonActionPerformed

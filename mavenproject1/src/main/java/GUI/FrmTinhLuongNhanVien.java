@@ -89,10 +89,12 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             for (BangLuongNhanVien blnv : list) {
                 {
                     NhanVien nv = blnv.getNhanVien();
-                    DecimalFormat decimalFormat = new DecimalFormat("#");
+//                    DecimalFormat decimalFormat = new DecimalFormat("#");
+                    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
                     modelDsBangLuong.addRow(new Object[]{
                         blnv.getMaBangLuong(), blnv.getNhanVien().getMaNhanVien(), blnv.getNhanVien().getTenNhanVien(), blnv.getNhanVien().getPhongBan().getTenPhongBan(), 
-                        blnv.getNhanVien().getHeSoLuong(), blnv.getThangLuong(), blnv.getNamLuong(), blnv.getSoNgayLam(), decimalFormat.format(nv.getLuongCoBan()), blnv.getNhanVien().getPhuCap(), decimalFormat.format(blnv.getTongLuong())
+                        blnv.getNhanVien().getHeSoLuong(), blnv.getThangLuong(), blnv.getNamLuong(), blnv.getSoNgayLam(), decimalFormat.format(nv.getLuongCoBan()), 
+                        decimalFormat.format(blnv.getNhanVien().getPhuCap()), decimalFormat.format(blnv.getTongLuong())
                     });
                 }
             }
@@ -652,9 +654,15 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         try {
             int row = tblDsNhanVien.getSelectedRow();
             String maNVChon = modelDsNhanVien.getValueAt(row, 0).toString();
+            NhanVien nv = nhanVienDao.layNVTheoMa(maNVChon);
+            
             int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
             int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
-//            Map<Double, Double> laySoNgayLamTheoMaNV = bangLuongNVDao.laySoNgayLamTheoMaNV(maNVChon);
+            BangLuongNhanVien blnv = new BangLuongNhanVien(nv, namLuong, thangLuong, Double.parseDouble(txtSoNgayLam.getText()),
+                    Double.parseDouble(txtTongLuong.getText().replace(",", "")));
+            
+            bangLuongNVDao.themBangLuongNV(blnv);
+            loadDataTblDsBangLuong();
         } catch (Exception ex) {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
