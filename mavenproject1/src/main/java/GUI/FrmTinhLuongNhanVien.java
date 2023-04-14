@@ -35,10 +35,15 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
      */
     public FrmTinhLuongNhanVien() {
         initComponents();
+        txtMaNhanVien.setEditable(false);
+        txtSoNgayLam.setEditable(false);
+        txtTongLuong.setEditable(false);
         for (int i = 1; i <= 12; i++)
             cmbThang.addItem(String.format("%02d", i));
+        cmbThang.setSelectedItem("01");
         for (int year = 2015; year <= 2024; year++)
             cmbNam.addItem(String.valueOf(year));
+        cmbNam.setSelectedItem("2023");
 
         loadDataCmbPhongBanLoc();
         initTable();
