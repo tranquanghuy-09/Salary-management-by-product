@@ -9,13 +9,15 @@ import dao.NhanVienDao;
 import dao.PhongBanDao;
 import entity.BangLuongNhanVien;
 import entity.NhanVien;
-import entity.PhieuChamCongNV;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Map;
 
 /**
  *
@@ -33,6 +35,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
      */
     public FrmTinhLuongNhanVien() {
         initComponents();
+        for (int i = 1; i <= 12; i++)
+            cmbThang.addItem(String.format("%02d", i));
+        for (int year = 2015; year <= 2024; year++)
+            cmbNam.addItem(String.valueOf(year));
+
         loadDataCmbPhongBanLoc();
         initTable();
         loadDataTblDsNhanVien();
@@ -108,7 +115,41 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             Logger.getLogger(FrmChamCongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private static int demNgayChuNhatThangNam(int nam, int thang) {
+        LocalDate firstDayOfMonth = LocalDate.of(nam, thang, 1);
+        int daysInMonth = firstDayOfMonth.getMonth().length(firstDayOfMonth.isLeapYear());
+        int count = 0;
+        for (int day = 1; day <= daysInMonth; day++) {
+            LocalDate date = LocalDate.of(nam, thang, day);
+            if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                count++;
+            }
+        }
+        return count;
+    }
     
+//    Tính tổng tiền lương theo mã Nhân viên
+    private double tinhTongLuongTheoMaNV(String maNhanVien, int thang, int nam, Map<Double, Double> map) {
+        double tongLuong = 0.0;
+        try {
+            int soNgayCongChuan = 31 - demNgayChuNhatThangNam(nam, thang);
+            NhanVien nv = nhanVienDao.layNVTheoMa(maNhanVien);
+            Double luongCoBan = nv.getLuongCoBan();
+      
+//            Map<Double, Double> laySoNgayLamTheoMaNV = bangLuongNVDao.laySoNgayLamTheoMaNV("NV_0001");
+            for (Map.Entry<Double, Double> entry : map.entrySet()) {
+                double heSoLuong = entry.getKey();
+                double soNgayLam = entry.getValue();
+                double luong = heSoLuong * (soNgayLam / soNgayCongChuan) * luongCoBan;
+                tongLuong += luong;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tongLuong;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -551,14 +592,27 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         String maNVChon = modelDsNhanVien.getValueAt(row, 0).toString();
         try {
             NhanVien nv = nhanVienDao.layNVTheoMa(maNVChon);
-            txtMaNhanVien.setText(String.valueOf(nv.getMaNhanVien()));    
+            txtMaNhanVien.setText(String.valueOf(nv.getMaNhanVien()));
             String tenNV = nv.getTenNhanVien();
             cmbNhanVien.removeAllItems();
             cmbNhanVien.addItem("Tất cả");
             cmbNhanVien.addItem(tenNV);
             cmbNhanVien.setSelectedItem(tenNV);
-            txtSoNgayLam.setText("");
-            txtTongLuong.setText("");
+
+            int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
+            int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
+            Map<Double, Double> map = bangLuongNVDao.laySoNgayLamTheoMaNV(maNVChon, thangLuong, namLuong);
+            double soNgayLam = 0;
+            for (double value : map.values()) {
+                soNgayLam += value;
+            }
+            txtSoNgayLam.setText(String.valueOf(soNgayLam));
+            
+            Double tongLuong = tinhTongLuongTheoMaNV(maNVChon, thangLuong, namLuong, map);
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+            String formattedTongLuong = decimalFormat.format(tongLuong);
+
+            txtTongLuong.setText(String.valueOf(formattedTongLuong));
             
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
@@ -590,7 +644,15 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbThangActionPerformed
 
     private void btnTinhLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTinhLuongActionPerformed
-        
+        try {
+            int row = tblDsNhanVien.getSelectedRow();
+            String maNVChon = modelDsNhanVien.getValueAt(row, 0).toString();
+            int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
+            int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
+//            Map<Double, Double> laySoNgayLamTheoMaNV = bangLuongNVDao.laySoNgayLamTheoMaNV(maNVChon);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnTinhLuongActionPerformed
 
     private void btnBoChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoChonActionPerformed

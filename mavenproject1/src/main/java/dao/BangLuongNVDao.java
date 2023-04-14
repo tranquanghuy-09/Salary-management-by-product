@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -94,5 +96,32 @@ public class BangLuongNVDao {
             }
         }
         return false;
+    }
+
+    //Tính số ngày làm của nhân Viên theo Hệ số lương và theo Mã nhân viên
+    public Map<Double, Double> laySoNgayLamTheoMaNV(String maNhanVien, int thang, int nam) throws Exception {
+        String sql = "SELECT   HeSoLuongCa, count(CHAMCONGNHANVIEN.MaChamCong)/2.0 as SoNgayLam\n"
+                + "FROM         NHANVIEN INNER JOIN\n"
+                + "                         CHAMCONGNHANVIEN ON NHANVIEN.MaNhanVien = CHAMCONGNHANVIEN.MaNhanVien\n"
+                + "WHERE NHANVIEN.MaNhanVien = ? and MONTH([NgayChamCong]) = ? and YEAR([NgayChamCong]) = ?\n"
+                + "GROUP BY NHANVIEN.MaNhanVien, HeSoLuongCa";
+        Connection con = ConnectDB.getInstance().getConnection();
+        Map<Double, Double> data = new HashMap<>();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, maNhanVien);
+            stmt.setInt(2, thang);
+            stmt.setInt(3, nam);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                data.put(rs.getDouble("HeSoLuongCa"), rs.getDouble("SoNgayLam"));
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return data;
     }
 }

@@ -178,4 +178,25 @@ public class NhanVienDao {
         return false;
     }
 
+    //Lấy Lương cơ bản của Nhân viên theo mã nhân viên
+    public double layLuongCobanTheoMa(String maNhanVien) throws Exception {
+        String sql = "SELECT   LuongCoBan\n"
+                + "FROM         NHANVIEN\n"
+                + "WHERE MaNhanVien = ?";
+        Connection con = ConnectDB.getInstance().getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, maNhanVien);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble("LuongCoBan");
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return 0;
+    }
 }
