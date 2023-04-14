@@ -221,7 +221,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         });
 
         lblHeSoLuong.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblHeSoLuong.setText("Hế số lương:");
+        lblHeSoLuong.setText("Hệ số lương:");
 
         txtLuongCoBan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -491,7 +491,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

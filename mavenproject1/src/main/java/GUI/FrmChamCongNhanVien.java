@@ -603,13 +603,13 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         }
         String caLam = cmbCaLam.getSelectedItem().toString();
         float heSoLuong;
-        if(caLam.equalsIgnoreCase("Ca sáng") || caLam.equalsIgnoreCase("Ca tối")){
+        if(caLam.equalsIgnoreCase("Ca sáng") || caLam.equalsIgnoreCase("Ca chiều")){
             heSoLuong = (float) 1.0; 
         }else{
-            heSoLuong = (float) 1.2;
+            heSoLuong = (float) 1.15;
         }
 //        LocalDate currentDate = LocalDate.now();
-        LocalDate date = LocalDate.of(2023, 1, 2);
+        LocalDate date = LocalDate.of(2023, 1, 10);
 //        Date ngayChamCong = Date.valueOf(currentDate);
         Date ngayChamCong = Date.valueOf(date);
         int coMat = radCoMat.isSelected()?1:0;
