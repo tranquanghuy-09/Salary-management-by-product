@@ -10,6 +10,7 @@ import dao.PhongBanDao;
 import entity.BangLuongNhanVien;
 import entity.NhanVien;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Hashtable;
 import java.util.Map;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import org.codehaus.groovy.control.messages.Message;
 
 /**
  *
@@ -143,7 +148,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             int soNgayCongChuan = 31 - demNgayChuNhatThangNam(nam, thang);
             NhanVien nv = nhanVienDao.layNVTheoMa(maNhanVien);
             Double luongCoBan = nv.getLuongCoBan();
-      
+            Double phuCap = nv.getPhuCap();
 //            Map<Double, Double> laySoNgayLamTheoMaNV = bangLuongNVDao.laySoNgayLamTheoMaNV("NV_0001");
             for (Map.Entry<Double, Double> entry : map.entrySet()) {
                 double heSoLuong = entry.getKey();
@@ -151,6 +156,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                 double luong = heSoLuong * (soNgayLam / soNgayCongChuan) * luongCoBan;
                 tongLuong += luong;
             }
+            tongLuong += phuCap;
         } catch (Exception ex) {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -473,6 +479,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         btnXuatExcel.setText("Xuất Excel");
         btnXuatExcel.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXuatExcel.setPreferredSize(new java.awt.Dimension(125, 22));
+        btnXuatExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatExcelActionPerformed(evt);
+            }
+        });
 
         btnThoat.setBackground(new java.awt.Color(252, 33, 30));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -675,6 +686,23 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private void cmbNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNhanVienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbNhanVienActionPerformed
+
+    private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
+        int row = tblDsTinhLuong.getSelectedRow();
+        String maBangLuong = modelDsBangLuong.getValueAt(row, 0).toString();
+        
+        Hashtable map = new Hashtable();
+        JasperReport report = JasperCompileManager.compileReport("/src/main/java/report/rptChiTietLuong.jrxml");
+//        map.put("maHD", maHD);
+//        
+//        java.sql.Connection con = DatabaseHelper.opConnection();
+//
+//        JasperPrint p = JasperFillManager.fillReport(report, map, con);
+//        JasperViewer.viewReport(p, false);
+//        JasperExportManager.exportReportToPdfFile(p, "test.pdf");
+
+
+    }//GEN-LAST:event_btnXuatExcelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
