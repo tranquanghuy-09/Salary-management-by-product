@@ -4,13 +4,15 @@
  */
 package GUI;
 
+import connectDB.ConnectDB;
 import dao.BangLuongNVDao;
 import dao.NhanVienDao;
 import dao.PhongBanDao;
 import entity.BangLuongNhanVien;
 import entity.NhanVien;
+import helper.DoubleTriple;
+import java.sql.Connection;
 import java.text.DecimalFormat;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +22,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Map;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import org.codehaus.groovy.control.messages.Message;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -161,6 +166,13 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
         return tongLuong;
+    }
+    
+//    Tính lương theo số ngày với ngày công chuẩn
+    private double tinhLuongTheoHeSo(double heSo, double soNgay, double ngayCongChuan, double luongCoban) {
+        double tong = 0.0;
+        tong = heSo * (soNgay / ngayCongChuan) * luongCoban;
+        return tong;
     }
 
     /**
@@ -535,6 +547,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDsTinhLuong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDsTinhLuongMouseClicked(evt);
+            }
+        });
         scrDsTinhLuong.setViewportView(tblDsTinhLuong);
 
         javax.swing.GroupLayout pnlDsTinhLuongLayout = new javax.swing.GroupLayout(pnlDsTinhLuong);
@@ -688,21 +705,89 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbNhanVienActionPerformed
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
-        int row = tblDsTinhLuong.getSelectedRow();
-        String maBangLuong = modelDsBangLuong.getValueAt(row, 0).toString();
+        try {
+            int row = tblDsTinhLuong.getSelectedRow();
+            String maBangLuong = modelDsBangLuong.getValueAt(row, 0).toString();
+            String maNV = modelDsBangLuong.getValueAt(row, 1).toString();
+            NhanVien nv = nhanVienDao.layNVTheoMa(maNV);
+            double luongCoBan = nv.getLuongCoBan();
+            double phuCap = nv.getPhuCap();
+            
+            
+            int thangLuong = Integer.parseInt(modelDsBangLuong.getValueAt(row, 5).toString());
+            System.out.println(thangLuong);
+
+            int namLuong = Integer.parseInt(modelDsBangLuong.getValueAt(row, 6).toString());
+            System.out.println(namLuong);
+            System.out.println(maNV);
+            System.out.println(luongCoBan);
+
+            int ngayCongChuan = 31 - demNgayChuNhatThangNam(namLuong, thangLuong);
+            System.out.println(ngayCongChuan);
+            
+            double ngayLamViecThucTe = 0.0;
+            double ngayNghiPhep = 0.0;
+            double ngayNgoaiGio = 0.0;
+            double luongCBTinh = 0.0;
+            double luongNghiPhep = 0.0;
+            double luongNgoaiGio = 0.0;
+           
+            List<DoubleTriple> list = bangLuongNVDao.laySoNgayLamNgayNghiTheoMaNV(maNV, thangLuong, namLuong);
+            list.forEach(d -> System.out.println(d));
+            if(list.size() == 1){
+                DoubleTriple dt = list.get(0);
+                ngayLamViecThucTe = dt.getSecond();
+                ngayNghiPhep = dt.getThird();
+                luongCBTinh = tinhLuongTheoHeSo(dt.getFirst(), dt.getSecond(), ngayCongChuan, luongCoBan);
+                luongNghiPhep = tinhLuongTheoHeSo(dt.getFirst(), dt.getThird(), ngayCongChuan, luongCoBan);
+            }else if(list.size() == 2){
+                DoubleTriple dt = list.get(0);
+                ngayLamViecThucTe = dt.getSecond();
+                ngayNghiPhep = dt.getThird();
+                luongCBTinh = tinhLuongTheoHeSo(dt.getFirst(), dt.getSecond(), ngayCongChuan, luongCoBan);
+                luongNghiPhep = tinhLuongTheoHeSo(dt.getFirst(), dt.getThird(), ngayCongChuan, luongCoBan);
+                
+                DoubleTriple dt2 = list.get(1);
+                luongNgoaiGio = tinhLuongTheoHeSo(dt2.getFirst(), dt2.getSecond(), ngayCongChuan, luongCoBan);
+                ngayNgoaiGio = dt2.getSecond();
+            }
+
+            double tongLuong = luongCBTinh + luongNghiPhep + luongNgoaiGio + phuCap;
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+            Hashtable map = new Hashtable();
+            JasperReport report = JasperCompileManager.compileReport("src/main/java/report/rptChiTietLuong.jrxml");
+            map.put("maNV", maNV);
+            map.put("ngayCongChuan", ngayCongChuan);
+            map.put("ngayLamViecThucTe", ngayLamViecThucTe);
+            map.put("ngayNghiPhep", ngayNghiPhep);
+            map.put("ngayNgoaiGio", ngayNgoaiGio);
+            map.put("luongCoBan", decimalFormat.format(luongCBTinh));
+            map.put("nghiPhepHuongLuong", decimalFormat.format(luongNghiPhep));
+            map.put("luongNgoaiGio", decimalFormat.format(luongNgoaiGio));
+            map.put("namLuong", namLuong);
+            map.put("thangLuong", thangLuong);
+            map.put("tongLuong", decimalFormat.format(tongLuong));
+            map.put("phuCap", decimalFormat.format(phuCap));
         
-        Hashtable map = new Hashtable();
-        JasperReport report = JasperCompileManager.compileReport("/src/main/java/report/rptChiTietLuong.jrxml");
-//        map.put("maHD", maHD);
-//        
-//        java.sql.Connection con = DatabaseHelper.opConnection();
-//
-//        JasperPrint p = JasperFillManager.fillReport(report, map, con);
-//        JasperViewer.viewReport(p, false);
+        Connection con = ConnectDB.getInstance().getConnection();
+
+        JasperPrint p = JasperFillManager.fillReport(report, map, con);
+        JasperViewer.viewReport(p, false);
 //        JasperExportManager.exportReportToPdfFile(p, "test.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_btnXuatExcelActionPerformed
+
+    private void tblDsTinhLuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDsTinhLuongMouseClicked
+        int row = tblDsTinhLuong.getSelectedRow();
+        String maNVChon = modelDsBangLuong.getValueAt(row, 1).toString();        
+        System.out.println(maNVChon);
+    }//GEN-LAST:event_tblDsTinhLuongMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

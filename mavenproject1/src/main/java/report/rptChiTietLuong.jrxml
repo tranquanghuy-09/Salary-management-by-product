@@ -12,19 +12,31 @@
 	<parameter name="ngayLamViecThucTe" class="java.lang.Double">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="nghiPhepHuongLuong" class="java.lang.Double">
+	<parameter name="nghiPhepHuongLuong" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="luongCoBan" class="java.lang.Double">
+	<parameter name="luongCoBan" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="luongNgoaiGio" class="java.lang.Double">
+	<parameter name="luongNgoaiGio" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ngayNghiPhep" class="java.lang.Double">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ngayNgoaiGio" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="thangLuong" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="namLuong" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tongLuong" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="phuCap" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -56,7 +68,7 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 				<text><![CDATA[PHIẾU LƯƠNG]]></text>
 			</staticText>
 			<image>
-				<reportElement x="31" y="0" width="64" height="50" uuid="4568d992-0b71-4176-8326-6a3c9ac00277"/>
+				<reportElement x="31" y="0" width="76" height="62" uuid="4568d992-0b71-4176-8326-6a3c9ac00277"/>
 				<imageExpression><![CDATA["C:\\PTUD\\QLLuongSP_PTUD\\mavenproject1\\src\\main\\resources\\Interface\\Images\\logo3.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -88,18 +100,18 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 				<text><![CDATA[Năm:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="242" y="78" width="51" height="20" uuid="1355a4cf-b75d-40b7-952c-06723a0ed6f3"/>
+				<reportElement x="242" y="78" width="37" height="20" uuid="19019ec7-c94f-4d22-9c98-320fd7e01b3e"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ThangLuong}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{thangLuong}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="327" y="78" width="100" height="20" uuid="f14181b8-5c35-4ec0-b1c2-06d7fedd42f7"/>
+				<reportElement x="327" y="78" width="100" height="20" uuid="3d54e97b-aa4e-484b-851d-6ebd87436fb3"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{NamLuong}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{namLuong}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -310,18 +322,16 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 				<textFieldExpression><![CDATA[$P{ngayNgoaiGio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="398" y="103" width="121" height="20" uuid="a48dc89b-b945-4480-a9bf-3642cc3457ac"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+				<reportElement x="398" y="145" width="121" height="20" uuid="da29878a-cfaf-4e63-8681-9f47be6cd0a0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PhuCap}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tongLuong}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="398" y="145" width="121" height="20" uuid="331eb083-4cf8-4775-8804-855cb81413d7"/>
-				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TongLuong}]]></textFieldExpression>
+				<reportElement x="398" y="103" width="121" height="20" uuid="83682711-1dba-4a5e-9356-0a0f6166004b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{phuCap}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

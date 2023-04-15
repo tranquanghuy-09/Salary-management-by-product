@@ -22,6 +22,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.toBack();
 //        this.setSize(1280,720);
 
     }

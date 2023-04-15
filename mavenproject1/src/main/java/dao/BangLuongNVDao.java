@@ -7,6 +7,7 @@ package dao;
 import connectDB.ConnectDB;
 import entity.BangLuongNhanVien;
 import entity.NhanVien;
+import helper.DoubleTriple;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,5 +123,35 @@ public class BangLuongNVDao {
             con.rollback();
         }
         return data;
+    }
+
+    //Tính số ngày làm và số ngày nghỉ phép của Nhân viên theo mã nhân viên và Hệ số lương
+    public List<DoubleTriple> laySoNgayLamNgayNghiTheoMaNV(String maNhanVien, int thang, int nam) throws Exception {
+        String sql = "SELECT HeSoLuongCa, sum(TrangThai)/2 as SoNgayLamThucTe, sum(NghiPhep)/2 as SoNgayNghiPhep\n"
+                + "FROM   CHAMCONGNHANVIEN\n"
+                + "where MaNhanVien = ? and MONTH([NgayChamCong]) = ? and YEAR([NgayChamCong]) = ?\n"
+                + "group by MaNhanVien, HeSoLuongCa";
+        Connection con = ConnectDB.getInstance().getConnection();
+        List<DoubleTriple> list = new ArrayList<>();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, maNhanVien);
+            stmt.setInt(2, thang);
+            stmt.setInt(3, nam);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                DoubleTriple dt = new DoubleTriple();
+                dt.setFirst(rs.getDouble("HeSoLuongCa"));
+                dt.setSecond(rs.getDouble("SoNgayLamThucTe"));
+                dt.setThird(rs.getDouble("SoNgayNghiPhep"));
+                list.add(dt);
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return list;
     }
 }
