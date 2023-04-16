@@ -24,6 +24,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -34,12 +35,14 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author huylauri
  */
 public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
+
     private NhanVienDao nhanVienDao = new NhanVienDao();
     private PhongBanDao phongBanDao = new PhongBanDao();
     private BangLuongNVDao bangLuongNVDao = new BangLuongNVDao();
-            
+
     private DefaultTableModel modelDsNhanVien;
     private DefaultTableModel modelDsBangLuong;
+
     /**
      * Creates new form FrmTinhLuongNhanVien
      */
@@ -48,11 +51,13 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         txtMaNhanVien.setEditable(false);
         txtSoNgayLam.setEditable(false);
         txtTongLuong.setEditable(false);
-        for (int i = 1; i <= 12; i++)
+        for (int i = 1; i <= 12; i++) {
             cmbThang.addItem(String.format("%02d", i));
+        }
         cmbThang.setSelectedItem("01");
-        for (int year = 2015; year <= 2024; year++)
+        for (int year = 2015; year <= 2024; year++) {
             cmbNam.addItem(String.valueOf(year));
+        }
         cmbNam.setSelectedItem("2023");
 
         loadDataCmbPhongBanLoc();
@@ -76,14 +81,14 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-    
+
     private void loadDataTblDsNhanVien(List<NhanVien> list, DefaultTableModel model) {
         try {
             model.setRowCount(0);
             for (NhanVien nv : list) {
                 {
                     model.addRow(new Object[]{
-                       nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getNgaySinh(), nv.getPhongBan().getTenPhongBan(), nv.getChucVu()
+                        nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getNgaySinh(), nv.getPhongBan().getTenPhongBan(), nv.getChucVu()
                     });
                 }
             }
@@ -91,7 +96,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-    
+
     private void loadDataTblDsBangLuong() {
         try {
             List<BangLuongNhanVien> list = bangLuongNVDao.layDsBangLuongNV();
@@ -102,8 +107,8 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
 //                    DecimalFormat decimalFormat = new DecimalFormat("#");
                     DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
                     modelDsBangLuong.addRow(new Object[]{
-                        blnv.getMaBangLuong(), blnv.getNhanVien().getMaNhanVien(), blnv.getNhanVien().getTenNhanVien(), blnv.getNhanVien().getPhongBan().getTenPhongBan(), 
-                        blnv.getNhanVien().getHeSoLuong(), blnv.getThangLuong(), blnv.getNamLuong(), blnv.getSoNgayLam(), decimalFormat.format(nv.getLuongCoBan()), 
+                        blnv.getMaBangLuong(), blnv.getNhanVien().getMaNhanVien(), blnv.getNhanVien().getTenNhanVien(), blnv.getNhanVien().getPhongBan().getTenPhongBan(),
+                        blnv.getNhanVien().getHeSoLuong(), blnv.getThangLuong(), blnv.getNamLuong(), blnv.getSoNgayLam(), decimalFormat.format(nv.getLuongCoBan()),
                         decimalFormat.format(blnv.getNhanVien().getPhuCap()), decimalFormat.format(blnv.getTongLuong())
                     });
                 }
@@ -112,7 +117,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-    
+
     private void initTable() {
         modelDsNhanVien = new DefaultTableModel();
         modelDsBangLuong = new DefaultTableModel();
@@ -122,7 +127,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         tblDsNhanVien.setModel(modelDsNhanVien);
         tblDsTinhLuong.setModel(modelDsBangLuong);
     }
-    
+
     private void loadDataCmbPhongBanLoc() {
         try {
             List<String> data = phongBanDao.layDsTenPhongBan();
@@ -145,7 +150,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         }
         return count;
     }
-    
+
 //    Tính tổng tiền lương theo mã Nhân viên
     private double tinhTongLuongTheoMaNV(String maNhanVien, int thang, int nam, Map<Double, Double> map) {
         double tongLuong = 0.0;
@@ -167,7 +172,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         }
         return tongLuong;
     }
-    
+
 //    Tính lương theo số ngày với ngày công chuẩn
     private double tinhLuongTheoHeSo(double heSo, double soNgay, double ngayCongChuan, double luongCoban) {
         double tong = 0.0;
@@ -212,6 +217,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         btnBoChon = new javax.swing.JButton();
         btnXuatExcel = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
+        btnThoat1 = new javax.swing.JButton();
         pnlDsTinhLuong = new javax.swing.JPanel();
         scrDsTinhLuong = new javax.swing.JScrollPane();
         tblDsTinhLuong = new javax.swing.JTable();
@@ -470,7 +476,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         btnXoaTinhLuong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXoaTinhLuong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xoachamcong.png"))); // NOI18N
         btnXoaTinhLuong.setText("Xoá Tính lương");
-        btnXoaTinhLuong.setMargin(new java.awt.Insets(2, 2, 3, 2));
+        btnXoaTinhLuong.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXoaTinhLuong.setPreferredSize(new java.awt.Dimension(125, 23));
 
         btnBoChon.setBackground(new java.awt.Color(0, 206, 245));
@@ -497,29 +503,42 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(252, 33, 30));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
-        btnThoat.setText("Thoát");
-        btnThoat.setMargin(new java.awt.Insets(2, 2, 3, 2));
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-in.png"))); // NOI18N
+        btnThoat.setText("In Bảng lương");
+        btnThoat.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnThoat.setPreferredSize(new java.awt.Dimension(125, 23));
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+
+        btnThoat1.setBackground(new java.awt.Color(252, 33, 30));
+        btnThoat1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnThoat1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
+        btnThoat1.setText("Thoát");
+        btnThoat1.setMargin(new java.awt.Insets(2, 2, 3, 2));
+        btnThoat1.setPreferredSize(new java.awt.Dimension(125, 23));
 
         javax.swing.GroupLayout pnlNutChucNangLayout = new javax.swing.GroupLayout(pnlNutChucNang);
         pnlNutChucNang.setLayout(pnlNutChucNangLayout);
         pnlNutChucNangLayout.setHorizontalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNutChucNangLayout.createSequentialGroup()
-                .addContainerGap(207, Short.MAX_VALUE)
+                .addContainerGap(122, Short.MAX_VALUE)
                 .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(btnXoaTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnXoaTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(btnBoChon, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(btnThoat1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         pnlNutChucNangLayout.setVerticalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,7 +549,8 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                     .addComponent(btnXoaTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBoChon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThoat1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -562,7 +582,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         );
         pnlDsTinhLuongLayout.setVerticalGroup(
             pnlDsTinhLuongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrDsTinhLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+            .addComponent(scrDsTinhLuong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -642,13 +662,13 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                 soNgayLam += value;
             }
             txtSoNgayLam.setText(String.valueOf(soNgayLam));
-            
+
             Double tongLuong = tinhTongLuongTheoMaNV(maNVChon, thangLuong, namLuong, map);
             DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
             String formattedTongLuong = decimalFormat.format(tongLuong);
 
             txtTongLuong.setText(String.valueOf(formattedTongLuong));
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -683,12 +703,12 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             int row = tblDsNhanVien.getSelectedRow();
             String maNVChon = modelDsNhanVien.getValueAt(row, 0).toString();
             NhanVien nv = nhanVienDao.layNVTheoMa(maNVChon);
-            
+
             int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
             int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
             BangLuongNhanVien blnv = new BangLuongNhanVien(nv, namLuong, thangLuong, Double.parseDouble(txtSoNgayLam.getText()),
                     Double.parseDouble(txtTongLuong.getText().replace(",", "")));
-            
+
             bangLuongNVDao.themBangLuongNV(blnv);
             loadDataTblDsBangLuong();
         } catch (Exception ex) {
@@ -705,6 +725,16 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbNhanVienActionPerformed
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
+
+    }//GEN-LAST:event_btnXuatExcelActionPerformed
+
+    private void tblDsTinhLuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDsTinhLuongMouseClicked
+        int row = tblDsTinhLuong.getSelectedRow();
+        String maNVChon = modelDsBangLuong.getValueAt(row, 1).toString();
+        System.out.println(maNVChon);
+    }//GEN-LAST:event_tblDsTinhLuongMouseClicked
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         try {
             int row = tblDsTinhLuong.getSelectedRow();
             String maBangLuong = modelDsBangLuong.getValueAt(row, 0).toString();
@@ -712,8 +742,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             NhanVien nv = nhanVienDao.layNVTheoMa(maNV);
             double luongCoBan = nv.getLuongCoBan();
             double phuCap = nv.getPhuCap();
-            
-            
+
             int thangLuong = Integer.parseInt(modelDsBangLuong.getValueAt(row, 5).toString());
             System.out.println(thangLuong);
 
@@ -724,29 +753,29 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
 
             int ngayCongChuan = 31 - demNgayChuNhatThangNam(namLuong, thangLuong);
             System.out.println(ngayCongChuan);
-            
+
             double ngayLamViecThucTe = 0.0;
             double ngayNghiPhep = 0.0;
             double ngayNgoaiGio = 0.0;
             double luongCBTinh = 0.0;
             double luongNghiPhep = 0.0;
             double luongNgoaiGio = 0.0;
-           
+
             List<DoubleTriple> list = bangLuongNVDao.laySoNgayLamNgayNghiTheoMaNV(maNV, thangLuong, namLuong);
             list.forEach(d -> System.out.println(d));
-            if(list.size() == 1){
+            if (list.size() == 1) {
                 DoubleTriple dt = list.get(0);
                 ngayLamViecThucTe = dt.getSecond();
                 ngayNghiPhep = dt.getThird();
                 luongCBTinh = tinhLuongTheoHeSo(dt.getFirst(), dt.getSecond(), ngayCongChuan, luongCoBan);
                 luongNghiPhep = tinhLuongTheoHeSo(dt.getFirst(), dt.getThird(), ngayCongChuan, luongCoBan);
-            }else if(list.size() == 2){
+            } else if (list.size() == 2) {
                 DoubleTriple dt = list.get(0);
                 ngayLamViecThucTe = dt.getSecond();
                 ngayNghiPhep = dt.getThird();
                 luongCBTinh = tinhLuongTheoHeSo(dt.getFirst(), dt.getSecond(), ngayCongChuan, luongCoBan);
                 luongNghiPhep = tinhLuongTheoHeSo(dt.getFirst(), dt.getThird(), ngayCongChuan, luongCoBan);
-                
+
                 DoubleTriple dt2 = list.get(1);
                 luongNgoaiGio = tinhLuongTheoHeSo(dt2.getFirst(), dt2.getSecond(), ngayCongChuan, luongCoBan);
                 ngayNgoaiGio = dt2.getSecond();
@@ -768,12 +797,12 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             map.put("thangLuong", thangLuong);
             map.put("tongLuong", decimalFormat.format(tongLuong));
             map.put("phuCap", decimalFormat.format(phuCap));
-        
-        Connection con = ConnectDB.getInstance().getConnection();
 
-        JasperPrint p = JasperFillManager.fillReport(report, map, con);
-        JasperViewer.viewReport(p, false);
-//        JasperExportManager.exportReportToPdfFile(p, "test.pdf");
+            Connection con = ConnectDB.getInstance().getConnection();
+
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+            JasperExportManager.exportReportToPdfFile(p, "test.pdf");
         } catch (JRException ex) {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -781,13 +810,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         }
 
 
-    }//GEN-LAST:event_btnXuatExcelActionPerformed
-
-    private void tblDsTinhLuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDsTinhLuongMouseClicked
-        int row = tblDsTinhLuong.getSelectedRow();
-        String maNVChon = modelDsBangLuong.getValueAt(row, 1).toString();        
-        System.out.println(maNVChon);
-    }//GEN-LAST:event_tblDsTinhLuongMouseClicked
+    }//GEN-LAST:event_btnThoatActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -795,6 +818,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private javax.swing.JButton btnBoLoc;
     private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnThoat;
+    private javax.swing.JButton btnThoat1;
     private javax.swing.JButton btnTinhLuong;
     private javax.swing.JButton btnXoaTinhLuong;
     private javax.swing.JButton btnXuatExcel;

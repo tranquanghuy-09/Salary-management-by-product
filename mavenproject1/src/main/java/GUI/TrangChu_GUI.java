@@ -65,6 +65,8 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
 
+        tabNoiDung.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         lblTenChuongTrinh.setBackground(new java.awt.Color(255, 255, 204));
         lblTenChuongTrinh.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTenChuongTrinh.setForeground(new java.awt.Color(255, 51, 0));
@@ -77,15 +79,15 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         lblTenChuongTrinh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         tabNoiDung.addTab("Trang chính", lblTenChuongTrinh);
 
-        mnuChinh.setBackground(new java.awt.Color(0, 0, 0));
         mnuChinh.setToolTipText("");
         mnuChinh.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         mnTrangChu.setBackground(new java.awt.Color(0, 0, 0));
-        mnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/HOME.png"))); // NOI18N
+        mnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/home2.png"))); // NOI18N
         mnTrangChu.setText("Trang Chủ");
         mnTrangChu.setFocusable(false);
         mnTrangChu.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnTrangChu.setIconTextGap(-6);
         mnTrangChu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mnTrangChuMouseClicked(evt);
@@ -96,7 +98,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         mnDanhMuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-danhmuc.png"))); // NOI18N
         mnDanhMuc.setText("Danh mục");
         mnDanhMuc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        mnDanhMuc.setIconTextGap(0);
+        mnDanhMuc.setIconTextGap(-6);
 
         mniDMNhanVien.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         mniDMNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -139,14 +141,14 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xuly.png"))); // NOI18N
         jMenu3.setText("Xử lý");
         jMenu3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jMenu3.setIconTextGap(0);
+        jMenu3.setIconTextGap(-6);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem5.setText("Phân công");
         jMenu3.add(jMenuItem5);
 
-        mniChamCongNhanVien.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        mniChamCongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcong.png"))); // NOI18N
+        mniChamCongNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniChamCongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcongNV.png"))); // NOI18N
         mniChamCongNhanVien.setText("Chấm công nhân viên");
         mniChamCongNhanVien.setAutoscrolls(true);
         mniChamCongNhanVien.setBorder(null);
@@ -163,7 +165,11 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenuItem7.setText("Chấm công công nhân");
         jMenu3.add(jMenuItem7);
 
+        mniTinhLuongNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniTinhLuongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-TinhLuong.png"))); // NOI18N
         mniTinhLuongNhanVien.setText("Tính lương nhân viên");
+        mniTinhLuongNhanVien.setIconTextGap(0);
+        mniTinhLuongNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
         mniTinhLuongNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniTinhLuongNhanVienActionPerformed(evt);
@@ -176,7 +182,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         mnuChinh.add(jMenu3);
 
-        mniTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-timkiem2.png"))); // NOI18N
+        mniTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-timkiem0.png"))); // NOI18N
         mniTimKiem.setText("Tìm Kiếm");
         mniTimKiem.setAutoscrolls(true);
         mniTimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -184,6 +190,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         mniTimKiem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         mniTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         mniTimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        mniTimKiem.setIconTextGap(-6);
 
         mniTKNhanVien.setText("Nhân viên");
         mniTKNhanVien.addActionListener(new java.awt.event.ActionListener() {
@@ -198,8 +205,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         mnuChinh.add(mniTimKiem);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thongke.png"))); // NOI18N
         jMenu5.setText("Thống Kê");
         jMenu5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenu5.setIconTextGap(-7);
 
         jMenuItem12.setText("Tiền lương");
         jMenu5.add(jMenuItem12);
@@ -212,7 +221,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         mnuChinh.add(jMenu5);
 
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-taikhoan.png"))); // NOI18N
         jMenu6.setText("Tài Khoản");
+        jMenu6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jMenu6.setIconTextGap(-6);
 
         jMenuItem15.setText("Đăng ký");
         jMenu6.add(jMenuItem15);
