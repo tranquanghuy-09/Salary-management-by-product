@@ -13,13 +13,14 @@ import java.sql.SQLException;
  * @author duy19
  */
 public class ConnectDB {
-    private static ConnectDB instance;
+
+     private static ConnectDB instance;
 
 	private Connection connection;
 
 	private ConnectDB() {
 		try {
-			String url = "jdbc:sqlserver://localhost:1433;databaseName=;trustServerCertificate=true";
+			String url = "jdbc:sqlserver://localhost:1433;databaseName=QuanLy_LuongSanPham;trustServerCertificate=true";
 			connection = DriverManager.getConnection(url , "sa", "sapassword");
 		}catch (Exception e) {
 			e.printStackTrace();
