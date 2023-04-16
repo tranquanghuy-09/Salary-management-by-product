@@ -78,13 +78,14 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             cmbNam.addItem(String.valueOf(year));
         }
         cmbNam.setSelectedItem("2023");
-
+        btnInBangLuong.setEnabled(false);
         loadDataCmbPhongBanLoc();
         initTable();
         loadDataTblDsNhanVien();
         int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
         int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
         loadDataTblDsBangLuong(thangLuong, namLuong);
+        
     }
 
     private void loadDataTblDsNhanVien() {
@@ -784,6 +785,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private void tblDsTinhLuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDsTinhLuongMouseClicked
         int row = tblDsTinhLuong.getSelectedRow();
         String maNVChon = modelDsBangLuong.getValueAt(row, 1).toString();
+        btnInBangLuong.setEnabled(true);
         System.out.println(maNVChon);
     }//GEN-LAST:event_tblDsTinhLuongMouseClicked
 

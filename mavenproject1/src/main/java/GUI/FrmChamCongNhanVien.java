@@ -53,7 +53,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         
         LocalDate currentDate = LocalDate.now();
         Date ngayChamCong = Date.valueOf(currentDate);
-        dchNgayCham.setDate(ngayChamCong);
+//        dchNgayCham.setDate(ngayChamCong);
         loadDataTblDsChamCong(ngayChamCong);
     }
     
@@ -646,7 +646,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
             heSoLuong = (float) 1.15;
         }
 //        LocalDate currentDate = LocalDate.now();
-        LocalDate date = LocalDate.of(2023, 1, 10);
+        LocalDate date = LocalDate.of(2023, 1, 11);
 //        Date ngayChamCong = Date.valueOf(currentDate);
         Date ngayChamCong = Date.valueOf(date);
         int coMat = radCoMat.isSelected() ? 1 : 0;
@@ -661,7 +661,7 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
                     System.out.println("Chấm công thành công");
                     System.out.println(phieuChamCongNV);
 //                JOptionPane.showMessageDialog(this, "Chấm công thành công");
-                    loadDataTblDsChamCong();
+                    loadDataTblDsChamCong(ngayChamCong);
                     xoaRong();
                     tblDsNhanVien.clearSelection();
                     modelDsNhanVien.removeRow(row);
