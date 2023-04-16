@@ -57,6 +57,31 @@ public class BangLuongNVDao {
         }
         return list;
     }
+    
+    //Lấy toàn bộ danh sách Bảng lương nhân viên theo tháng và năm
+    public List<BangLuongNhanVien> layDsBangLuongNVTheoThangNam(int thang, int nam) throws Exception {
+        String sql = "select * from BANGLUONGNHANVIEN\n"
+                + "where ThangLuong = ? and NamLuong = ?";
+        Connection con = ConnectDB.getInstance().getConnection();
+        List<BangLuongNhanVien> list = new ArrayList<BangLuongNhanVien>();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, thang);
+            stmt.setInt(2, nam);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                BangLuongNhanVien bangLuongNhanVien = new BangLuongNhanVien();
+                bangLuongNhanVien = taoBangLuongNV(rs);
+                list.add(bangLuongNhanVien);
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return list;
+    }
 
 //    Thêm một Bảng lương nhân viên
     public boolean themBangLuongNV(BangLuongNhanVien bangLuongNhanVien) throws Exception {
@@ -127,7 +152,7 @@ public class BangLuongNVDao {
 
     //Tính số ngày làm và số ngày nghỉ phép của Nhân viên theo mã nhân viên và Hệ số lương
     public List<DoubleTriple> laySoNgayLamNgayNghiTheoMaNV(String maNhanVien, int thang, int nam) throws Exception {
-        String sql = "SELECT HeSoLuongCa, sum(TrangThai)/2 as SoNgayLamThucTe, sum(NghiPhep)/2 as SoNgayNghiPhep\n"
+        String sql = "SELECT HeSoLuongCa, sum(TrangThai)/2.0 as SoNgayLamThucTe, sum(NghiPhep)/2.0 as SoNgayNghiPhep\n"
                 + "FROM   CHAMCONGNHANVIEN\n"
                 + "where MaNhanVien = ? and MONTH([NgayChamCong]) = ? and YEAR([NgayChamCong]) = ?\n"
                 + "group by MaNhanVien, HeSoLuongCa";

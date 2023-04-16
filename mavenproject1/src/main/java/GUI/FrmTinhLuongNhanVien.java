@@ -11,6 +11,8 @@ import dao.PhongBanDao;
 import entity.BangLuongNhanVien;
 import entity.NhanVien;
 import helper.DoubleTriple;
+import helper.RightRenderer;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Map;
+import javax.swing.table.TableColumnModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -51,7 +54,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         txtMaNhanVien.setEditable(false);
         txtSoNgayLam.setEditable(false);
         txtTongLuong.setEditable(false);
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 2; i <= 12; i++) {
             cmbThang.addItem(String.format("%02d", i));
         }
         cmbThang.setSelectedItem("01");
@@ -63,7 +66,9 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         loadDataCmbPhongBanLoc();
         initTable();
         loadDataTblDsNhanVien();
-        loadDataTblDsBangLuong();
+        int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
+        int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
+        loadDataTblDsBangLuong(thangLuong, namLuong);
     }
 
     private void loadDataTblDsNhanVien() {
@@ -97,9 +102,9 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         }
     }
 
-    private void loadDataTblDsBangLuong() {
+    private void loadDataTblDsBangLuong(int thangLuong, int namLuong) {
         try {
-            List<BangLuongNhanVien> list = bangLuongNVDao.layDsBangLuongNV();
+            List<BangLuongNhanVien> list = bangLuongNVDao.layDsBangLuongNVTheoThangNam(thangLuong, namLuong);
             modelDsBangLuong.setRowCount(0);
             for (BangLuongNhanVien blnv : list) {
                 {
@@ -126,6 +131,15 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             "Tháng lương", "Năm lương", "Số ngày làm", "Lương cơ bản", "Phụ cấp", "Tổng lương"});
         tblDsNhanVien.setModel(modelDsNhanVien);
         tblDsTinhLuong.setModel(modelDsBangLuong);
+        
+        TableColumnModel columnModel = tblDsTinhLuong.getColumnModel();
+        columnModel.getColumn(4).setCellRenderer(new RightRenderer());
+        columnModel.getColumn(5).setCellRenderer(new RightRenderer()); 
+        columnModel.getColumn(6).setCellRenderer(new RightRenderer()); 
+        columnModel.getColumn(7).setCellRenderer(new RightRenderer()); 
+        columnModel.getColumn(8).setCellRenderer(new RightRenderer()); 
+        columnModel.getColumn(9).setCellRenderer(new RightRenderer()); 
+        columnModel.getColumn(10).setCellRenderer(new RightRenderer()); 
     }
 
     private void loadDataCmbPhongBanLoc() {
@@ -353,10 +367,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         lblThang.setText("Tháng:");
 
         cmbNam.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cmbNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2015" }));
         cmbNam.setName(""); // NOI18N
-        cmbNam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbNamActionPerformed(evt);
+        cmbNam.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbNamItemStateChanged(evt);
             }
         });
 
@@ -383,10 +398,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         lblMaNhanVien.setText("Mã NV:");
 
         cmbThang.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        cmbThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01" }));
         cmbThang.setName(""); // NOI18N
-        cmbThang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbThangActionPerformed(evt);
+        cmbThang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbThangItemStateChanged(evt);
             }
         });
 
@@ -682,10 +698,6 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoNgayLamActionPerformed
 
-    private void cmbNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNamActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbNamActionPerformed
-
     private void txtTongLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongLuongActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTongLuongActionPerformed
@@ -693,10 +705,6 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private void txtMaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNhanVienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNhanVienActionPerformed
-
-    private void cmbThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbThangActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbThangActionPerformed
 
     private void btnTinhLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTinhLuongActionPerformed
         try {
@@ -710,7 +718,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                     Double.parseDouble(txtTongLuong.getText().replace(",", "")));
 
             bangLuongNVDao.themBangLuongNV(blnv);
-            loadDataTblDsBangLuong();
+            loadDataTblDsBangLuong(thangLuong, namLuong);
         } catch (Exception ex) {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -811,6 +819,22 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void cmbThangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbThangItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
+            int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
+            loadDataTblDsBangLuong(thangLuong, namLuong);
+        }
+    }//GEN-LAST:event_cmbThangItemStateChanged
+
+    private void cmbNamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbNamItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
+            int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
+            loadDataTblDsBangLuong(thangLuong, namLuong);
+        }
+    }//GEN-LAST:event_cmbNamItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

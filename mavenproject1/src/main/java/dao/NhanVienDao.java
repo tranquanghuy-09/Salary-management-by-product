@@ -199,4 +199,28 @@ public class NhanVienDao {
         }
         return 0;
     }
+    
+    //Lấy danh sách nhân viên theo điều kiện truyền vào
+    public List<NhanVien> layDSNhanVienTheoDKWhere(String dieuKienWhere) throws Exception {
+        String sql = "select * from NHANVIEN \n"
+                + dieuKienWhere ;
+        System.out.println("Nhân viên dao: " + dieuKienWhere);
+        Connection con = ConnectDB.getInstance().getConnection();
+        List<NhanVien> list = new ArrayList<NhanVien>();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv = taoNhanVien(rs);
+                list.add(nv);
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return list;
+    }
 }
