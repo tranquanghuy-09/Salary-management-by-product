@@ -561,6 +561,9 @@
               <Dimension value="[125, 23]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaTinhLuongActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBoChon">
           <Properties>
@@ -647,6 +650,9 @@
               <Dimension value="[125, 23]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThoat1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

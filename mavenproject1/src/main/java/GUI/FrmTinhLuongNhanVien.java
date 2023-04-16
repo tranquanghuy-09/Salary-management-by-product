@@ -24,6 +24,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Map;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumnModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -131,15 +135,15 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             "Tháng lương", "Năm lương", "Số ngày làm", "Lương cơ bản", "Phụ cấp", "Tổng lương"});
         tblDsNhanVien.setModel(modelDsNhanVien);
         tblDsTinhLuong.setModel(modelDsBangLuong);
-        
+
         TableColumnModel columnModel = tblDsTinhLuong.getColumnModel();
         columnModel.getColumn(4).setCellRenderer(new RightRenderer());
-        columnModel.getColumn(5).setCellRenderer(new RightRenderer()); 
-        columnModel.getColumn(6).setCellRenderer(new RightRenderer()); 
-        columnModel.getColumn(7).setCellRenderer(new RightRenderer()); 
-        columnModel.getColumn(8).setCellRenderer(new RightRenderer()); 
-        columnModel.getColumn(9).setCellRenderer(new RightRenderer()); 
-        columnModel.getColumn(10).setCellRenderer(new RightRenderer()); 
+        columnModel.getColumn(5).setCellRenderer(new RightRenderer());
+        columnModel.getColumn(6).setCellRenderer(new RightRenderer());
+        columnModel.getColumn(7).setCellRenderer(new RightRenderer());
+        columnModel.getColumn(8).setCellRenderer(new RightRenderer());
+        columnModel.getColumn(9).setCellRenderer(new RightRenderer());
+        columnModel.getColumn(10).setCellRenderer(new RightRenderer());
     }
 
     private void loadDataCmbPhongBanLoc() {
@@ -150,6 +154,15 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger.getLogger(FrmChamCongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void xoaRong() {
+        txtMaNhanVien.setText("");
+        cmbNhanVien.setSelectedIndex(0);
+        cmbThang.setSelectedItem("01");
+        cmbThang.setSelectedItem("2023");
+        txtSoNgayLam.setText("");
+        txtTongLuong.setText("");
     }
 
     private static int demNgayChuNhatThangNam(int nam, int thang) {
@@ -494,6 +507,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         btnXoaTinhLuong.setText("Xoá Tính lương");
         btnXoaTinhLuong.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXoaTinhLuong.setPreferredSize(new java.awt.Dimension(125, 23));
+        btnXoaTinhLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaTinhLuongActionPerformed(evt);
+            }
+        });
 
         btnBoChon.setBackground(new java.awt.Color(0, 206, 245));
         btnBoChon.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -536,6 +554,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         btnThoat1.setText("Thoát");
         btnThoat1.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnThoat1.setPreferredSize(new java.awt.Dimension(125, 23));
+        btnThoat1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoat1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlNutChucNangLayout = new javax.swing.GroupLayout(pnlNutChucNang);
         pnlNutChucNang.setLayout(pnlNutChucNangLayout);
@@ -656,6 +679,10 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private void btnBoLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoLocActionPerformed
         initTable();
         loadDataTblDsNhanVien();
+        
+        int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
+        int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
+        loadDataTblDsBangLuong(thangLuong, namLuong);
     }//GEN-LAST:event_btnBoLocActionPerformed
 
     private void tblDsNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDsNhanVienMouseClicked
@@ -725,7 +752,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTinhLuongActionPerformed
 
     private void btnBoChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoChonActionPerformed
-//        xoaRong();
+        xoaRong();
     }//GEN-LAST:event_btnBoChonActionPerformed
 
     private void cmbNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNhanVienActionPerformed
@@ -835,6 +862,36 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             loadDataTblDsBangLuong(thangLuong, namLuong);
         }
     }//GEN-LAST:event_cmbNamItemStateChanged
+
+    private void btnXoaTinhLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTinhLuongActionPerformed
+        int row = tblDsTinhLuong.getSelectedRow();
+        String maBangLuongXoa = modelDsBangLuong.getValueAt(row, 0).toString();
+        try {
+            if (bangLuongNVDao.xoaBangLuongNV(maBangLuongXoa)) {
+                JOptionPane.showMessageDialog(this, "Xoá Bảng lương thành công!");
+                modelDsBangLuong.removeRow(row);
+            } else {
+                System.out.println("Xoá Bảng lương không thành công");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmQuanLyNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        xoaRong();
+    }//GEN-LAST:event_btnXoaTinhLuongActionPerformed
+
+    private void btnThoat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoat1ActionPerformed
+        JTabbedPane tabbedPane = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
+        int index = tabbedPane.indexOfComponent(this);
+        if (index != -1) {
+            tabbedPane.removeTabAt(index);
+        }
+        if (tabbedPane.getTabCount() == 0) {
+            JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(tabbedPane);
+            mainFrame.getContentPane().removeAll();
+            mainFrame.getContentPane().add(new TrangChu_GUI());
+            mainFrame.getContentPane().revalidate();
+        }
+    }//GEN-LAST:event_btnThoat1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

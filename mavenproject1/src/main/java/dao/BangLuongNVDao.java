@@ -179,4 +179,23 @@ public class BangLuongNVDao {
         }
         return list;
     }
+    
+//    Xoá Bảng lương Nhân viên theo mã Bảng lương
+    public boolean xoaBangLuongNV(String maBangLuong) throws Exception {
+        String sql = "DELETE FROM BANGLUONGNHANVIEN WHERE MaBangLuong = ?";
+        Connection con = ConnectDB.getInstance().getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, maBangLuong);
+            
+            stmt.executeUpdate();
+            con.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            con.rollback();
+        }
+        return false;
+    }
+    
 }

@@ -103,6 +103,7 @@ public class PhieuChamCongNVDao {
         return false;
     }
 
+//    Xoá Phiếu chấm công theo mã Phiếu chấm công
     public boolean xoaPhieuChamCong(String maPhieuChamCong) throws Exception {
         String sql = "DELETE FROM CHAMCONGNHANVIEN WHERE MaChamCong = ?";
         Connection con = ConnectDB.getInstance().getConnection();
