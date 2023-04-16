@@ -232,6 +232,9 @@
           </AuxValues>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dchNgayCham">
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dchNgayChamPropertyChange"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTenNhanVien">
           <Properties>
@@ -504,6 +507,9 @@
               <Dimension value="[125, 22]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXuatExcelActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnThoat">
           <Properties>
@@ -524,6 +530,9 @@
               <Dimension value="[125, 23]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThoatActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

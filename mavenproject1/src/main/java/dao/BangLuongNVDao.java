@@ -198,4 +198,29 @@ public class BangLuongNVDao {
         return false;
     }
     
+    //Lấy Bản lương theo mã Nhân viên và tháng lương, năm lương
+    public BangLuongNhanVien layBangLuongTheoMaNVThangNamLuong(String maNhanVien, int thang, int nam) throws Exception {
+        String sql = "select * from BANGLUONGNHANVIEN\n"
+                + "where MaNhanVien = ? and ThangLuong = ? and NamLuong = ?";
+        Connection con = ConnectDB.getInstance().getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, maNhanVien);
+            stmt.setInt(2, thang);
+            stmt.setInt(3, nam);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                BangLuongNhanVien blnv = new BangLuongNhanVien();
+                blnv = taoBangLuongNV(rs);
+                return blnv;
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return null;
+    }
+    
 }

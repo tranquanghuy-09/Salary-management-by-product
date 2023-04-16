@@ -8,6 +8,7 @@ import connectDB.ConnectDB;
 import entity.NhanVien;
 import entity.PhieuChamCongNV;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -119,6 +120,30 @@ public class PhieuChamCongNVDao {
             con.rollback();
         }
         return false;
+    }
+    
+    //Lấy toàn bộ danh sách chấm công nhân viên theo ngày
+    public List<PhieuChamCongNV> layDsPhieuChamCongNV(Date date) throws Exception {
+        String sql = "select * from [CHAMCONGNHANVIEN]\n"
+                + "where NgayChamCong = ?";
+        Connection con = ConnectDB.getInstance().getConnection();
+        List<PhieuChamCongNV> list = new ArrayList<PhieuChamCongNV>();
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setDate(1, date);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                PhieuChamCongNV chamCongNV = new PhieuChamCongNV();
+                chamCongNV = taoPhieuChamCongNV(rs);
+                list.add(chamCongNV);
+            }
+            con.commit();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            con.rollback();
+        }
+        return list;
     }
 
 }

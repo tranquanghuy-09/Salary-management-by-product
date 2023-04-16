@@ -12,7 +12,13 @@ import entity.BangLuongNhanVien;
 import entity.NhanVien;
 import helper.DoubleTriple;
 import helper.RightRenderer;
+import helper.XuatFileExcel;
+import java.awt.Desktop;
 import java.awt.event.ItemEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -24,6 +30,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Hashtable;
 import java.util.Map;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -36,6 +43,11 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -163,6 +175,8 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         cmbThang.setSelectedItem("2023");
         txtSoNgayLam.setText("");
         txtTongLuong.setText("");
+        tblDsNhanVien.clearSelection();
+        tblDsTinhLuong.clearSelection();
     }
 
     private static int demNgayChuNhatThangNam(int nam, int thang) {
@@ -206,7 +220,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         tong = heSo * (soNgay / ngayCongChuan) * luongCoban;
         return tong;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -243,8 +257,8 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         btnXoaTinhLuong = new javax.swing.JButton();
         btnBoChon = new javax.swing.JButton();
         btnXuatExcel = new javax.swing.JButton();
+        btnInBangLuong = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
-        btnThoat1 = new javax.swing.JButton();
         pnlDsTinhLuong = new javax.swing.JPanel();
         scrDsTinhLuong = new javax.swing.JScrollPane();
         tblDsTinhLuong = new javax.swing.JTable();
@@ -425,9 +439,9 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         cmbNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         cmbNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
         cmbNhanVien.setName(""); // NOI18N
-        cmbNhanVien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbNhanVienActionPerformed(evt);
+        cmbNhanVien.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbNhanVienItemStateChanged(evt);
             }
         });
 
@@ -537,26 +551,26 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             }
         });
 
+        btnInBangLuong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnInBangLuong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-in.png"))); // NOI18N
+        btnInBangLuong.setText("In Bảng lương");
+        btnInBangLuong.setMargin(new java.awt.Insets(2, 0, 3, 0));
+        btnInBangLuong.setPreferredSize(new java.awt.Dimension(125, 23));
+        btnInBangLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBangLuongActionPerformed(evt);
+            }
+        });
+
+        btnThoat.setBackground(new java.awt.Color(252, 33, 30));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-in.png"))); // NOI18N
-        btnThoat.setText("In Bảng lương");
-        btnThoat.setMargin(new java.awt.Insets(2, 0, 3, 0));
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
+        btnThoat.setText("Thoát");
+        btnThoat.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnThoat.setPreferredSize(new java.awt.Dimension(125, 23));
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThoatActionPerformed(evt);
-            }
-        });
-
-        btnThoat1.setBackground(new java.awt.Color(252, 33, 30));
-        btnThoat1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnThoat1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
-        btnThoat1.setText("Thoát");
-        btnThoat1.setMargin(new java.awt.Insets(2, 2, 3, 2));
-        btnThoat1.setPreferredSize(new java.awt.Dimension(125, 23));
-        btnThoat1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoat1ActionPerformed(evt);
             }
         });
 
@@ -574,9 +588,9 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addComponent(btnThoat1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(122, Short.MAX_VALUE))
         );
         pnlNutChucNangLayout.setVerticalGroup(
@@ -588,8 +602,8 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                     .addComponent(btnXoaTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBoChon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThoat1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
 
@@ -679,7 +693,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private void btnBoLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoLocActionPerformed
         initTable();
         loadDataTblDsNhanVien();
-        
+
         int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
         int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
         loadDataTblDsBangLuong(thangLuong, namLuong);
@@ -741,11 +755,16 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
 
             int thangLuong = Integer.parseInt(cmbThang.getSelectedItem().toString());
             int namLuong = Integer.parseInt(cmbNam.getSelectedItem().toString());
-            BangLuongNhanVien blnv = new BangLuongNhanVien(nv, namLuong, thangLuong, Double.parseDouble(txtSoNgayLam.getText()),
-                    Double.parseDouble(txtTongLuong.getText().replace(",", "")));
-
-            bangLuongNVDao.themBangLuongNV(blnv);
-            loadDataTblDsBangLuong(thangLuong, namLuong);
+            if (bangLuongNVDao.layBangLuongTheoMaNVThangNamLuong(maNVChon, thangLuong, namLuong) == null) {
+                BangLuongNhanVien blnv = new BangLuongNhanVien(nv, namLuong, thangLuong, Double.parseDouble(txtSoNgayLam.getText()),
+                        Double.parseDouble(txtTongLuong.getText().replace(",", "")));
+                bangLuongNVDao.themBangLuongNV(blnv);
+                loadDataTblDsBangLuong(thangLuong, namLuong);
+                int lastRow = tblDsTinhLuong.getRowCount() - 1;
+                tblDsTinhLuong.setRowSelectionInterval(lastRow, lastRow);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nhân viên này đã được tính lương!");
+            }
         } catch (Exception ex) {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -753,14 +772,13 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
 
     private void btnBoChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoChonActionPerformed
         xoaRong();
+        txtMaNhanVien.setEnabled(true);
+        txtSoNgayLam.setEnabled(true);
+        txtTongLuong.setEnabled(true);
     }//GEN-LAST:event_btnBoChonActionPerformed
 
-    private void cmbNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNhanVienActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbNhanVienActionPerformed
-
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
-
+        XuatFileExcel.xuatFileExcel(tblDsTinhLuong);
     }//GEN-LAST:event_btnXuatExcelActionPerformed
 
     private void tblDsTinhLuongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDsTinhLuongMouseClicked
@@ -769,7 +787,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         System.out.println(maNVChon);
     }//GEN-LAST:event_tblDsTinhLuongMouseClicked
 
-    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+    private void btnInBangLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBangLuongActionPerformed
         try {
             int row = tblDsTinhLuong.getSelectedRow();
             String maBangLuong = modelDsBangLuong.getValueAt(row, 0).toString();
@@ -845,7 +863,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         }
 
 
-    }//GEN-LAST:event_btnThoatActionPerformed
+    }//GEN-LAST:event_btnInBangLuongActionPerformed
 
     private void cmbThangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbThangItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
@@ -879,7 +897,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
         xoaRong();
     }//GEN-LAST:event_btnXoaTinhLuongActionPerformed
 
-    private void btnThoat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoat1ActionPerformed
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         JTabbedPane tabbedPane = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
         int index = tabbedPane.indexOfComponent(this);
         if (index != -1) {
@@ -891,15 +909,29 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             mainFrame.getContentPane().add(new TrangChu_GUI());
             mainFrame.getContentPane().revalidate();
         }
-    }//GEN-LAST:event_btnThoat1ActionPerformed
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void cmbNhanVienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbNhanVienItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+        String selectedItem = (String) cmbNhanVien.getSelectedItem();
+        if (selectedItem.equals("Tất cả")) {
+            txtMaNhanVien.setEnabled(false);
+            txtSoNgayLam.setEnabled(false);
+            txtTongLuong.setEnabled(false);
+            
+            //Còn xử lý tính lương 1 lần nhiều nhân viên
+        } 
+
+    }
+    }//GEN-LAST:event_cmbNhanVienItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBoChon;
     private javax.swing.JButton btnBoLoc;
+    private javax.swing.JButton btnInBangLuong;
     private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnThoat;
-    private javax.swing.JButton btnThoat1;
     private javax.swing.JButton btnTinhLuong;
     private javax.swing.JButton btnXoaTinhLuong;
     private javax.swing.JButton btnXuatExcel;

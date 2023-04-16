@@ -9,14 +9,22 @@ import dao.PhieuChamCongNVDao;
 import dao.PhongBanDao;
 import entity.NhanVien;
 import entity.PhieuChamCongNV;
+import helper.XuatFileExcel;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,7 +50,11 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         loadDataCmbPhongBanLoc();
         initTable();
         loadDataTblDsNhanVien();
-        loadDataTblDsChamCong();
+        
+        LocalDate currentDate = LocalDate.now();
+        Date ngayChamCong = Date.valueOf(currentDate);
+        dchNgayCham.setDate(ngayChamCong);
+        loadDataTblDsChamCong(ngayChamCong);
     }
     
     private void loadDataCmbPhongBanLoc() {
@@ -86,9 +98,9 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         }
     }
     
-    private void loadDataTblDsChamCong() {
+    private void loadDataTblDsChamCong(Date date) {
         try {
-            List<PhieuChamCongNV> list = phieuChamCongNVDao.layDsPhieuChamCongNV();
+            List<PhieuChamCongNV> list = phieuChamCongNVDao.layDsPhieuChamCongNV(date);
             modelDsPhieuChamCongNV.setRowCount(0);
             for (PhieuChamCongNV chamCongNV : list) {
                 {
@@ -122,6 +134,15 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         txtGhiChu.setText("");
         radCoMat.setSelected(false);
         radCoPhep.setSelected(false);
+    }
+    
+    public void openFile(String file) {
+        try {
+            File path = new File(file);
+            Desktop.getDesktop().open(path);
+        } catch (IOException ioe) {
+            System.out.println(ioe);
+        }
     }
 
     /**
@@ -195,6 +216,12 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         cmbCaLam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCaLamActionPerformed(evt);
+            }
+        });
+
+        dchNgayCham.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dchNgayChamPropertyChange(evt);
             }
         });
 
@@ -403,6 +430,11 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         btnXuatExcel.setText("Xuất Excel");
         btnXuatExcel.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXuatExcel.setPreferredSize(new java.awt.Dimension(125, 22));
+        btnXuatExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatExcelActionPerformed(evt);
+            }
+        });
 
         btnThoat.setBackground(new java.awt.Color(252, 33, 30));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -410,6 +442,11 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
         btnThoat.setText("Thoát");
         btnThoat.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnThoat.setPreferredSize(new java.awt.Dimension(125, 23));
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlNutChucNangLayout = new javax.swing.GroupLayout(pnlNutChucNang);
         pnlNutChucNang.setLayout(pnlNutChucNangLayout);
@@ -709,6 +746,36 @@ public class FrmChamCongNhanVien extends javax.swing.JPanel {
             Logger.getLogger(FrmChamCongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnXoaChamCongActionPerformed
+
+    private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
+        XuatFileExcel.xuatFileExcel(tblDsChamCong);
+    }//GEN-LAST:event_btnXuatExcelActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        JTabbedPane tabbedPane = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
+        int index = tabbedPane.indexOfComponent(this);
+        if (index != -1) {
+            tabbedPane.removeTabAt(index);
+        }
+        if (tabbedPane.getTabCount() == 0) {
+            JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(tabbedPane);
+            mainFrame.getContentPane().removeAll();
+            mainFrame.getContentPane().add(new TrangChu_GUI());
+            mainFrame.getContentPane().revalidate();
+        }
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void dchNgayChamPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dchNgayChamPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            Date date = new Date(dchNgayCham.getDate().getTime());
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            String formattedDate = formatter.format(date);
+            System.out.println(date);
+            loadDataTblDsChamCong(date);
+        }
+
+
+    }//GEN-LAST:event_dchNgayChamPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
