@@ -125,11 +125,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtSoLuongDaLam" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lblNgayHoanThanh" min="-2" pref="100" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="chooserNgayHoanThanh" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="lblNgayHoanThanh" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lblSoLuongCanLam" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -160,7 +156,6 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblNgayHoanThanh" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="chooserNgayHoanThanh" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                           <Component id="lblLoaiSanPham" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="txtLoaiSanPham" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -274,11 +269,6 @@
         <Component class="javax.swing.JTextField" name="txtSoLuongDaLam">
         </Component>
         <Component class="javax.swing.JTextField" name="txtTrangThai">
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="chooserNgayHoanThanh">
-          <Properties>
-            <Property name="dateFormatString" type="java.lang.String" value=" dd/MM/yyyy"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

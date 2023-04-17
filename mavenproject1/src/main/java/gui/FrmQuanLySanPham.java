@@ -102,7 +102,6 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         txtSoLuongCanLam = new javax.swing.JTextField();
         txtSoLuongDaLam = new javax.swing.JTextField();
         txtTrangThai = new javax.swing.JTextField();
-        chooserNgayHoanThanh = new com.toedter.calendar.JDateChooser();
         pnlNutChucNang = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         btnCapNhat = new javax.swing.JButton();
@@ -156,8 +155,6 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             }
         });
 
-        chooserNgayHoanThanh.setDateFormatString(" dd/MM/yyyy");
-
         javax.swing.GroupLayout pnlThongTinNVLayout = new javax.swing.GroupLayout(pnlThongTinNV);
         pnlThongTinNV.setLayout(pnlThongTinNVLayout);
         pnlThongTinNVLayout.setHorizontalGroup(
@@ -195,10 +192,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
                         .addComponent(lblSoLuongDaLam, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSoLuongDaLam))
-                    .addGroup(pnlThongTinNVLayout.createSequentialGroup()
-                        .addComponent(lblNgayHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chooserNgayHoanThanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblNgayHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlThongTinNVLayout.createSequentialGroup()
                         .addComponent(lblSoLuongCanLam, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,7 +217,6 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNgayHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooserNgayHoanThanh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -563,7 +556,6 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton btnXuatExcel;
-    private com.toedter.calendar.JDateChooser chooserNgayHoanThanh;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblChatLieu;
