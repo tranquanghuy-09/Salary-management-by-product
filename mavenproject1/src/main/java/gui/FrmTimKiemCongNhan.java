@@ -286,8 +286,9 @@ public class FrmTimKiemCongNhan extends javax.swing.JPanel {
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
-        btnTimKiem.setBackground(new java.awt.Color(204, 255, 204));
+        btnTimKiem.setBackground(new java.awt.Color(102, 255, 102));
         btnTimKiem.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-tìmkiemNV.png"))); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnTimKiem.setMaximumSize(new java.awt.Dimension(115, 37));
@@ -299,8 +300,9 @@ public class FrmTimKiemCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(204, 255, 204));
+        btnLamMoi.setBackground(new java.awt.Color(255, 255, 51));
         btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-LamMoi.png"))); // NOI18N
         btnLamMoi.setText("Làm mới");
         btnLamMoi.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnLamMoi.setPreferredSize(new java.awt.Dimension(125, 22));
@@ -310,8 +312,8 @@ public class FrmTimKiemCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnXuatExcel.setBackground(new java.awt.Color(204, 255, 204));
         btnXuatExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnXuatExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
         btnXuatExcel.setText("Xuất Excel");
         btnXuatExcel.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXuatExcel.setPreferredSize(new java.awt.Dimension(125, 22));
@@ -321,8 +323,9 @@ public class FrmTimKiemCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(204, 255, 204));
+        btnThoat.setBackground(new java.awt.Color(255, 102, 102));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
         btnThoat.setText("Thoát");
         btnThoat.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnThoat.setPreferredSize(new java.awt.Dimension(125, 23));

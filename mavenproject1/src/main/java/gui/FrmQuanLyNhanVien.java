@@ -11,6 +11,7 @@ import entity.PhongBan;
 import helper.RightRenderer;
 import helper.XuatFileExcel;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,6 +102,55 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         txtLuongCoBan.setText("");
         txtPhuCap.setText("");
         txtHeSoLuong.setText("");
+    }
+    
+    public String kiemTraDuLieu(NhanVien nv){
+        String loi = "";
+        if (!nv.getMaNhanVien().matches("NV_[0-9]{4}")) {
+            loi = "Mã nhân viên phải có dạng NV_XXXX, X là các số từ 0 đến 9.";
+            return loi;
+        }       
+        
+        if (!(nv.getNgaySinh().toLocalDate().compareTo(LocalDate.now()) < 0)) {
+            loi = "Ngày sinh phải nhỏ hơn ngày hiện tại.";
+            return loi;
+        }
+        if (!(nv.getNgayBatDau().toLocalDate().compareTo(LocalDate.now()) < 0)) {
+            loi = "Ngày bắt đầu làm phải nhỏ hơn ngày hiện tại.";
+            return loi;
+        }
+        
+        if (!nv.getSoDienThoai().matches("[0-9]{10}")) {
+            loi = "Số điện thoại không đúng cú pháp.";
+            return loi;
+        }
+        
+        if (!nv.getEmail().contains("@") || nv.getEmail().contains(" ")) {
+            loi = "Email không đúng cú pháp.";
+            return loi;
+        }
+        
+        if (!nv.getCmnd().matches("[0-9]{9}|[0-9]{12}")) {
+            loi = "Số CMND không đúng cú pháp.";
+            return loi;
+        }
+        
+        if (nv.getHeSoLuong() < 1.0) {
+            loi = "Hệ số lương phải lớn hơn 1.0";
+            return loi;
+        }
+        
+        if (nv.getLuongCoBan() <= 0) {
+            loi = "Lương cơ bản phải lớn hơn 0";
+            return loi;
+        }
+        
+        if (nv.getPhuCap() < 0) {
+            loi = "Phụ cấp phải lớn hơn 0";
+            return loi;
+        }
+        
+        return null;
     }
 
     /**
@@ -548,13 +598,22 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
                 Double.valueOf(txtPhuCap.getText()), phongBan);
 
         try {
-            if (nhanVienDao.themNhanVien(nv)) {
-                System.out.println("Thêm nhân viên thành công");
-                JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
-                loadDataToTable();
-                xoaRong();
+            if (nhanVienDao.layNVTheoMa(nv.getMaNhanVien()) == null) {
+                String rs = kiemTraDuLieu(nv);
+                if (rs == null) {
+                    if (nhanVienDao.themNhanVien(nv)) {
+                        JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công.");
+                        loadDataToTable();
+                        xoaRong();
+                    } else {
+                        System.out.println("Lỗi");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this, rs);
+                }
+
             } else {
-                System.out.println("Lỗi");
+                JOptionPane.showMessageDialog(this, "Mã nhân viên đã tồn tại!");
             }
 
         } catch (Exception ex) {
@@ -627,7 +686,7 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
 //      Lấy JTabbedPane chính
-        JTabbedPane tabbedPane = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this); // this là QuanLyNhanVienPanel
+        JTabbedPane tabbedPane = (JTabbedPane) SwingUtilities.getAncestorOfClass(JTabbedPane.class, this);
 //      Xác định index của tab hiện tại
         int index = tabbedPane.indexOfComponent(this);
 //      Xóa tab hiện tại

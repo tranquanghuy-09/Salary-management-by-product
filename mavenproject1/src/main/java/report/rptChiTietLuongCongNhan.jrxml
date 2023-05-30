@@ -3,28 +3,10 @@
 	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="maNV" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ngayCongChuan" class="java.lang.Double">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ngayLamViecThucTe" class="java.lang.Double">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="nghiPhepHuongLuong" class="java.lang.String">
+	<parameter name="maCongNhan" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="luongCoBan" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="luongNgoaiGio" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ngayNghiPhep" class="java.lang.Double">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="ngayNgoaiGio" class="java.lang.Double">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="thangLuong" class="java.lang.Integer">
@@ -36,24 +18,35 @@
 	<parameter name="tongLuong" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="phuCap" class="java.lang.String">
+	<parameter name="troCap" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tenCongNhan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="soLuongDaLam" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="giaPhanDoan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="heSo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ngayLapPhieuLuong" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tenNguoiDung" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hoTenNguoiDung" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT BANGLUONGNHANVIEN.ThangLuong, BANGLUONGNHANVIEN.NamLuong, NHANVIEN.MaNhanVien, NHANVIEN.TenNhanVien, PHONGBAN.TenPhongBan, NHANVIEN.ChucVu, NHANVIEN.PhuCap, BANGLUONGNHANVIEN.TongLuong, BANGLUONGNHANVIEN.NgayLapPhieuLuong
-FROM   PHONGBAN INNER JOIN
-         NHANVIEN ON PHONGBAN.MaPhongBan = NHANVIEN.MaPhongBan INNER JOIN
-         BANGLUONGNHANVIEN ON NHANVIEN.MaNhanVien = BANGLUONGNHANVIEN.MaNhanVien
-where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuong = $P{namLuong}]]>
+		<![CDATA[SELECT       NgayLapPhieuLuong
+FROM            BANGLUONGCONGNHAN
+where MaCongNhan = $P{maCongNhan}]]>
 	</queryString>
-	<field name="ThangLuong" class="java.lang.Integer"/>
-	<field name="NamLuong" class="java.lang.Integer"/>
-	<field name="MaNhanVien" class="java.lang.String"/>
-	<field name="TenNhanVien" class="java.lang.String"/>
-	<field name="TenPhongBan" class="java.lang.String"/>
-	<field name="ChucVu" class="java.lang.String"/>
-	<field name="PhuCap" class="java.lang.Double"/>
-	<field name="TongLuong" class="java.lang.Double"/>
 	<field name="NgayLapPhieuLuong" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -68,7 +61,7 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 				<text><![CDATA[PHIẾU LƯƠNG]]></text>
 			</staticText>
 			<image>
-				<reportElement x="31" y="0" width="76" height="62" uuid="4568d992-0b71-4176-8326-6a3c9ac00277"/>
+				<reportElement x="52" y="0" width="76" height="62" uuid="4568d992-0b71-4176-8326-6a3c9ac00277"/>
 				<imageExpression><![CDATA["C:\\PTUD\\QLLuongSP_PTUD\\mavenproject1\\src\\main\\resources\\Interface\\Images\\logo3.jpg"]]></imageExpression>
 			</image>
 			<staticText>
@@ -100,14 +93,14 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 				<text><![CDATA[Năm:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="252" y="78" width="37" height="20" uuid="19019ec7-c94f-4d22-9c98-320fd7e01b3e"/>
+				<reportElement x="252" y="78" width="41" height="20" uuid="a955b114-cead-4fb1-bc84-344d96acf4e9"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{thangLuong}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="315" y="78" width="100" height="20" uuid="3d54e97b-aa4e-484b-851d-6ebd87436fb3"/>
+				<reportElement x="315" y="78" width="100" height="20" uuid="1a481dd5-f9ec-4259-823f-65f2f53b910a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
@@ -116,224 +109,150 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 		</band>
 	</title>
 	<pageHeader>
-		<band height="78" splitType="Stretch">
+		<band height="44" splitType="Stretch">
 			<staticText>
-				<reportElement x="69" y="0" width="84" height="20" uuid="4ab1019f-aaad-45c0-9dad-b98d57e53ed2"/>
+				<reportElement x="82" y="7" width="84" height="20" uuid="4ab1019f-aaad-45c0-9dad-b98d57e53ed2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<text><![CDATA[Mã Nhân viên:]]></text>
+				<text><![CDATA[Mã Công nhân:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="294" y="0" width="83" height="20" uuid="304b6b2f-635e-4df5-83b2-1c54801160e2"/>
+				<reportElement x="289" y="7" width="83" height="20" uuid="304b6b2f-635e-4df5-83b2-1c54801160e2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Tên Nhân viên:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="69" y="21" width="84" height="20" uuid="b1909e97-c955-4d2c-9321-482a18d2c10d"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Phòng ban:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="294" y="21" width="83" height="20" uuid="52c1acf0-d5f7-4d75-b5b0-7bf5ddfb4b34"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Chức vụ:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="69" y="42" width="84" height="20" uuid="a523bd40-f86f-403b-a27e-67424ac9f54d"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Ngày công chuẩn:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="294" y="42" width="104" height="20" uuid="9fdae76a-1679-4796-a8b5-02ad761fe8e2"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<text><![CDATA[Ngày làm việc thực tế:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="156" y="0" width="100" height="20" uuid="11461b75-651c-4442-9e6d-9c8ddeb03281"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{MaNhanVien}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="156" y="21" width="100" height="20" uuid="6fc91b11-9b79-42bf-93c0-1a975efd6888"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TenPhongBan}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="376" y="0" width="100" height="20" uuid="94946009-d491-48f8-b153-61d2b6a13a1e"/>
+				<reportElement x="371" y="7" width="121" height="20" uuid="8e177f9f-984e-45d8-a978-459fcfa99034"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{TenNhanVien}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tenCongNhan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="376" y="21" width="100" height="20" uuid="0fdd41e2-c6cd-4e5a-bd2b-663bfeabb607"/>
+				<reportElement x="166" y="7" width="100" height="20" uuid="f931ad59-3c1a-4719-957e-f42d23428088"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
+					<font fontName="Tahoma" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ChucVu}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="156" y="42" width="100" height="20" uuid="701d71f5-e446-4e9f-a354-4a4f11dc32c7"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{ngayCongChuan}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="401" y="42" width="42" height="20" uuid="3562af28-322c-444b-9a12-c4d89eb3bd58"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{ngayLamViecThucTe}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{maCongNhan}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="280" splitType="Stretch">
-			<image>
-				<reportElement x="348" y="210" width="122" height="54" uuid="d6ab0dc3-f1b3-435d-b1d7-fa61e42e5139"/>
-				<imageExpression><![CDATA["C:\\PTUD\\QLLuongSP_PTUD\\mavenproject1\\src\\main\\resources\\Interface\\Images\\ChuKy-Huy.jpg"]]></imageExpression>
-			</image>
 			<staticText>
-				<reportElement x="348" y="180" width="77" height="20" uuid="b3d15bed-a98a-4461-ad7b-bef6b39c04a6"/>
+				<reportElement x="325" y="180" width="77" height="20" uuid="b3d15bed-a98a-4461-ad7b-bef6b39c04a6"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Ngày lập phiếu]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="31" y="0" width="524" height="20" uuid="ad837ff6-14a9-43c6-a48b-518f439ba1fb"/>
+				<reportElement x="52" y="0" width="503" height="20" uuid="ad837ff6-14a9-43c6-a48b-518f439ba1fb"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Các khoảng thu nhập:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="69" y="27" width="112" height="18" uuid="41338ddc-266b-42e0-bb74-5b3cc01925e1"/>
+				<reportElement x="82" y="27" width="145" height="18" uuid="41338ddc-266b-42e0-bb74-5b3cc01925e1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<text><![CDATA[Lương cơ bản:]]></text>
+				<text><![CDATA[Số lượng sản phẩm đã làm:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="69" y="53" width="112" height="20" uuid="36edbbbd-19da-4381-ae1c-c7d069160ec2"/>
+				<reportElement x="82" y="53" width="145" height="20" uuid="36edbbbd-19da-4381-ae1c-c7d069160ec2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<text><![CDATA[Nghỉ phép hưởng lương:]]></text>
+				<text><![CDATA[Giá phân đoạn:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="69" y="81" width="112" height="20" uuid="3c136a3a-a75d-4338-aea9-b9bce2e6aa85"/>
+				<reportElement x="82" y="81" width="145" height="20" uuid="3c136a3a-a75d-4338-aea9-b9bce2e6aa85"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<text><![CDATA[Ngoài giờ:]]></text>
+				<text><![CDATA[Hệ số:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="69" y="109" width="112" height="20" uuid="7d7ce6d0-cead-4d3b-80ab-aba6c93196fb"/>
+				<reportElement x="82" y="109" width="145" height="20" uuid="7d7ce6d0-cead-4d3b-80ab-aba6c93196fb"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma"/>
 				</textElement>
-				<text><![CDATA[Phụ cấp:]]></text>
+				<text><![CDATA[Trợ cấp:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="31" y="147" width="524" height="20" uuid="898fc967-50dc-4f0e-bed5-33e317de808a"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tổng lương thực nhận:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="354" y="200" width="116" height="20" uuid="954e5c7e-50b4-491a-8dce-4804f500af60"/>
+				<reportElement x="331" y="200" width="116" height="20" uuid="954e5c7e-50b4-491a-8dce-4804f500af60"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Người lập phiếu lương]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="361" y="254" width="100" height="20" uuid="971fa682-3581-4d02-8d03-70ffc0688d53"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="Tahoma" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Trần Quang Huy]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="416" y="180" width="92" height="20" uuid="68d22858-0bad-4b50-8d5f-93b53d875d43"/>
+				<reportElement x="326" y="27" width="121" height="18" uuid="4cfa473e-1c66-4696-93a5-59e9e5e30f3b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{soLuongDaLam}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="53" width="121" height="20" uuid="6422d178-a33d-45dd-a125-39df660a50b0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{giaPhanDoan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="81" width="121" height="20" uuid="6e636b85-92b8-4dc7-800f-deef04c96b0c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{heSo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="109" width="121" height="20" uuid="7cced28a-e6c9-4868-b4a6-287265d3ffe1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{troCap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="147" width="121" height="20" uuid="a01ce69c-f79e-4d56-b568-7ab03e836182"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tongLuong}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="180" width="100" height="20" uuid="c85c5760-d664-4ece-bf39-9d270bb1a936"/>
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NgayLapPhieuLuong}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="344" y="27" width="122" height="18" uuid="e7f34109-f622-45ee-ba74-ff505f72de73"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
+				<reportElement x="341" y="217" width="100" height="26" uuid="22685b68-4884-4f53-90a3-929d086ecf1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{luongCoBan}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tenNguoiDung}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="284" y="27" width="49" height="18" uuid="a3c96de7-cc58-4b52-a716-6371bfc63eea"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
+				<reportElement x="323" y="241" width="138" height="20" uuid="853d05f0-738c-4cf9-9fae-0c4a39a25856"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{ngayLamViecThucTe}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="345" y="53" width="121" height="20" uuid="ed48d474-63e9-40fc-bba2-208c8f50ec81"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{nghiPhepHuongLuong}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="284" y="53" width="49" height="20" uuid="8e037d39-ab26-4ba2-8fa7-68c25d108fbc"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{ngayNghiPhep}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="345" y="81" width="121" height="20" uuid="4d24b150-ff4c-4540-b477-bd141898b9fa"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{luongNgoaiGio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="284" y="81" width="49" height="20" uuid="52ca16be-6e4f-492a-9b4b-a71da297536a"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Tahoma" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{ngayNgoaiGio}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="345" y="147" width="121" height="20" uuid="da29878a-cfaf-4e63-8681-9f47be6cd0a0"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
-					<font fontName="Tahoma" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{tongLuong}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="345" y="109" width="121" height="20" uuid="83682711-1dba-4a5e-9356-0a0f6166004b"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{phuCap}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{hoTenNguoiDung}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

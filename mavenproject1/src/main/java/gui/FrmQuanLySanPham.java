@@ -48,6 +48,24 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         }
     }
 
+    private void setTrangThai() {
+        int soLuongCanLam = 0;
+        int soLuongDaLam = 0;
+        try {
+            soLuongCanLam = Integer.parseInt(txtSoLuongCanLam.getText());
+            soLuongDaLam = Integer.parseInt(txtSoLuongDaLam.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng là số nguyên");
+            return;
+        }
+
+        if (soLuongCanLam == soLuongDaLam) {
+            txtTrangThai.setText("Hoàn thành");
+        } else {
+            txtTrangThai.setText("Chưa hoàn thành");
+        }
+    }
+
     private void loadTableData() throws Exception {
         SanPhamDao sanPhamDAO = new SanPhamDao();
         List<SanPham> sanPhams = sanPhamDAO.getAllSanPham();
@@ -253,7 +271,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        btnThem.setBackground(new java.awt.Color(204, 255, 204));
+        btnThem.setBackground(new java.awt.Color(102, 255, 102));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/them.png"))); // NOI18N
         btnThem.setText("Thêm");
@@ -267,7 +285,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             }
         });
 
-        btnCapNhat.setBackground(new java.awt.Color(204, 255, 204));
+        btnCapNhat.setBackground(new java.awt.Color(51, 204, 255));
         btnCapNhat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-CapNhat.png"))); // NOI18N
         btnCapNhat.setText("Cập nhật");
@@ -281,7 +299,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             }
         });
 
-        btnXoa.setBackground(new java.awt.Color(204, 255, 204));
+        btnXoa.setBackground(new java.awt.Color(255, 102, 102));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xoachamcong.png"))); // NOI18N
         btnXoa.setText("Xóa");
@@ -293,7 +311,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(204, 255, 204));
+        btnLamMoi.setBackground(new java.awt.Color(153, 255, 153));
         btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-LamMoi.png"))); // NOI18N
         btnLamMoi.setText("Làm mới");
@@ -305,7 +323,6 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             }
         });
 
-        btnXuatExcel.setBackground(new java.awt.Color(204, 255, 204));
         btnXuatExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXuatExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
         btnXuatExcel.setText("Xuất Excel");
@@ -317,7 +334,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(204, 255, 204));
+        btnThoat.setBackground(new java.awt.Color(153, 153, 153));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -440,8 +457,8 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         Date ngayHoanThanh = chooserNgayHoanThanh.getDate();
         checkNgayHoanThanh();
         String trangThai = txtTrangThai.getText();
-        if (maSanPham.isEmpty() || tenSanPham.isEmpty() || loaiSanPham.isEmpty() || mauSac.isEmpty() || chatLieu.isEmpty() || trangThai.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sản phẩm");
+        if (maSanPham.isEmpty() || tenSanPham.isEmpty() || loaiSanPham.isEmpty() || mauSac.isEmpty() || chatLieu.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
             return;
         }
         int soLuongCanLam = 0;
@@ -453,6 +470,9 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng là số nguyên");
             return;
         }
+
+        setTrangThai();
+
         SanPham sanPham = new SanPham(maSanPham, tenSanPham, loaiSanPham, mauSac, chatLieu, soLuongCanLam,
                 soLuongDaLam, ngayHoanThanh, trangThai);
         try {
@@ -551,10 +571,10 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             Date ngayHoanThanh = chooserNgayHoanThanh.getDate();
             checkNgayHoanThanh();
             String trangThai = txtTrangThai.getText();
-            
+
             SanPham sanPham = new SanPham(maSanPham, tenSanPham, loaiSanPham, mauSac, chatLieu, soLuongCanLam, soLuongDaLam, ngayHoanThanh, trangThai);
             boolean result = sanPhamDao.suaSanPham(sanPham);
-            
+
             if (result) {
                 JOptionPane.showMessageDialog(this, "Cập nhật thành công");
                 loadTableData();
@@ -568,7 +588,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
         // TODO add your handling code here:
-         XuatFileExcel.xuatFileExcel(tblDanhSachSanPham);
+        XuatFileExcel.xuatFileExcel(tblDanhSachSanPham);
     }//GEN-LAST:event_btnXuatExcelActionPerformed
 
     private void txtMaSanPhamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMaSanPhamFocusLost

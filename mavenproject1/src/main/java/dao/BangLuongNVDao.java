@@ -94,6 +94,9 @@ public class BangLuongNVDao {
             System.out.println(rs);
             if (rs.next()) {
                 String maxIdString = rs.getString(1);
+                if(maxIdString == null){
+                    maxIdString = "BLNV-000000";
+                }
                 int maxId = Integer.parseInt(maxIdString.substring(5));
                 String maBangLuong = String.format("BLNV-%06d", maxId + 1);
 

@@ -48,6 +48,24 @@ public class NhanVien {
         this.phongBan = phongBan;
     }
 
+    public NhanVien(String tenNhanVien, Date ngaySinh, boolean gioiTinh, String diaChi, String soDienThoai, String email, String cmnd, Date ngayBatDau, String chucVu, Double heSoLuong, Double luongCoBan, Double phuCap, PhongBan phongBan) {
+        this.tenNhanVien = tenNhanVien;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.diaChi = diaChi;
+        this.soDienThoai = soDienThoai;
+        this.email = email;
+        this.cmnd = cmnd;
+        this.ngayBatDau = ngayBatDau;
+        this.chucVu = chucVu;
+        this.heSoLuong = heSoLuong;
+        this.luongCoBan = luongCoBan;
+        this.phuCap = phuCap;
+        this.phongBan = phongBan;
+    }
+    
+    
+
     public String getMaNhanVien() {
         return maNhanVien;
     }

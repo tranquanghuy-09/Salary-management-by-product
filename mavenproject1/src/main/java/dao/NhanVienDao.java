@@ -6,6 +6,7 @@ package dao;
 
 import connectDB.ConnectDB;
 import entity.NhanVien;
+import entity.PhieuChamCongNV;
 import entity.PhongBan;
 import java.sql.Connection;
 import java.sql.Date;
@@ -106,6 +107,57 @@ public class NhanVienDao {
         }
         return false;
     }
+    
+//    //Thêm một nhân viên mới
+//    public boolean themNhanVien(NhanVien nv) throws Exception {
+//        String query = "select Max([MaNhanVien]) from [dbo].[NHANVIEN]";
+//        Connection con = ConnectDB.getInstance().getConnection();
+//        PreparedStatement stmt1 = con.prepareStatement(query);
+//        boolean hasResultSet = stmt1.execute();
+//        if (hasResultSet) {
+//            ResultSet rs = stmt1.getResultSet();
+//            System.out.println(rs);
+//            if (rs.next()) {
+//                String maxIdString = rs.getString(1);
+//                if(maxIdString == null) {
+//                    maxIdString = "NV_0000";
+//                }
+//                int maxId = Integer.parseInt(maxIdString.substring(5));
+//                String maNhanVien = String.format("NV_%04d", maxId + 1);
+//
+//                String sql = "INSERT INTO [dbo].[NHANVIEN]\n"
+//                        + "           ([MaNhanVien],[MaPhongBan],[TenNhanVien],[NgaySinh],[GioiTinh],[DiaChi],[SoDienThoai],[Email],[CMND],[NgayBatDau],[ChucVu],[HeSoLuong],[LuongCoBan],[PhuCap])\n"
+//                        + "     VALUES\n"
+//                        + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?)\n";
+//                try {
+//                    PreparedStatement stmt = con.prepareStatement(sql);
+//                    stmt.setString(1, maNhanVien);
+//                    stmt.setString(2, nv.getPhongBan().getMaPhongBan());
+//                    stmt.setString(3, nv.getTenNhanVien());
+//                    stmt.setDate(4, nv.getNgaySinh());
+//                    stmt.setInt(5, nv.isGioiTinh() ? 1 : 0);
+//                    stmt.setString(6, nv.getDiaChi());
+//                    stmt.setString(7, nv.getSoDienThoai());
+//                    stmt.setString(8, nv.getEmail());
+//                    stmt.setString(9, nv.getCmnd());
+//                    stmt.setDate(10, (Date) nv.getNgayBatDau());
+//                    stmt.setString(11, nv.getChucVu());
+//                    stmt.setDouble(12, nv.getHeSoLuong());
+//                    stmt.setDouble(13, nv.getLuongCoBan());
+//                    stmt.setDouble(14, nv.getPhuCap());
+//
+//                    stmt.executeUpdate();
+//                    con.commit();
+//                    return true;
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    con.rollback();
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     //Lấy Nhân viên theo mã nhân viên
     public NhanVien layNVTheoMa(String maNhanVien) throws Exception {

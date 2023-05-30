@@ -328,7 +328,7 @@ public class FrmChamCongCongNhan extends javax.swing.JPanel {
                 .addGap(27, 27, 27))
         );
 
-        btnChamCong.setBackground(new java.awt.Color(204, 255, 204));
+        btnChamCong.setBackground(new java.awt.Color(102, 255, 102));
         btnChamCong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/them.png"))); // NOI18N
         btnChamCong.setText("Chấm công");
@@ -342,7 +342,7 @@ public class FrmChamCongCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnXoaChamCong.setBackground(new java.awt.Color(204, 255, 204));
+        btnXoaChamCong.setBackground(new java.awt.Color(255, 102, 102));
         btnXoaChamCong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXoaChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xoachamcong.png"))); // NOI18N
         btnXoaChamCong.setText("Xóa");
@@ -354,7 +354,7 @@ public class FrmChamCongCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(204, 255, 204));
+        btnLamMoi.setBackground(new java.awt.Color(102, 204, 255));
         btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-LamMoi.png"))); // NOI18N
         btnLamMoi.setText("Làm mới");
@@ -366,7 +366,6 @@ public class FrmChamCongCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnXuatExcel.setBackground(new java.awt.Color(204, 255, 204));
         btnXuatExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXuatExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
         btnXuatExcel.setText("Xuất Excel");
@@ -378,7 +377,7 @@ public class FrmChamCongCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(204, 255, 204));
+        btnThoat.setBackground(new java.awt.Color(204, 204, 204));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -467,7 +466,7 @@ public class FrmChamCongCongNhan extends javax.swing.JPanel {
                     .addComponent(pnlNutChucNang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

@@ -4,6 +4,7 @@
  */
 package gui;
 
+import connectDB.ConnectDB;
 import dao.BangLuongCNDao;
 
 import dao.ChamCongCNDao;
@@ -15,15 +16,41 @@ import entity.BangLuongCN;
 import entity.ChamCongCN;
 
 import entity.CongNhan;
-import entity.CongNhanDaChamCong;
-import entity.PhanCong;
+import helper.TenNguoiDung;
+import helper.XuatFileExcel;
+import java.sql.Connection;
+import java.text.DecimalFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Hashtable;
+import java.util.Map;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import java.awt.Desktop;
+import java.awt.event.ItemEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import javax.swing.SwingUtilities;
+import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -92,9 +119,10 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
         tblDSTinhLuong = new javax.swing.JTable();
         pnlNutChucNang = new javax.swing.JPanel();
         btnTinhLuong = new javax.swing.JButton();
-        btnXoaRong = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
+        btnXuatExcel = new javax.swing.JButton();
         btnInBangLuong = new javax.swing.JButton();
+        btnBoChon = new javax.swing.JButton();
         lblTieuDe = new javax.swing.JLabel();
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách công nhân đã chấm công", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
@@ -405,18 +433,6 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnXoaRong.setBackground(new java.awt.Color(0, 206, 245));
-        btnXoaRong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnXoaRong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-bochon.png"))); // NOI18N
-        btnXoaRong.setText("Xóa rỗng");
-        btnXoaRong.setMargin(new java.awt.Insets(2, 0, 3, 0));
-        btnXoaRong.setPreferredSize(new java.awt.Dimension(125, 22));
-        btnXoaRong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaRongActionPerformed(evt);
-            }
-        });
-
         btnThoat.setBackground(new java.awt.Color(252, 33, 30));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
@@ -426,6 +442,18 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThoatActionPerformed(evt);
+            }
+        });
+
+        btnXuatExcel.setBackground(new java.awt.Color(231, 242, 242));
+        btnXuatExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnXuatExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
+        btnXuatExcel.setText("Xuất Excel");
+        btnXuatExcel.setMargin(new java.awt.Insets(2, 0, 3, 0));
+        btnXuatExcel.setPreferredSize(new java.awt.Dimension(125, 22));
+        btnXuatExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXuatExcelActionPerformed(evt);
             }
         });
 
@@ -440,19 +468,33 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
             }
         });
 
+        btnBoChon.setBackground(new java.awt.Color(0, 206, 245));
+        btnBoChon.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBoChon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-bochon.png"))); // NOI18N
+        btnBoChon.setText("Bỏ chọn");
+        btnBoChon.setMargin(new java.awt.Insets(2, 2, 3, 2));
+        btnBoChon.setPreferredSize(new java.awt.Dimension(125, 22));
+        btnBoChon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBoChonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlNutChucNangLayout = new javax.swing.GroupLayout(pnlNutChucNang);
         pnlNutChucNang.setLayout(pnlNutChucNangLayout);
         pnlNutChucNangLayout.setHorizontalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNutChucNangLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(btnXoaRong, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnBoChon, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlNutChucNangLayout.setVerticalGroup(
@@ -461,9 +503,10 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addGroup(pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoaRong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBoChon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -571,6 +614,22 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
+    
+    private void xoaRong() {
+        txtMaCN.setText("");
+        txtTenCN.setText("");
+        txtThangLuong.setText("");
+        txtNamLuong.setText("");
+        txtTroCap.setText("");
+        txtSLDaLam.setText("");
+        txtHeSoCa.setText("");
+        txtCaLam.setText("");
+        txtGiaPhanDoan.setText("");
+        txtMaPhieuLuong.setText("");
+        tblDSTinhLuong.clearSelection();
+        tblDSCongNhanDaChamCong.clearSelection();
+    }
+    
     private void tblDSCongNhanDaChamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSCongNhanDaChamCongMouseClicked
         // TODO add your handling code here:
         try {
@@ -637,6 +696,7 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
             double giaPhanDoan = Double.parseDouble(txtGiaPhanDoan.getText());
             double heSo = Double.parseDouble(txtHeSoCa.getText());
             double troCap = Double.parseDouble(txtTroCap.getText());
+            
 
             double tongLuong = soLuongDaLam * giaPhanDoan * heSo + troCap;
             CongNhan cn = cn_dao.getCNByID(txtMaCN.getText());
@@ -652,12 +712,6 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
         loadDataToTableTinhLuong();
         model.removeRow(row);
     }//GEN-LAST:event_btnTinhLuongActionPerformed
-
-    private void btnXoaRongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaRongActionPerformed
-        // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_btnXoaRongActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
@@ -692,67 +746,78 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
 
     private void cmbGioiTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGioiTinhActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_cmbGioiTinhActionPerformed
+
+    private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
+        XuatFileExcel.xuatFileExcel(tblDSTinhLuong);
+    }//GEN-LAST:event_btnXuatExcelActionPerformed
 
     private void btnInBangLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBangLuongActionPerformed
         try {
             int row = tblDSTinhLuong.getSelectedRow();
             String maBangLuong = model1.getValueAt(row, 0).toString();
             String maCN = model1.getValueAt(row, 1).toString();
-            CongNhan cn = cn_dao.timCNTheoMa(maCN);
-//            double luongCoBan = cn.getLuongCoBan();
-            double phuCap = cn.getTroCap();
+            CongNhan cn = cn_dao.getCNByID(maCN);
+            BangLuongCN bangLuongCN = bangLuongCN_dao.getBangLuongByID(maBangLuong);
 
             int thangLuong = Integer.parseInt(model1.getValueAt(row, 3).toString());
-
             int namLuong = Integer.parseInt(model1.getValueAt(row, 2).toString());
+            
+            int soLuongDaLam = bangLuongCN.getChamCongCN().getSoLuongSanPham();
+            Double giaPhanDoan = bangLuongCN.getChamCongCN().getPhanCong().getCongDoan().getGiaPhanDoan();
+            Double heSo = (double)bangLuongCN.getChamCongCN().getHeSoLuongCa();
+            Double troCap = bangLuongCN.getChamCongCN().getPhanCong().getCongNhan().getTroCap();
+            
+            
+            double tongLuong = soLuongDaLam * giaPhanDoan * heSo + troCap;
+            
+            TenNguoiDung nguoiDung = new TenNguoiDung();
+            String hoTenNguoiDung = nguoiDung.getTenNguoiDung();
+            String tenNguoiDung = hoTenNguoiDung.substring(hoTenNguoiDung.lastIndexOf(" ") + 1);
 
-//            double tongLuong = soLuongDaLam * giaPhanDoan * heSo + troCap;
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+            DecimalFormat decimalFormat2 = new DecimalFormat("#.0");
+            Hashtable map = new Hashtable();
+            JasperReport report = JasperCompileManager.compileReport("src/main/java/report/rptChiTietLuongCongNhan.jrxml");
             
+            map.put("thangLuong", thangLuong);
+            map.put("namLuong", namLuong);
+            map.put("maCongNhan", maCN);
+            map.put("tenCongNhan", cn.getTenCongNhan());
+            map.put("soLuongDaLam", soLuongDaLam);
+            map.put("giaPhanDoan", decimalFormat.format(giaPhanDoan));
+            map.put("heSo", decimalFormat2.format(heSo));
+            map.put("troCap", decimalFormat.format(troCap));
+            map.put("tongLuong", decimalFormat.format(tongLuong));
+            map.put("ngayLapPhieuLuong", bangLuongCN.getNgaylap().toString());
+            map.put("tenNguoiDung", tenNguoiDung);
+            map.put("hoTenNguoiDung", hoTenNguoiDung);
+            
+            Connection con = ConnectDB.getInstance().getConnection();
 
-            int soLuongDaLam = 0;
-            Double giaPhanDoan = 0.0;
-            Double heSo = 0.0;
-            Double troCap = 0.0;
-            
-            
-//            double tongLuong = luongCBTinh + luongNghiPhep + luongNgoaiGio + phuCap;
-//            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-//            Hashtable map = new Hashtable();
-//            JasperReport report = JasperCompileManager.compileReport("src/main/java/report/rptChiTietLuong.jrxml");
-//            map.put("maNV", maNV);
-//            map.put("ngayCongChuan", ngayCongChuan);
-//            map.put("ngayLamViecThucTe", ngayLamViecThucTe);
-//            map.put("ngayNghiPhep", ngayNghiPhep);
-//            map.put("ngayNgoaiGio", ngayNgoaiGio);
-//            map.put("luongCoBan", decimalFormat.format(luongCBTinh));
-//            map.put("nghiPhepHuongLuong", decimalFormat.format(luongNghiPhep));
-//            map.put("luongNgoaiGio", decimalFormat.format(luongNgoaiGio));
-//            map.put("namLuong", namLuong);
-//            map.put("thangLuong", thangLuong);
-//            map.put("tongLuong", decimalFormat.format(tongLuong));
-//            map.put("phuCap", decimalFormat.format(phuCap));
-//
-//            Connection con = ConnectDB.getInstance().getConnection();
-//
-//            JasperPrint p = JasperFillManager.fillReport(report, map, con);
-//            JasperViewer.viewReport(p, false);
-//            JasperExportManager.exportReportToPdfFile(p, "test.pdf");
-//        } catch (JRException ex) {
-//            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+            JasperViewer.viewReport(p, false);
+            JasperExportManager.exportReportToPdfFile(p, "test1.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_btnInBangLuongActionPerformed
+
+    private void btnBoChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoChonActionPerformed
+        xoaRong();
+    }//GEN-LAST:event_btnBoChonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JPanel ThongTinPC;
+    private javax.swing.JButton btnBoChon;
     private javax.swing.JButton btnInBangLuong;
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnTinhLuong;
-    private javax.swing.JButton btnXoaRong;
+    private javax.swing.JButton btnXuatExcel;
     private javax.swing.JComboBox<String> cmbGioiTinh;
     private com.toedter.calendar.JDateChooser jDateNgayLap;
     private com.toedter.calendar.JDateChooser jDateNgaySinh;

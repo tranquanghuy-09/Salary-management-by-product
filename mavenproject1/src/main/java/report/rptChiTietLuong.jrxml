@@ -39,6 +39,12 @@
 	<parameter name="phuCap" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tenNguoiDung" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="hoTenNguoiDung" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT BANGLUONGNHANVIEN.ThangLuong, BANGLUONGNHANVIEN.NamLuong, NHANVIEN.MaNhanVien, NHANVIEN.TenNhanVien, PHONGBAN.TenPhongBan, NHANVIEN.ChucVu, NHANVIEN.PhuCap, BANGLUONGNHANVIEN.TongLuong, BANGLUONGNHANVIEN.NgayLapPhieuLuong
 FROM   PHONGBAN INNER JOIN
@@ -205,10 +211,6 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 	</pageHeader>
 	<columnHeader>
 		<band height="280" splitType="Stretch">
-			<image>
-				<reportElement x="348" y="210" width="122" height="54" uuid="d6ab0dc3-f1b3-435d-b1d7-fa61e42e5139"/>
-				<imageExpression><![CDATA["C:\\PTUD\\QLLuongSP_PTUD\\mavenproject1\\src\\main\\resources\\Interface\\Images\\ChuKy-Huy.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="348" y="180" width="77" height="20" uuid="b3d15bed-a98a-4461-ad7b-bef6b39c04a6"/>
 				<textElement>
@@ -264,13 +266,6 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 					<font fontName="Tahoma"/>
 				</textElement>
 				<text><![CDATA[Người lập phiếu lương]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="361" y="254" width="100" height="20" uuid="971fa682-3581-4d02-8d03-70ffc0688d53"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="Tahoma" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Trần Quang Huy]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="416" y="180" width="92" height="20" uuid="68d22858-0bad-4b50-8d5f-93b53d875d43"/>
@@ -334,6 +329,20 @@ where NHANVIEN.MaNhanVien = $P{maNV} and ThangLuong = $P{thangLuong} and NamLuon
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{phuCap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="213" width="100" height="34" uuid="3b853f1c-e335-4509-9d0a-538752751308"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tenNguoiDung}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="242" width="141" height="20" uuid="aa43f1d3-2a8d-46b7-9eac-d47a4eed91f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hoTenNguoiDung}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

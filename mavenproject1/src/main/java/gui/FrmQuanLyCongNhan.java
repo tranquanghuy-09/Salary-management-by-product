@@ -255,7 +255,7 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnThem.setBackground(new java.awt.Color(204, 255, 204));
+        btnThem.setBackground(new java.awt.Color(0, 204, 51));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/them.png"))); // NOI18N
         btnThem.setText("Thêm");
@@ -269,7 +269,7 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnCapNhat.setBackground(new java.awt.Color(204, 255, 204));
+        btnCapNhat.setBackground(new java.awt.Color(51, 153, 255));
         btnCapNhat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-CapNhat.png"))); // NOI18N
         btnCapNhat.setText("Cập nhật");
@@ -283,7 +283,7 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnThoiViec.setBackground(new java.awt.Color(204, 255, 204));
+        btnThoiViec.setBackground(new java.awt.Color(255, 102, 102));
         btnThoiViec.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThoiViec.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-ThoiViec.png"))); // NOI18N
         btnThoiViec.setText("Thôi việc");
@@ -295,7 +295,7 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(204, 255, 204));
+        btnLamMoi.setBackground(new java.awt.Color(102, 255, 102));
         btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-LamMoi.png"))); // NOI18N
         btnLamMoi.setText("Làm mới");
@@ -307,7 +307,6 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnXuatExcel.setBackground(new java.awt.Color(204, 255, 204));
         btnXuatExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnXuatExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
         btnXuatExcel.setText("Xuất Excel");
@@ -319,7 +318,7 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(204, 255, 204));
+        btnThoat.setBackground(new java.awt.Color(255, 255, 0));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thoat.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -475,6 +474,20 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyCongNhan.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        // cleanValue();
+        // txtHoTen.setText("");
+        //btnTroLai.setEnabled(false);					Double.parseDouble(cboHeSL.getSelectedItem().toString())); 
+        // cleanValue();
+        // txtHoTen.setText("");
+        //btnTroLai.setEnabled(false);					Double.parseDouble(cboHeSL.getSelectedItem().toString())); 
+
+        // cleanValue();
+        // txtHoTen.setText("");
+        //btnTroLai.setEnabled(false);					Double.parseDouble(cboHeSL.getSelectedItem().toString())); 
+        // cleanValue();
+        // txtHoTen.setText("");
+        //btnTroLai.setEnabled(false);					Double.parseDouble(cboHeSL.getSelectedItem().toString())); 
 
         // cleanValue();
         // txtHoTen.setText("");

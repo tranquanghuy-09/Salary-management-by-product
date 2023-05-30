@@ -12,6 +12,7 @@ import entity.BangLuongNhanVien;
 import entity.NhanVien;
 import helper.DoubleTriple;
 import helper.RightRenderer;
+import helper.TenNguoiDung;
 import helper.XuatFileExcel;
 import java.awt.Desktop;
 import java.awt.event.ItemEvent;
@@ -195,7 +196,7 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             NhanVien nv = nhanVienDao.layNVTheoMa(maNhanVien);
             int soNgayCongChuan = 31 - demNgayChuNhatThangNam(nam, thang);
             double luongCoBan = nv.getLuongCoBan();
-            double phuCap = nv.getLuongCoBan();
+            double phuCap = nv.getPhuCap();
 //            Map<Double, Double> laySoNgayLamTheoMaNV = bangLuongNVDao.laySoNgayLamTheoMaNV("NV_0001");
             for (Map.Entry<Double, Double> entry : map.entrySet()) {
                 double heSoLuong = entry.getKey();
@@ -830,7 +831,11 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
                 luongNgoaiGio = tinhLuongTheoHeSo(dt2.getFirst(), dt2.getSecond(), ngayCongChuan, luongCoBan);
                 ngayNgoaiGio = dt2.getSecond();
             }
-
+            
+            TenNguoiDung nguoiDung = new TenNguoiDung();
+            String hoTenNguoiDung = nguoiDung.getTenNguoiDung();
+            String tenNguoiDung = hoTenNguoiDung.substring(hoTenNguoiDung.lastIndexOf(" ") + 1);
+            
             double tongLuong = luongCBTinh + luongNghiPhep + luongNgoaiGio + phuCap;
             DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
             Hashtable map = new Hashtable();
@@ -847,6 +852,8 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
             map.put("thangLuong", thangLuong);
             map.put("tongLuong", decimalFormat.format(tongLuong));
             map.put("phuCap", decimalFormat.format(phuCap));
+            map.put("tenNguoiDung", tenNguoiDung);
+            map.put("hoTenNguoiDung", hoTenNguoiDung);
 
             Connection con = ConnectDB.getInstance().getConnection();
 

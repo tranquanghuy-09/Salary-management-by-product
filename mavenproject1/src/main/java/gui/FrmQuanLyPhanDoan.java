@@ -301,8 +301,9 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnXem.setBackground(new java.awt.Color(204, 255, 204));
+        btnXem.setBackground(new java.awt.Color(153, 255, 153));
         btnXem.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnXem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-loc-nho.png"))); // NOI18N
         btnXem.setText("Xem");
         btnXem.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnXem.setMaximumSize(new java.awt.Dimension(115, 37));
@@ -314,8 +315,9 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
             }
         });
 
-        btnThem.setBackground(new java.awt.Color(204, 255, 204));
+        btnThem.setBackground(new java.awt.Color(51, 153, 255));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/them.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnThem.setMaximumSize(new java.awt.Dimension(115, 37));
@@ -327,8 +329,9 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
             }
         });
 
-        btnXoaPhanDoan.setBackground(new java.awt.Color(204, 255, 204));
+        btnXoaPhanDoan.setBackground(new java.awt.Color(255, 102, 102));
         btnXoaPhanDoan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnXoaPhanDoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xoachamcong.png"))); // NOI18N
         btnXoaPhanDoan.setText("Xóa");
         btnXoaPhanDoan.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnXoaPhanDoan.setPreferredSize(new java.awt.Dimension(125, 23));
@@ -338,8 +341,9 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
             }
         });
 
-        btnLamMoi.setBackground(new java.awt.Color(204, 255, 204));
+        btnLamMoi.setBackground(new java.awt.Color(255, 255, 204));
         btnLamMoi.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-LamMoi.png"))); // NOI18N
         btnLamMoi.setText("Làm mới");
         btnLamMoi.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnLamMoi.setPreferredSize(new java.awt.Dimension(125, 22));
@@ -349,8 +353,8 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
             }
         });
 
-        btnXuatExcel.setBackground(new java.awt.Color(204, 255, 204));
         btnXuatExcel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnXuatExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
         btnXuatExcel.setText("Xuất Excel");
         btnXuatExcel.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXuatExcel.setPreferredSize(new java.awt.Dimension(125, 22));
@@ -360,8 +364,9 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
             }
         });
 
-        btnThoat.setBackground(new java.awt.Color(204, 255, 204));
+        btnThoat.setBackground(new java.awt.Color(204, 204, 204));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-DangXuat.png"))); // NOI18N
         btnThoat.setText("Thoát");
         btnThoat.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnThoat.setPreferredSize(new java.awt.Dimension(125, 23));
@@ -458,7 +463,7 @@ public class FrmQuanLyPhanDoan extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)))
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(630, 630, 630)

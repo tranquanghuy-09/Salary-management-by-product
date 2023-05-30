@@ -15,18 +15,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import connectDB.ConnectDB;
+
 /**
  *
  * @author duy19
  */
 public class ChamCongCNDao {
-  
+
     public ChamCongCN getChamCongByID(String id) throws Exception {
         String sql = "select * from CHAMCONGCONGNHAN where MaChamCong =  '" + id + "'";
         Connection con = ConnectDB.getInstance().getConnection();
         try (
-               // Connection con = ConnectDB1.opConnection();
-               
+                // Connection con = ConnectDB1.opConnection();
+
                 PreparedStatement stm = con.prepareStatement(sql);) {
             try (ResultSet rs = stm.executeQuery();) {
                 while (rs.next()) {
@@ -48,13 +49,13 @@ public class ChamCongCNDao {
             return null;
         }
     }
-    
+
     public List<ChamCongCN> getAllChamCong() throws Exception {
         List<ChamCongCN> chamCongList = new ArrayList<>();
         Connection con = ConnectDB.getInstance().getConnection();
         try {
-            String sql = "SELECT cc.MaChamCong, cc.SoLuongSanPham, cc.HeSoLuongCa, cc.CaLam, cc.NgayChamCong, pc.MaPhanCong, pc.SoLuongCanLam, pc.NgayPhanCong, pc.NgayHoanThanh, pc.TrangThai, pc.MaPhanDoan, pc.MaCongNhan FROM CHAMCONGCONGNHAN cc JOIN BANGPHANCONG pc ON cc.MaPhanCong = pc.MaPhanCong";
-           // Connection con = ConnectDB1.opConnection();
+            String sql = "SELECT cc.MaChamCong, cc.SoLuongSanPham, cc.HeSoLuongCa, cc.CaLam, cc.NgayChamCong, pc.MaPhanCong, pc.SoLuongCanLam, pc.NgayPhanCong, pc.NgayHoanThanh, cc.TrangThai, pc.MaPhanDoan, pc.MaCongNhan FROM CHAMCONGCONGNHAN cc JOIN BANGPHANCONG pc ON cc.MaPhanCong = pc.MaPhanCong";
+            // Connection con = ConnectDB1.opConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -64,9 +65,9 @@ public class ChamCongCNDao {
                 phanCong.setNgayPhanCong(rs.getDate("NgayPhanCong"));
                 phanCong.setNgayHoanThanh(rs.getDate("NgayHoanThanh"));
                 phanCong.setTrangThai(rs.getString("TrangThai"));
-                PhanDoanDao phandao_dao =new PhanDoanDao();
+                PhanDoanDao phandao_dao = new PhanDoanDao();
                 PhanDoan pd = phandao_dao.getCDByID(rs.getString("MaPhanDoan"));
-                CongNhanDao cn_dao =new CongNhanDao();
+                CongNhanDao cn_dao = new CongNhanDao();
                 CongNhan cn = cn_dao.getCNByID(rs.getString("MaCongNhan"));
                 phanCong.setCongDoan(pd);
                 phanCong.setCongNhan(cn);
@@ -88,19 +89,19 @@ public class ChamCongCNDao {
         return chamCongList;
     }
     //String maChamCong, PhanCong phanCong, int soLuongSanPham, float heSoLuongCa, String caLam, String trangThai
-    
+
     public ChamCongCN timChamCongTheoMaCN(String ma) throws Exception {
         String sql = "select cc.* from CHAMCONGCONGNHAN cc join BANGPHANCONG pc on cc.MaPhanCong = pc.MaPhanCong join CONGNHAN cn on pc.MaCongNhan = cn.MaCongNhan Where cn.MaCongNhan = '" + ma + "'";
         Connection con = ConnectDB.getInstance().getConnection();
         try (
-              //  Connection con = ConnectDB1.opConnection();
-               PreparedStatement stm = con.prepareStatement(sql);) {
+                //  Connection con = ConnectDB1.opConnection();
+                PreparedStatement stm = con.prepareStatement(sql);) {
             try (ResultSet rs = stm.executeQuery();) {
                 while (rs.next()) {
-                  ChamCongCN chamCongCN = new ChamCongCN();
+                    ChamCongCN chamCongCN = new ChamCongCN();
                     chamCongCN.setMaChamCong(rs.getString("MaChamCong"));
                     chamCongCN.setCaLam(rs.getString("CaLam"));
-                    chamCongCN.setHeSoLuongCa((float)rs.getDouble("HeSoLuongCa"));
+                    chamCongCN.setHeSoLuongCa((float) rs.getDouble("HeSoLuongCa"));
                     chamCongCN.setSoLuongSanPham(rs.getInt("SoLuongSanPham"));
                     chamCongCN.setNgayChamCong(rs.getDate("NgayChamCong"));
                     PhanCongCNDao phanCongCN_dao = new PhanCongCNDao();
@@ -114,8 +115,6 @@ public class ChamCongCNDao {
             return null;
         }
     }
-    
-    
 
     public boolean themChamCongCongNhan(ChamCongCN chamCong) {
         try {
@@ -151,4 +150,30 @@ public class ChamCongCNDao {
         return false;
     }
 
+    public ChamCongCN getChamCongByIDAndMaPC(String id, String maPC) throws Exception {
+        String sql = "select * from CHAMCONGCONGNHAN where MaChamCong =  '" + id + "' and MaPhanCong = '" + maPC + "'";
+        //select * from CHAMCONGCONGNHAN where MaChamCong = 'CCCN-000001' and MaPhanCong = 'PC-000001'
+        Connection con = ConnectDB.getInstance().getConnection();
+        try (
+                PreparedStatement stm = con.prepareStatement(sql);) {
+            try (ResultSet rs = stm.executeQuery();) {
+                while (rs.next()) {
+                    ChamCongCN chamCongCN = new ChamCongCN();
+                    chamCongCN.setMaChamCong(rs.getString("MaChamCong"));
+                    chamCongCN.setCaLam(rs.getString("CaLam"));
+                    chamCongCN.setSoLuongSanPham(rs.getInt("SoLuongSanPham"));
+                    chamCongCN.setHeSoLuongCa((float) rs.getDouble("HeSoLuongCa"));
+                    chamCongCN.setNgayChamCong(rs.getDate("NgayChamCong"));
+                    PhanCongCNDao dao = new PhanCongCNDao();
+                    PhanCong phanCongCN = dao.getPCCNByID(rs.getString("MaPhanCong"));
+                    chamCongCN.setPhanCongCN(phanCongCN);
+                    chamCongCN.setTrangThai(rs.getString("TrangThai"));
+                    con.commit();
+                    return chamCongCN;
+                }
+
+            }
+            return null;
+        }
+    }
 }
