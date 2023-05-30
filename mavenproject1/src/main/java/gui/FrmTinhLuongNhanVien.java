@@ -192,10 +192,10 @@ public class FrmTinhLuongNhanVien extends javax.swing.JPanel {
     private double tinhTongLuongTheoMaNV(String maNhanVien, int thang, int nam, Map<Double, Double> map) {
         double tongLuong = 0.0;
         try {
-            int soNgayCongChuan = 31 - demNgayChuNhatThangNam(nam, thang);
             NhanVien nv = nhanVienDao.layNVTheoMa(maNhanVien);
-            Double luongCoBan = nv.getLuongCoBan();
-            Double phuCap = nv.getPhuCap();
+            int soNgayCongChuan = 31 - demNgayChuNhatThangNam(nam, thang);
+            double luongCoBan = nv.getLuongCoBan();
+            double phuCap = nv.getLuongCoBan();
 //            Map<Double, Double> laySoNgayLamTheoMaNV = bangLuongNVDao.laySoNgayLamTheoMaNV("NV_0001");
             for (Map.Entry<Double, Double> entry : map.entrySet()) {
                 double heSoLuong = entry.getKey();

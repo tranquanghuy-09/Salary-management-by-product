@@ -1,5 +1,6 @@
 package gui;
 
+import helper.TenNguoiDung;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,7 +9,6 @@ import java.util.logging.Logger;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author huylauri
@@ -19,7 +19,8 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private FrmChamCongNhanVien frmChamCongNhanVien;
     private FrmTinhLuongNhanVien frmTinhLuongNhanVien;
     private FrmTimKiemNhanVien frmTimKiemNhanVien;
-    
+    private FrmThayDoiMatKhau frmThayDoiMatKhau;
+
     /*Duy*/
     private FrmQuanLySanPham qlsp;
     private FrmQuanLyPhanDoan qlcd;
@@ -39,9 +40,14 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.toBack();
+        TenNguoiDung nguoiDung = new TenNguoiDung();
+        String ten = nguoiDung.getTenNguoiDung();
+        System.out.println(ten);
+        mnTaiKhoan.setText(ten);
 //        this.setSize(1280,720);
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,10 +82,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         mniThongKeCN = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
+        mnTaiKhoan = new javax.swing.JMenu();
+        mniDoiMatKhau = new javax.swing.JMenuItem();
+        mniDangXuat = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -293,21 +298,32 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         mnuChinh.add(jMenu5);
 
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-taikhoan.png"))); // NOI18N
-        jMenu6.setText("Tài Khoản");
-        jMenu6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jMenu6.setIconTextGap(0);
+        mnTaiKhoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-taikhoan.png"))); // NOI18N
+        mnTaiKhoan.setText("Tài Khoản");
+        mnTaiKhoan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnTaiKhoan.setIconTextGap(4);
 
-        jMenuItem15.setText("Đăng ký");
-        jMenu6.add(jMenuItem15);
+        mniDoiMatKhau.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniDoiMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-DoiMatKhau.png"))); // NOI18N
+        mniDoiMatKhau.setText("Đổi mật khẩu");
+        mniDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDoiMatKhauActionPerformed(evt);
+            }
+        });
+        mnTaiKhoan.add(mniDoiMatKhau);
 
-        jMenuItem16.setText("Đổi mật khẩu");
-        jMenu6.add(jMenuItem16);
+        mniDangXuat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-DangXuat.png"))); // NOI18N
+        mniDangXuat.setText("Đăng xuất");
+        mniDangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDangXuatActionPerformed(evt);
+            }
+        });
+        mnTaiKhoan.add(mniDangXuat);
 
-        jMenuItem17.setText("Đăng xuất");
-        jMenu6.add(jMenuItem17);
-
-        mnuChinh.add(jMenu6);
+        mnuChinh.add(mnTaiKhoan);
 
         setJMenuBar(mnuChinh);
 
@@ -410,7 +426,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mniChamCongCongNhanActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-         cccn = new FrmChamCongCN();
+        cccn = new FrmChamCongCN();
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Chấm công công nhân", cccn);
         tabNoiDung.setSelectedComponent(cccn);
@@ -443,6 +459,20 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         tabNoiDung.addTab("Thống kê lương công nhân", tklcn);
         tabNoiDung.setSelectedComponent(tklcn);
     }//GEN-LAST:event_mniThongKeCNActionPerformed
+
+    private void mniDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDangXuatActionPerformed
+        this.dispose();
+        FrmDangNhapDangKy frmDangNhapDangKy = new FrmDangNhapDangKy();
+        frmDangNhapDangKy.setVisible(true);
+    }//GEN-LAST:event_mniDangXuatActionPerformed
+
+    private void mniDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDoiMatKhauActionPerformed
+        frmThayDoiMatKhau = new FrmThayDoiMatKhau();
+        tabNoiDung.removeAll();
+        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
+        tabNoiDung.addTab("Thay đổi mật khẩu", frmThayDoiMatKhau);
+        tabNoiDung.setSelectedComponent(frmThayDoiMatKhau);
+    }//GEN-LAST:event_mniDoiMatKhauActionPerformed
 
     /**
      * @param args the command line arguments
@@ -483,22 +513,21 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JLabel lblTenChuongTrinh;
     private javax.swing.JMenu mnDanhMuc;
+    private javax.swing.JMenu mnTaiKhoan;
     private javax.swing.JMenu mnTrangChu;
     private javax.swing.JMenuItem mniChamCongCongNhan;
     private javax.swing.JMenuItem mniChamCongNhanVien;
     private javax.swing.JMenuItem mniCongNhan;
     private javax.swing.JMenuItem mniDMNhanVien;
+    private javax.swing.JMenuItem mniDangXuat;
+    private javax.swing.JMenuItem mniDoiMatKhau;
     private javax.swing.JMenuItem mniPhanDoan;
     private javax.swing.JMenuItem mniSanPham;
     private javax.swing.JMenuItem mniTKNhanVien;
