@@ -1,5 +1,8 @@
 package gui;
 
+import dao.NhanVienDao;
+import entity.NhanVien;
+import helper.MaNguoiDung;
 import helper.TenNguoiDung;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -31,21 +34,52 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private FrmQuanLyCongNhan qlcn;
     private FrmTinhLuongCongNhan tlcn;
     private FrmPhanCongCongNhan pc;
+    
+    private NhanVienDao nhanVienDao = new NhanVienDao();
 
     /**
      * Creates new form TrangChu_GUI1
      */
-    public TrangChu_GUI() {
+    public TrangChu_GUI(){
         initComponents();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.toBack();
-        TenNguoiDung nguoiDung = new TenNguoiDung();
-        String ten = nguoiDung.getTenNguoiDung();
-        System.out.println(ten);
-        mnTaiKhoan.setText(ten);
-//        this.setSize(1280,720);
+        try {
+            khoiTaoThanhMenu();
+        } catch (Exception ex) {
+            Logger.getLogger(TrangChu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+    }
+    
+    private void khoiTaoThanhMenu(){
+        try {
+            TenNguoiDung nguoiDung = new TenNguoiDung();
+            String ten = nguoiDung.getTenNguoiDung();
+            mnTaiKhoan.setText(ten);
+            
+            MaNguoiDung maNguoiDung = new MaNguoiDung();
+            String maND = maNguoiDung.getMaNguoiDung();
+            NhanVien nv = nhanVienDao.layNVTheoMa(maND);
+            if(nv.getPhongBan().getMaPhongBan().equals("PB_KeToan")){
+                mnDanhMuc.setVisible(false);                
+                mniChamCongCongNhan.setVisible(false);
+                mniChamCongNhanVien.setVisible(false);
+                mniPhanCong.setVisible(false);
+                mniTimKiemSanPham.setVisible(false);
+            }else if(nv.getPhongBan().getMaPhongBan().equals("PB_QuanLy")){
+                // Mở tất cả menu
+            }else{
+                mnDanhMuc.setVisible(false);
+                mnXuLy.setVisible(false);
+                mnTimKiem.setVisible(false);
+                mnThongKe.setVisible(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TrangChu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -66,17 +100,17 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         mniCongNhan = new javax.swing.JMenuItem();
         mniSanPham = new javax.swing.JMenuItem();
         mniPhanDoan = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        mnXuLy = new javax.swing.JMenu();
         mniPhanCong = new javax.swing.JMenuItem();
         mniChamCongNhanVien = new javax.swing.JMenuItem();
         mniChamCongCongNhan = new javax.swing.JMenuItem();
         mniTinhLuongNhanVien = new javax.swing.JMenuItem();
         mniTinhLuongCongNhan = new javax.swing.JMenuItem();
-        mniTimKiem = new javax.swing.JMenu();
+        mnTimKiem = new javax.swing.JMenu();
         mniTKNhanVien = new javax.swing.JMenuItem();
         mniTimKiemCongNhan = new javax.swing.JMenuItem();
         mniTimKiemSanPham = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        mnThongKe = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -178,9 +212,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         mnuChinh.add(mnDanhMuc);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xuly.png"))); // NOI18N
-        jMenu3.setText("Xử lý");
-        jMenu3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnXuLy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xuly.png"))); // NOI18N
+        mnXuLy.setText("Xử lý");
+        mnXuLy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         mniPhanCong.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mniPhanCong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -192,7 +226,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniPhanCongActionPerformed(evt);
             }
         });
-        jMenu3.add(mniPhanCong);
+        mnXuLy.add(mniPhanCong);
 
         mniChamCongNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniChamCongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcongNV.png"))); // NOI18N
@@ -203,7 +237,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniChamCongNhanVienActionPerformed(evt);
             }
         });
-        jMenu3.add(mniChamCongNhanVien);
+        mnXuLy.add(mniChamCongNhanVien);
 
         mniChamCongCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniChamCongCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcongNV.png"))); // NOI18N
@@ -214,7 +248,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniChamCongCongNhanActionPerformed(evt);
             }
         });
-        jMenu3.add(mniChamCongCongNhan);
+        mnXuLy.add(mniChamCongCongNhan);
 
         mniTinhLuongNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniTinhLuongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-TinhLuong.png"))); // NOI18N
@@ -225,7 +259,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniTinhLuongNhanVienActionPerformed(evt);
             }
         });
-        jMenu3.add(mniTinhLuongNhanVien);
+        mnXuLy.add(mniTinhLuongNhanVien);
 
         mniTinhLuongCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniTinhLuongCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-TinhLuong.png"))); // NOI18N
@@ -236,19 +270,19 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniTinhLuongCongNhanActionPerformed(evt);
             }
         });
-        jMenu3.add(mniTinhLuongCongNhan);
+        mnXuLy.add(mniTinhLuongCongNhan);
 
-        mnuChinh.add(jMenu3);
+        mnuChinh.add(mnXuLy);
 
-        mniTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-timkiem0.png"))); // NOI18N
-        mniTimKiem.setText("Tìm kiếm");
-        mniTimKiem.setAutoscrolls(true);
-        mniTimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        mniTimKiem.setFocusPainted(true);
-        mniTimKiem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        mniTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        mniTimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        mniTimKiem.setIconTextGap(0);
+        mnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-timkiem0.png"))); // NOI18N
+        mnTimKiem.setText("Tìm kiếm");
+        mnTimKiem.setAutoscrolls(true);
+        mnTimKiem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mnTimKiem.setFocusPainted(true);
+        mnTimKiem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        mnTimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        mnTimKiem.setIconTextGap(0);
 
         mniTKNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniTKNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-NhanVien2.png"))); // NOI18N
@@ -259,7 +293,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniTKNhanVienActionPerformed(evt);
             }
         });
-        mniTimKiem.add(mniTKNhanVien);
+        mnTimKiem.add(mniTKNhanVien);
 
         mniTimKiemCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniTimKiemCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-CongNhan.png"))); // NOI18N
@@ -269,7 +303,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniTimKiemCongNhanActionPerformed(evt);
             }
         });
-        mniTimKiem.add(mniTimKiemCongNhan);
+        mnTimKiem.add(mniTimKiemCongNhan);
 
         mniTimKiemSanPham.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniTimKiemSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-SanPham.png"))); // NOI18N
@@ -279,23 +313,23 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniTimKiemSanPhamActionPerformed(evt);
             }
         });
-        mniTimKiem.add(mniTimKiemSanPham);
+        mnTimKiem.add(mniTimKiemSanPham);
 
-        mnuChinh.add(mniTimKiem);
+        mnuChinh.add(mnTimKiem);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thongke.png"))); // NOI18N
-        jMenu5.setText("Thống Kê");
-        jMenu5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jMenu5.setIconTextGap(0);
+        mnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-thongke.png"))); // NOI18N
+        mnThongKe.setText("Thống Kê");
+        mnThongKe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        mnThongKe.setIconTextGap(0);
 
         jMenuItem12.setText("Tiền lương");
-        jMenu5.add(jMenuItem12);
+        mnThongKe.add(jMenuItem12);
 
         jMenuItem13.setText("Sản phẩm");
-        jMenu5.add(jMenuItem13);
+        mnThongKe.add(jMenuItem13);
 
         jMenuItem14.setText("Xuất phiếu lương");
-        jMenu5.add(jMenuItem14);
+        mnThongKe.add(jMenuItem14);
 
         mniThongKeCN.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniThongKeCN.setText("Công nhân");
@@ -304,12 +338,12 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 mniThongKeCNActionPerformed(evt);
             }
         });
-        jMenu5.add(mniThongKeCN);
+        mnThongKe.add(mniThongKeCN);
 
         jMenuItem2.setText("Nhân viên");
-        jMenu5.add(jMenuItem2);
+        mnThongKe.add(jMenuItem2);
 
-        mnuChinh.add(jMenu5);
+        mnuChinh.add(mnThongKe);
 
         mnTaiKhoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-taikhoan.png"))); // NOI18N
         mnTaiKhoan.setText("Tài Khoản");
@@ -537,8 +571,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
@@ -546,7 +578,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblTenChuongTrinh;
     private javax.swing.JMenu mnDanhMuc;
     private javax.swing.JMenu mnTaiKhoan;
+    private javax.swing.JMenu mnThongKe;
+    private javax.swing.JMenu mnTimKiem;
     private javax.swing.JMenu mnTrangChu;
+    private javax.swing.JMenu mnXuLy;
     private javax.swing.JMenuItem mniChamCongCongNhan;
     private javax.swing.JMenuItem mniChamCongNhanVien;
     private javax.swing.JMenuItem mniCongNhan;
@@ -558,7 +593,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniSanPham;
     private javax.swing.JMenuItem mniTKNhanVien;
     private javax.swing.JMenuItem mniThongKeCN;
-    private javax.swing.JMenu mniTimKiem;
     private javax.swing.JMenuItem mniTimKiemCongNhan;
     private javax.swing.JMenuItem mniTimKiemSanPham;
     private javax.swing.JMenuItem mniTinhLuongCongNhan;

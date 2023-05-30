@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -38,7 +39,18 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         initComponents();
         initTable();
         loadDataToTable();
+        loadDataCmbPhongBan();
 
+    }
+    
+    private void loadDataCmbPhongBan() {
+        try {
+            List<String> data = phongBanDao.layDsTenPhongBan();
+            DefaultComboBoxModel<String> newModel = new DefaultComboBoxModel<>(data.toArray((new String[data.size()])));
+            cmbPhongBan.setModel(newModel);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmChamCongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void loadDataToTable() {
@@ -83,7 +95,8 @@ public class FrmQuanLyNhanVien extends javax.swing.JPanel {
         txtEmail.setText("");
         dchNgayBatDau.setDate(null);
         txtDiaChi.setText("");
-        cmbPhongBan.removeAllItems();
+//        cmbPhongBan.removeAllItems();
+        loadDataCmbPhongBan();
         txtChucVu.setText("");
         txtLuongCoBan.setText("");
         txtPhuCap.setText("");
