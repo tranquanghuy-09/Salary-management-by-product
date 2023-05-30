@@ -94,6 +94,7 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
         btnTinhLuong = new javax.swing.JButton();
         btnXoaRong = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
+        btnInBangLuong = new javax.swing.JButton();
         lblTieuDe = new javax.swing.JLabel();
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách công nhân đã chấm công", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
@@ -394,7 +395,7 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
 
         btnTinhLuong.setBackground(new java.awt.Color(204, 255, 204));
         btnTinhLuong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnTinhLuong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-LamMoi.png"))); // NOI18N
+        btnTinhLuong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/them.png"))); // NOI18N
         btnTinhLuong.setText("Tính Lương");
         btnTinhLuong.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnTinhLuong.setPreferredSize(new java.awt.Dimension(125, 22));
@@ -404,9 +405,9 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
             }
         });
 
-        btnXoaRong.setBackground(new java.awt.Color(204, 255, 204));
+        btnXoaRong.setBackground(new java.awt.Color(0, 206, 245));
         btnXoaRong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnXoaRong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-XuatExcel.png"))); // NOI18N
+        btnXoaRong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-bochon.png"))); // NOI18N
         btnXoaRong.setText("Xóa rỗng");
         btnXoaRong.setMargin(new java.awt.Insets(2, 0, 3, 0));
         btnXoaRong.setPreferredSize(new java.awt.Dimension(125, 22));
@@ -428,17 +429,30 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
             }
         });
 
+        btnInBangLuong.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnInBangLuong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-in.png"))); // NOI18N
+        btnInBangLuong.setText("In Bảng lương");
+        btnInBangLuong.setMargin(new java.awt.Insets(2, 0, 3, 0));
+        btnInBangLuong.setPreferredSize(new java.awt.Dimension(125, 23));
+        btnInBangLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBangLuongActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlNutChucNangLayout = new javax.swing.GroupLayout(pnlNutChucNang);
         pnlNutChucNang.setLayout(pnlNutChucNangLayout);
         pnlNutChucNangLayout.setHorizontalGroup(
             pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNutChucNangLayout.createSequentialGroup()
-                .addGap(497, 497, 497)
-                .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(btnXoaRong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnXoaRong, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlNutChucNangLayout.setVerticalGroup(
@@ -448,7 +462,8 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
                 .addGroup(pnlNutChucNangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTinhLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoaRong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBangLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -679,9 +694,62 @@ public class FrmTinhLuongCongNhan extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbGioiTinhActionPerformed
 
+    private void btnInBangLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBangLuongActionPerformed
+        try {
+            int row = tblDSTinhLuong.getSelectedRow();
+            String maBangLuong = model1.getValueAt(row, 0).toString();
+            String maCN = model1.getValueAt(row, 1).toString();
+            CongNhan cn = cn_dao.timCNTheoMa(maCN);
+//            double luongCoBan = cn.getLuongCoBan();
+            double phuCap = cn.getTroCap();
+
+            int thangLuong = Integer.parseInt(model1.getValueAt(row, 3).toString());
+
+            int namLuong = Integer.parseInt(model1.getValueAt(row, 2).toString());
+
+//            double tongLuong = soLuongDaLam * giaPhanDoan * heSo + troCap;
+            
+
+            int soLuongDaLam = 0;
+            Double giaPhanDoan = 0.0;
+            Double heSo = 0.0;
+            Double troCap = 0.0;
+            
+            
+//            double tongLuong = luongCBTinh + luongNghiPhep + luongNgoaiGio + phuCap;
+//            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+//            Hashtable map = new Hashtable();
+//            JasperReport report = JasperCompileManager.compileReport("src/main/java/report/rptChiTietLuong.jrxml");
+//            map.put("maNV", maNV);
+//            map.put("ngayCongChuan", ngayCongChuan);
+//            map.put("ngayLamViecThucTe", ngayLamViecThucTe);
+//            map.put("ngayNghiPhep", ngayNghiPhep);
+//            map.put("ngayNgoaiGio", ngayNgoaiGio);
+//            map.put("luongCoBan", decimalFormat.format(luongCBTinh));
+//            map.put("nghiPhepHuongLuong", decimalFormat.format(luongNghiPhep));
+//            map.put("luongNgoaiGio", decimalFormat.format(luongNgoaiGio));
+//            map.put("namLuong", namLuong);
+//            map.put("thangLuong", thangLuong);
+//            map.put("tongLuong", decimalFormat.format(tongLuong));
+//            map.put("phuCap", decimalFormat.format(phuCap));
+//
+//            Connection con = ConnectDB.getInstance().getConnection();
+//
+//            JasperPrint p = JasperFillManager.fillReport(report, map, con);
+//            JasperViewer.viewReport(p, false);
+//            JasperExportManager.exportReportToPdfFile(p, "test.pdf");
+//        } catch (JRException ex) {
+//            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmTinhLuongNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnInBangLuongActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JPanel ThongTinPC;
+    private javax.swing.JButton btnInBangLuong;
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnTinhLuong;
     private javax.swing.JButton btnXoaRong;

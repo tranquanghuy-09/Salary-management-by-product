@@ -39,7 +39,7 @@ public class FrmDangNhapDangKy extends javax.swing.JFrame {
         pwdNhapMatKhau_DK.setText("");
         pwdNhapLaiMatKhau_DK.setText("");
     }
-    
+
     public boolean kiemTraMatKhau(String password) {
         // Kiểm tra độ dài ít nhất 8 kí tự
         if (password.length() < 8) {
@@ -287,6 +287,11 @@ public class FrmDangNhapDangKy extends javax.swing.JFrame {
                 pwdMatKhauFocusLost(evt);
             }
         });
+        pwdMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwdMatKhauActionPerformed(evt);
+            }
+        });
 
         txtTenDangNhap.setBackground(new java.awt.Color(0, 169, 187));
         txtTenDangNhap.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
@@ -516,7 +521,7 @@ public class FrmDangNhapDangKy extends javax.swing.JFrame {
                     MaNguoiDung maNguoiDung = new MaNguoiDung();
                     nguoiDung.setTenNguoiDung(nv.getTenNhanVien());
                     maNguoiDung.setMaNguoiDung(nv.getMaNhanVien());
-                    
+
                     this.dispose();
                     TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
                     trangChu_GUI.setVisible(true);
@@ -556,15 +561,15 @@ public class FrmDangNhapDangKy extends javax.swing.JFrame {
         try {
             if (nhanVienDao.layNVTheoMa(maNhanVien) != null) {
                 if (!taiKhoanDao.kiemTraTaiKhoanTonTai(maNhanVien)) {
-                    if(kiemTraMatKhau(matKhauString)){
+                    if (kiemTraMatKhau(matKhauString)) {
                         if (matKhauString.equals(matKhauNhapLaiString)) {
-                        taiKhoanDao.themTaiKhoan(maNhanVien, matKhauString);
-                        JOptionPane.showMessageDialog(this, "Đăng ký tài khoản thành công.");
-                        xoaRongDangKyTK();
+                            taiKhoanDao.themTaiKhoan(maNhanVien, matKhauString);
+                            JOptionPane.showMessageDialog(this, "Đăng ký tài khoản thành công.");
+                            xoaRongDangKyTK();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Các mật khẩu đã nhập không khớp. Hãy thử lại.");
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Các mật khẩu đã nhập không khớp. Hãy thử lại.");
-                    }
-                    }else{
                         JOptionPane.showMessageDialog(this, "Mật khẩu phải ít nhất 8 kí tự, có chứa chữ cái in hoa, số và ký tự đặc biệt!");
                     }
                 } else {
@@ -602,6 +607,41 @@ public class FrmDangNhapDangKy extends javax.swing.JFrame {
             pwdNhapLaiMatKhau_DK.setEchoChar('*');
         }
     }//GEN-LAST:event_chkHienThiMatKhau_DKItemStateChanged
+
+    private void pwdMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdMatKhauActionPerformed
+        try {
+            String maNhanVien = txtTenDangNhap.getText();
+            char[] matKhau = pwdMatKhau.getPassword();
+            String matKhauString = new String(matKhau);
+            if (taiKhoanDao.kiemTraTaiKhoanTonTai(maNhanVien)) {
+                TaiKhoan tk = taiKhoanDao.layTaiKhoanTheoMaNV(maNhanVien);
+                if (tk.getMatKhau().equals(matKhauString)) {
+                    NhanVien nv = nhanVienDao.layNVTheoMa(maNhanVien);
+
+                    TenNguoiDung nguoiDung = new TenNguoiDung();
+                    MaNguoiDung maNguoiDung = new MaNguoiDung();
+                    nguoiDung.setTenNguoiDung(nv.getTenNhanVien());
+                    maNguoiDung.setMaNguoiDung(nv.getMaNhanVien());
+
+                    this.dispose();
+                    TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+                    trangChu_GUI.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Mật khẩu sai!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại!");
+            }
+
+//            TenNguoiDung nguoiDung = new TenNguoiDung();
+//            nguoiDung.setTenNguoiDung(txtTenDangNhap.getText());
+//            this.dispose();
+//            TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+//            trangChu_GUI.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmDangNhapDangKy.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_pwdMatKhauActionPerformed
 
     /**
      * @param args the command line arguments
