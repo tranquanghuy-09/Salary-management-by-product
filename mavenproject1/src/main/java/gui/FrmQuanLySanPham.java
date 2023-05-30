@@ -6,10 +6,13 @@ package gui;
 
 import dao.SanPhamDao;
 import entity.SanPham;
+import helper.XuatFileExcel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +25,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
 
     private final SanPhamDao sanPhamDao;
 
-    public FrmQuanLySanPham() {
+    public FrmQuanLySanPham() throws Exception {
         sanPhamDao = new SanPhamDao();
         initComponents();
         loadTableData();
@@ -45,7 +48,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         }
     }
 
-    private void loadTableData() {
+    private void loadTableData() throws Exception {
         SanPhamDao sanPhamDAO = new SanPhamDao();
         List<SanPham> sanPhams = sanPhamDAO.getAllSanPham();
         DefaultTableModel model = new DefaultTableModel();
@@ -97,12 +100,12 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         txtMaSanPham = new javax.swing.JTextField();
         txtTenSanPham = new javax.swing.JTextField();
         txtLoaiSanPham = new javax.swing.JTextField();
-        txtMauSac = new javax.swing.JTextField();
-        txtChatLieu = new javax.swing.JTextField();
         txtSoLuongCanLam = new javax.swing.JTextField();
         txtSoLuongDaLam = new javax.swing.JTextField();
         txtTrangThai = new javax.swing.JTextField();
         chooserNgayHoanThanh = new com.toedter.calendar.JDateChooser();
+        cmbMauSac = new javax.swing.JComboBox<>();
+        cmbChatLieu = new javax.swing.JComboBox<>();
         pnlNutChucNang = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         btnCapNhat = new javax.swing.JButton();
@@ -158,25 +161,34 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
 
         chooserNgayHoanThanh.setDateFormatString(" dd/MM/yyyy");
 
+        cmbMauSac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đen", "Trắng", "Xanh lá", "Tím", "Đỏ", "Vàng", "Cam" }));
+        cmbMauSac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMauSacActionPerformed(evt);
+            }
+        });
+
+        cmbChatLieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thép", "Nhôm", "Nhựa", "Gỗ", "Cao su", "Kính" }));
+
         javax.swing.GroupLayout pnlThongTinNVLayout = new javax.swing.GroupLayout(pnlThongTinNV);
         pnlThongTinNV.setLayout(pnlThongTinNVLayout);
         pnlThongTinNVLayout.setHorizontalGroup(
             pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinNVLayout.createSequentialGroup()
-                .addContainerGap(257, Short.MAX_VALUE)
+                .addContainerGap(360, Short.MAX_VALUE)
                 .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlThongTinNVLayout.createSequentialGroup()
                         .addComponent(lblTenSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTenSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                        .addComponent(txtTenSanPham))
                     .addGroup(pnlThongTinNVLayout.createSequentialGroup()
                         .addComponent(lblChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtChatLieu))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinNVLayout.createSequentialGroup()
+                        .addComponent(cmbChatLieu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlThongTinNVLayout.createSequentialGroup()
                         .addComponent(lblMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMauSac))
+                        .addComponent(cmbMauSac, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongTinNVLayout.createSequentialGroup()
                         .addComponent(lblLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,7 +196,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
                     .addGroup(pnlThongTinNVLayout.createSequentialGroup()
                         .addComponent(lblMaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMaSanPham)))
+                        .addComponent(txtMaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70)
                 .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlThongTinNVLayout.createSequentialGroup()
@@ -203,12 +215,12 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
                         .addComponent(lblSoLuongCanLam, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSoLuongCanLam, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addGap(351, 351, 351))
         );
         pnlThongTinNVLayout.setVerticalGroup(
             pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlThongTinNVLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(14, 14, 14)
                 .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,16 +240,17 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
                         .addComponent(lblLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbMauSac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlThongTinNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(cmbChatLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         btnThem.setBackground(new java.awt.Color(204, 255, 204));
@@ -270,7 +283,7 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
 
         btnXoa.setBackground(new java.awt.Color(204, 255, 204));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-CapNhat.png"))); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xoachamcong.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setMargin(new java.awt.Insets(2, 2, 3, 2));
         btnXoa.setPreferredSize(new java.awt.Dimension(125, 23));
@@ -422,8 +435,8 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         String maSanPham = txtMaSanPham.getText();
         String tenSanPham = txtTenSanPham.getText();
         String loaiSanPham = txtLoaiSanPham.getText();
-        String mauSac = txtMauSac.getText();
-        String chatLieu = txtChatLieu.getText();
+        String mauSac = cmbMauSac.getSelectedItem().toString();
+        String chatLieu = cmbChatLieu.getSelectedItem().toString();
         Date ngayHoanThanh = chooserNgayHoanThanh.getDate();
         checkNgayHoanThanh();
         String trangThai = txtTrangThai.getText();
@@ -442,12 +455,16 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         }
         SanPham sanPham = new SanPham(maSanPham, tenSanPham, loaiSanPham, mauSac, chatLieu, soLuongCanLam,
                 soLuongDaLam, ngayHoanThanh, trangThai);
-        if (sanPhamDao.themSanPham(sanPham)) {
-            JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thành công");
-            xoaRong();
-            loadTableData();
-        } else {
-            JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thất bại");
+        try {
+            if (sanPhamDao.themSanPham(sanPham)) {
+                JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thành công");
+                xoaRong();
+                loadTableData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thất bại");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmQuanLySanPham.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -457,12 +474,16 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         if (row != -1) {
             String maSanPham = tblDanhSachSanPham.getValueAt(row, 0).toString();
             SanPhamDao sanPhamDao = new SanPhamDao();
-            if (sanPhamDao.xoaSanPham(maSanPham)) {
-                JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công");
-                loadTableData();
-                xoaRong();
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa sản phẩm không thành công");
+            try {
+                if (sanPhamDao.xoaSanPham(maSanPham)) {
+                    JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công");
+                    loadTableData();
+                    xoaRong();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa sản phẩm không thành công");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(FrmQuanLySanPham.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm để xóa");
@@ -476,8 +497,8 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
             txtMaSanPham.setText(tblDanhSachSanPham.getValueAt(row, 0).toString());
             txtTenSanPham.setText(tblDanhSachSanPham.getValueAt(row, 1).toString());
             txtLoaiSanPham.setText(tblDanhSachSanPham.getValueAt(row, 2).toString());
-            txtMauSac.setText(tblDanhSachSanPham.getValueAt(row, 3).toString());
-            txtChatLieu.setText(tblDanhSachSanPham.getValueAt(row, 4).toString());
+            cmbMauSac.setSelectedItem(tblDanhSachSanPham.getValueAt(row, 3).toString());
+            cmbChatLieu.setSelectedItem(tblDanhSachSanPham.getValueAt(row, 4).toString());
             txtSoLuongCanLam.setText(tblDanhSachSanPham.getValueAt(row, 5).toString());
             txtSoLuongDaLam.setText(tblDanhSachSanPham.getValueAt(row, 6).toString());
             try {
@@ -497,7 +518,11 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
         xoaRong();
-        loadTableData();
+        try {
+            loadTableData();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmQuanLySanPham.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
@@ -509,36 +534,41 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        String maSanPham = txtMaSanPham.getText();
-        String tenSanPham = txtTenSanPham.getText();
-        String loaiSanPham = txtLoaiSanPham.getText();
-        String mauSac = txtMauSac.getText();
-        String chatLieu = txtChatLieu.getText();
-        if (maSanPham.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng đầy đủu thông tin");
-            return;
-        }
-        int soLuongCanLam = Integer.parseInt(txtSoLuongCanLam.getText());
-        int soLuongDaLam = Integer.parseInt(txtSoLuongDaLam.getText());
-        Date ngayHoanThanh = chooserNgayHoanThanh.getDate();
-        checkNgayHoanThanh();
-        String trangThai = txtTrangThai.getText();
-
-        SanPham sanPham = new SanPham(maSanPham, tenSanPham, loaiSanPham, mauSac, chatLieu, soLuongCanLam, soLuongDaLam, ngayHoanThanh, trangThai);
-        boolean result = sanPhamDao.suaSanPham(sanPham);
-
-        if (result) {
-            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-            loadTableData();
-        } else {
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại, vui lòng kiểm tra lại dữ liệu nhập");
+        try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            String maSanPham = txtMaSanPham.getText();
+            String tenSanPham = txtTenSanPham.getText();
+            String loaiSanPham = txtLoaiSanPham.getText();
+            String mauSac = cmbMauSac.getSelectedItem().toString();
+            String chatLieu = cmbChatLieu.getSelectedItem().toString();
+            if (maSanPham.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng đầy đủu thông tin");
+                return;
+            }
+            int soLuongCanLam = Integer.parseInt(txtSoLuongCanLam.getText());
+            int soLuongDaLam = Integer.parseInt(txtSoLuongDaLam.getText());
+            Date ngayHoanThanh = chooserNgayHoanThanh.getDate();
+            checkNgayHoanThanh();
+            String trangThai = txtTrangThai.getText();
+            
+            SanPham sanPham = new SanPham(maSanPham, tenSanPham, loaiSanPham, mauSac, chatLieu, soLuongCanLam, soLuongDaLam, ngayHoanThanh, trangThai);
+            boolean result = sanPhamDao.suaSanPham(sanPham);
+            
+            if (result) {
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+                loadTableData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật thất bại, vui lòng kiểm tra lại dữ liệu nhập");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrmQuanLySanPham.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
         // TODO add your handling code here:
+         XuatFileExcel.xuatFileExcel(tblDanhSachSanPham);
     }//GEN-LAST:event_btnXuatExcelActionPerformed
 
     private void txtMaSanPhamFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMaSanPhamFocusLost
@@ -555,6 +585,10 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtMaSanPhamFocusLost
 
+    private void cmbMauSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMauSacActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMauSacActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
@@ -564,6 +598,8 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton btnXuatExcel;
     private com.toedter.calendar.JDateChooser chooserNgayHoanThanh;
+    private javax.swing.JComboBox<String> cmbChatLieu;
+    private javax.swing.JComboBox<String> cmbMauSac;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblChatLieu;
@@ -579,10 +615,8 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
     private javax.swing.JPanel pnlNutChucNang;
     private javax.swing.JPanel pnlThongTinNV;
     private javax.swing.JTable tblDanhSachSanPham;
-    private javax.swing.JTextField txtChatLieu;
     private javax.swing.JTextField txtLoaiSanPham;
     private javax.swing.JTextField txtMaSanPham;
-    private javax.swing.JTextField txtMauSac;
     private javax.swing.JTextField txtSoLuongCanLam;
     private javax.swing.JTextField txtSoLuongDaLam;
     private javax.swing.JTextField txtTenSanPham;
@@ -593,8 +627,8 @@ public class FrmQuanLySanPham extends javax.swing.JPanel {
         txtMaSanPham.setText("");
         txtTenSanPham.setText("");
         txtLoaiSanPham.setText("");
-        txtMauSac.setText("");
-        txtChatLieu.setText("");
+        cmbMauSac.setSelectedItem(null);
+        cmbChatLieu.setSelectedItem(null);
         txtSoLuongCanLam.setText("");
         txtSoLuongDaLam.setText("");
         chooserNgayHoanThanh.setDate(null);

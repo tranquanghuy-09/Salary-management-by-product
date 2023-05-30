@@ -4,29 +4,18 @@
  */
 package entity;
 
-public class PhanDoan {
+import java.util.Objects;
 
+/**
+ *
+ * @author duy19
+ */
+public class PhanDoan {
     private String maPhanDoan;
     private String tenPhanDoan;
+    private SanPham sanPham;
     private double giaPhanDoan;
     private String phanDoanYeuCau;
-
-    private SanPham sanPham;
-
-    public PhanDoan() {
-    }
-
-    public PhanDoan(String maPhanDoan) {
-        this.maPhanDoan = maPhanDoan;
-    }
-
-    public PhanDoan(String maPhanDoan, String tenPhanDoan, double giaPhanDoan, String phanDoanYeuCau, SanPham sanPham) {
-        this.maPhanDoan = maPhanDoan;
-        this.tenPhanDoan = tenPhanDoan;
-        this.giaPhanDoan = giaPhanDoan;
-        this.phanDoanYeuCau = phanDoanYeuCau;
-        this.sanPham = sanPham;
-    }
 
     public String getMaPhanDoan() {
         return maPhanDoan;
@@ -34,6 +23,10 @@ public class PhanDoan {
 
     public String getTenPhanDoan() {
         return tenPhanDoan;
+    }
+
+    public SanPham getSanPham() {
+        return sanPham;
     }
 
     public double getGiaPhanDoan() {
@@ -44,16 +37,16 @@ public class PhanDoan {
         return phanDoanYeuCau;
     }
 
-    public SanPham getSanPham() {
-        return sanPham;
-    }
-
     public void setMaPhanDoan(String maPhanDoan) {
         this.maPhanDoan = maPhanDoan;
     }
 
     public void setTenPhanDoan(String tenPhanDoan) {
         this.tenPhanDoan = tenPhanDoan;
+    }
+
+    public void setSanPham(SanPham sanPham) {
+        this.sanPham = sanPham;
     }
 
     public void setGiaPhanDoan(double giaPhanDoan) {
@@ -64,8 +57,53 @@ public class PhanDoan {
         this.phanDoanYeuCau = phanDoanYeuCau;
     }
 
-    public void setSanPham(SanPham sanPham) {
+    public PhanDoan(String maPhanDoan, String tenPhanDoan, SanPham sanPham, double giaPhanDoan, String phanDoanYeuCau) {
+        this.maPhanDoan = maPhanDoan;
+        this.tenPhanDoan = tenPhanDoan;
+        this.sanPham = sanPham;
+        this.giaPhanDoan = giaPhanDoan;
+        this.phanDoanYeuCau = phanDoanYeuCau;
+    }
+     public PhanDoan(String maPhanDoan, String tenPhanDoan, double giaPhanDoan, String phanDoanYeuCau, SanPham sanPham) {
+        this.maPhanDoan = maPhanDoan;
+        this.tenPhanDoan = tenPhanDoan;
+        this.giaPhanDoan = giaPhanDoan;
+        this.phanDoanYeuCau = phanDoanYeuCau;
         this.sanPham = sanPham;
     }
+     
+       public PhanDoan(String maPhanDoan) {
+        this.maPhanDoan = maPhanDoan;
+    }
+    public PhanDoan() {
+    }
 
+    @Override
+    public String toString() {
+        return "CongDoan{" + "maPhanDoan=" + maPhanDoan + ", tenPhanDoan=" + tenPhanDoan + ", sanPham=" + sanPham + ", giaPhanDoan=" + giaPhanDoan + ", phanDoanYeuCau=" + phanDoanYeuCau + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.maPhanDoan);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PhanDoan other = (PhanDoan) obj;
+        return Objects.equals(this.maPhanDoan, other.maPhanDoan);
+    }
+    
+    
 }

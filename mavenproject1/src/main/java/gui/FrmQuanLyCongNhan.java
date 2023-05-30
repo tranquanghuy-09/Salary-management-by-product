@@ -4,8 +4,9 @@
  */
 package gui;
 
-import dao.CongNhanDao1;
-import entity.CongNhan1;
+import dao.CongNhanDao;
+import entity.CongNhan;
+import helper.XuatFileExcel;
 import java.awt.Dimension;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -26,17 +27,17 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
     /**
      * Creates new form FrmQuanLyCongNhan
      */
-    private CongNhanDao1 dao = new CongNhanDao1();
+    private CongNhanDao dao = new CongNhanDao();
     private DefaultTableModel model;
-    private CongNhan1 cn = new CongNhan1();
+    private CongNhan cn = new CongNhan();
     // private TrangChu_GUI1 trangChu = new TrangChu_GUI1();
     private static int n;
-
+    
     public FrmQuanLyCongNhan() throws SQLException {
         initComponents();
         initTable();
         loadDataToTable();
-        btnXuatExcel.setEnabled(false);
+//        btnXuatExcel.setEnabled(false);
 
     }
 
@@ -453,15 +454,15 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         Boolean gt = null;
-
+        
         if (cmbGioiTinh2.getSelectedItem().equals("Nam")) {
             gt = true;
         } else if (cmbGioiTinh2.getSelectedItem().equals("Nữ")) {
             gt = false;
         }
         try {
-
-            CongNhan1 cn = new CongNhan1(txtMaCongNhan.getText(), txtHoten.getText(), txtNgaySinh.getDate(), gt, txtDC.getText(), txtSDT.getText(), txtEMAIL.getText(), txtCMND.getText(), txtNgayBatDau.getDate(), Double.valueOf(txtTroCap.getText()), txtTayNghe.getText());
+            
+            CongNhan cn = new CongNhan(txtMaCongNhan.getText(), txtHoten.getText(), txtNgaySinh.getDate(), gt, txtDC.getText(), txtSDT.getText(), txtEMAIL.getText(), txtCMND.getText(), txtNgayBatDau.getDate(), Double.valueOf(txtTroCap.getText()), txtTayNghe.getText());
             boolean n = dao.themCN(cn);
             System.out.println(cn);
             if (n) {
@@ -470,10 +471,17 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(this, "Lỗi");
             }
-
+            
         } catch (Exception ex) {
             Logger.getLogger(FrmQuanLyCongNhan.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        // cleanValue();
+        // txtHoTen.setText("");
+        //btnTroLai.setEnabled(false);					Double.parseDouble(cboHeSL.getSelectedItem().toString())); 
+        // cleanValue();
+        // txtHoTen.setText("");
+        //btnTroLai.setEnabled(false);					Double.parseDouble(cboHeSL.getSelectedItem().toString())); 
 
         // cleanValue();
         // txtHoTen.setText("");
@@ -489,8 +497,8 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             int row = tblDSCongNhan.getSelectedRow();
             if (row >= 0) {
                 String id = (String) tblDSCongNhan.getValueAt(row, 0);
-                CongNhanDao1 dao = new CongNhanDao1();
-                CongNhan1 cn = dao.getCNByID(id);
+                CongNhanDao dao = new CongNhanDao();
+                CongNhan cn = dao.getCNByID(id);
                 if (cn != null) {
                     txtMaCongNhan.setText(cn.getMaCongNhan());
                     txtHoten.setText(cn.getTenCongNhan());
@@ -529,11 +537,15 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
         // TODO add your handling code here:
         int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa công nhân này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
-            dao.xoaCongNhan(txtMaCongNhan.getText());
+            try {
+                dao.xoaCongNhan(txtMaCongNhan.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmQuanLyCongNhan.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 loadDataToTable();
             } catch (Exception ex) {
-
+                
             }
         }
 
@@ -548,9 +560,9 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
         } else if (cmbGioiTinh2.getSelectedItem().equals("Nữ")) {
             gt = false;
         }
-
-        CongNhan1 cn = new CongNhan1(txtMaCongNhan.getText(), txtHoten.getText(), txtNgaySinh.getDate(), gt, txtDC.getText(), txtSDT.getText(), txtEMAIL.getText(), txtCMND.getText(), txtNgayBatDau.getDate(), Double.valueOf(txtTroCap.getText()), txtTayNghe.getText());
-
+        
+        CongNhan cn = new CongNhan(txtMaCongNhan.getText(), txtHoten.getText(), txtNgaySinh.getDate(), gt, txtDC.getText(), txtSDT.getText(), txtEMAIL.getText(), txtCMND.getText(), txtNgayBatDau.getDate(), Double.valueOf(txtTroCap.getText()), txtTayNghe.getText());
+        
         int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắc muốn cập nhật không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             try {
@@ -564,13 +576,13 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
                 Logger.getLogger(FrmQuanLyCongNhan.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
 
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatExcelActionPerformed
         // TODO add your handling code here:
-
+        XuatFileExcel.xuatFileExcel(tblDSCongNhan);
 
     }//GEN-LAST:event_btnXuatExcelActionPerformed
 
@@ -626,13 +638,13 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
             "Tay nghề", "Trợ cấp"});
         tblDSCongNhan.setModel(model);
     }
-
+    
     public void loadDataToTable() {
         try {
-
-            List<CongNhan1> list = dao.getDanhSachCN();
+            
+            List<CongNhan> list = dao.getDanhSachCN();
             model.setRowCount(0);
-            for (CongNhan1 cn : list) {
+            for (CongNhan cn : list) {
                 {
                     model.addRow(new Object[]{
                         cn.getMaCongNhan(), cn.getTenCongNhan(), cn.isGioiTinh() ? "Nam" : "Nữ",
@@ -644,5 +656,5 @@ public class FrmQuanLyCongNhan extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-
+    
 }

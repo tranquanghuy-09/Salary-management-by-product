@@ -1,20 +1,28 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package entity;
 
 import java.util.Date;
 
-public class ChamCongCN {
-
-    private String maChamCong;
-    private int soLuongSanPham;
-    private float heSoLuongCa;
-    private String caLam;
-    private String trangThai;
-    private Date ngayChamCong;
-
-    private PhanCong phanCong;
+/**
+ *
+ * @author duy19
+ */
+    public class ChamCongCN {
+        private String maChamCong;
+        private int soLuongSanPham;
+        private float heSoLuongCa;
+        private String caLam;
+        private String trangThai;
+        private Date ngayChamCong;
+        private PhanCong phanCong;
 
     public ChamCongCN() {
     }
+
+    
 
     public ChamCongCN(String maChamCong, PhanCong phanCong, int soLuongSanPham, float heSoLuongCa, String caLam, String trangThai) {
         this.maChamCong = maChamCong;
@@ -25,6 +33,20 @@ public class ChamCongCN {
         this.phanCong = phanCong;
 
     }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public void setPhanCong(PhanCong phanCong) {
+        this.phanCong = phanCong;
+    }
+    
+    
 
     public String getMaChamCong() {
         return maChamCong;
@@ -42,9 +64,7 @@ public class ChamCongCN {
         return caLam;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
+  
 
     public Date getNgayChamCong() {
         return ngayChamCong;
@@ -70,16 +90,21 @@ public class ChamCongCN {
         this.caLam = caLam;
     }
 
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
+  
     public void setNgayChamCong(Date ngayChamCong) {
         this.ngayChamCong = ngayChamCong;
     }
 
-    public void setPhanCong(PhanCong phanCong) {
-        this.phanCong = phanCong;
+    public void setPhanCongCN(PhanCong phanCong) {
+        this.phanCong= phanCong;
     }
 
+    @Override
+    public String toString() {
+        return "ChamCongCN{" + "maChamCong=" + maChamCong + ", soLuongSanPham=" + soLuongSanPham + ", heSoLuongCa=" + heSoLuongCa + ", caLam=" + caLam + ", ngayChamCong=" + ngayChamCong + ", phanCongCN=" + phanCong + '}';
+    }
+
+    
+
+   
 }

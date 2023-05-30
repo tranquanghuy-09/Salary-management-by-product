@@ -4,6 +4,10 @@
  */
 package entity;
 
+
+
+
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,11 +16,10 @@ import java.util.Objects;
  * @author duy19
  */
 public class CongNhan {
-
     private String maCongNhan;
     private String tenCongNhan;
     private Date ngaySinh;
-    private boolean gioiTinh;
+    private boolean  gioiTinh;
     private String diaChi;
     private String soDienThoai;
     private String email;
@@ -126,18 +129,10 @@ public class CongNhan {
         this.troCap = troCap;
         this.tayNghe = tayNghe;
     }
+    
+    
 
     public CongNhan() {
-    }
-
-    public CongNhan(String maCongNhan) {
-        this.maCongNhan = maCongNhan;
-    }
-
-    public CongNhan(String maCongNhan, String tenCongNhan, String diaChi) {
-        this.maCongNhan = maCongNhan;
-        this.tenCongNhan = tenCongNhan;
-        this.diaChi = diaChi;
     }
 
     @Override
@@ -172,4 +167,18 @@ public class CongNhan {
         this.tenCongNhan = tenCongNhan;
     }
 
+    public CongNhan(String maCongNhan) {
+        this.maCongNhan = maCongNhan;
+    }
+    
+       public CongNhan(String maCongNhan, String tenCongNhan, String diaChi) {
+        this.maCongNhan = maCongNhan;
+        this.tenCongNhan = tenCongNhan;
+        this.diaChi = diaChi;
+    }
+
+
+   
+    
+    
 }

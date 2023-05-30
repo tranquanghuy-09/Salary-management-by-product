@@ -25,12 +25,12 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private FrmQuanLySanPham qlsp;
     private FrmQuanLyPhanDoan qlcd;
     private FrmTimKiemSanPham tksp;
-    private FrmTimKiemCN tkcn;
-    private FrmChamCongCN cccn;/*Duy*/
-    private FrmThongKeCN tklcn;
+    private FrmTimKiemCongNhan tkcn;
+    private FrmChamCongCongNhan cccn;/*Duy*/
+    private FrmThongKeCongNhan tklcn;
     private FrmQuanLyCongNhan qlcn;
-    private FrmTinhLuongCN tlcn;
-    private FrmPhanCongCN pc;
+    private FrmTinhLuongCongNhan tlcn;
+    private FrmPhanCongCongNhan pc;
 
     /**
      * Creates new form TrangChu_GUI1
@@ -126,14 +126,11 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         mniDMNhanVien.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         mniDMNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        mniDMNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-Nhanvien.png"))); // NOI18N
+        mniDMNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-NhanVien2.png"))); // NOI18N
         mniDMNhanVien.setText("Nhân viên");
         mniDMNhanVien.setToolTipText("");
-        mniDMNhanVien.setDisabledIcon(null);
-        mniDMNhanVien.setDisabledSelectedIcon(null);
-        mniDMNhanVien.setIconTextGap(0);
-        mniDMNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        mniDMNhanVien.setPreferredSize(new java.awt.Dimension(215, 25));
+        mniDMNhanVien.setInheritsPopupMenu(true);
+        mniDMNhanVien.setPreferredSize(new java.awt.Dimension(220, 36));
         mniDMNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniDMNhanVienActionPerformed(evt);
@@ -141,7 +138,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         mnDanhMuc.add(mniDMNhanVien);
 
+        mniCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-CongNhan.png"))); // NOI18N
         mniCongNhan.setText("Công nhân");
+        mniCongNhan.setPreferredSize(new java.awt.Dimension(220, 36));
         mniCongNhan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 mniCongNhanMouseClicked(evt);
@@ -154,7 +154,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         mnDanhMuc.add(mniCongNhan);
 
+        mniSanPham.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-SanPham.png"))); // NOI18N
         mniSanPham.setText("Sản phẩm");
+        mniSanPham.setPreferredSize(new java.awt.Dimension(220, 36));
         mniSanPham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniSanPhamActionPerformed(evt);
@@ -162,7 +165,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         mnDanhMuc.add(mniSanPham);
 
+        mniPhanDoan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniPhanDoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-PhanDoan.png"))); // NOI18N
         mniPhanDoan.setText("Phân đoạn");
+        mniPhanDoan.setPreferredSize(new java.awt.Dimension(220, 36));
         mniPhanDoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniPhanDoanActionPerformed(evt);
@@ -175,10 +181,12 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-xuly.png"))); // NOI18N
         jMenu3.setText("Xử lý");
         jMenu3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jMenu3.setIconTextGap(0);
 
         mniChamCongCongNhan.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        mniChamCongCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniChamCongCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-PhanCong.png"))); // NOI18N
         mniChamCongCongNhan.setText("Phân công");
+        mniChamCongCongNhan.setPreferredSize(new java.awt.Dimension(180, 36));
         mniChamCongCongNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniChamCongCongNhanActionPerformed(evt);
@@ -189,11 +197,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         mniChamCongNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniChamCongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcongNV.png"))); // NOI18N
         mniChamCongNhanVien.setText("Chấm công nhân viên");
-        mniChamCongNhanVien.setAutoscrolls(true);
-        mniChamCongNhanVien.setBorder(null);
-        mniChamCongNhanVien.setIconTextGap(0);
-        mniChamCongNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        mniChamCongNhanVien.setName(""); // NOI18N
+        mniChamCongNhanVien.setPreferredSize(new java.awt.Dimension(198, 36));
         mniChamCongNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniChamCongNhanVienActionPerformed(evt);
@@ -201,7 +205,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         jMenu3.add(mniChamCongNhanVien);
 
+        jMenuItem7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-chamcongNV.png"))); // NOI18N
         jMenuItem7.setText("Chấm công công nhân");
+        jMenuItem7.setPreferredSize(new java.awt.Dimension(220, 36));
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -212,8 +219,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         mniTinhLuongNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniTinhLuongNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-TinhLuong.png"))); // NOI18N
         mniTinhLuongNhanVien.setText("Tính lương nhân viên");
-        mniTinhLuongNhanVien.setIconTextGap(0);
-        mniTinhLuongNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        mniTinhLuongNhanVien.setPreferredSize(new java.awt.Dimension(180, 36));
         mniTinhLuongNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniTinhLuongNhanVienActionPerformed(evt);
@@ -221,7 +227,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         jMenu3.add(mniTinhLuongNhanVien);
 
+        mniTinhLuongCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniTinhLuongCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-TinhLuong.png"))); // NOI18N
         mniTinhLuongCongNhan.setText("Tính lương công nhân");
+        mniTinhLuongCongNhan.setPreferredSize(new java.awt.Dimension(201, 36));
         mniTinhLuongCongNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniTinhLuongCongNhanActionPerformed(evt);
@@ -242,10 +251,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         mniTimKiem.setIconTextGap(0);
 
         mniTKNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        mniTKNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-Nhanvien.png"))); // NOI18N
+        mniTKNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-NhanVien2.png"))); // NOI18N
         mniTKNhanVien.setText("Nhân viên");
-        mniTKNhanVien.setIconTextGap(0);
-        mniTKNhanVien.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        mniTKNhanVien.setPreferredSize(new java.awt.Dimension(104, 36));
         mniTKNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mniTKNhanVienActionPerformed(evt);
@@ -253,6 +261,8 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         mniTimKiem.add(mniTKNhanVien);
 
+        mniTimKiemCongNhan.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniTimKiemCongNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-CongNhan.png"))); // NOI18N
         mniTimKiemCongNhan.setText("Công nhân");
         mniTimKiemCongNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +271,8 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         });
         mniTimKiem.add(mniTimKiemCongNhan);
 
+        mniTimKiemSanPham.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mniTimKiemSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/icon-SanPham.png"))); // NOI18N
         mniTimKiemSanPham.setText("Sản phầm");
         mniTimKiemSanPham.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,6 +297,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         jMenuItem14.setText("Xuất phiếu lương");
         jMenu5.add(jMenuItem14);
 
+        mniThongKeCN.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mniThongKeCN.setText("Công nhân");
         mniThongKeCN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,19 +369,15 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mniDMNhanVienActionPerformed
 
     private void mniSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSanPhamActionPerformed
-        qlsp = new FrmQuanLySanPham();
+        try {
+            qlsp = new FrmQuanLySanPham();
+        } catch (Exception ex) {
+            Logger.getLogger(TrangChu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Quản lý sản phẩm", qlsp);
         tabNoiDung.setSelectedComponent(qlsp);
     }//GEN-LAST:event_mniSanPhamActionPerformed
-
-    private void mniChamCongNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChamCongNhanVienActionPerformed
-        frmChamCongNhanVien = new FrmChamCongNhanVien();
-        tabNoiDung.removeAll();
-        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
-        tabNoiDung.addTab("Chấm công nhân viên", frmChamCongNhanVien);
-        tabNoiDung.setSelectedComponent(frmChamCongNhanVien);
-    }//GEN-LAST:event_mniChamCongNhanVienActionPerformed
 
     private void mniTinhLuongNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTinhLuongNhanVienActionPerformed
         frmTinhLuongNhanVien = new FrmTinhLuongNhanVien();
@@ -407,7 +416,11 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mniCongNhanActionPerformed
 
     private void mniPhanDoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniPhanDoanActionPerformed
-        qlcd = new FrmQuanLyPhanDoan();
+        try {
+            qlcd = new FrmQuanLyPhanDoan();
+        } catch (Exception ex) {
+            Logger.getLogger(TrangChu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Quản lý phân đoạn", qlcd);
         tabNoiDung.setSelectedComponent(qlcd);
@@ -416,7 +429,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     private void mniChamCongCongNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChamCongCongNhanActionPerformed
         try {
             // TODO add your handling code here:
-            pc = new FrmPhanCongCN();
+            pc = new FrmPhanCongCongNhan();
         } catch (Exception ex) {
             Logger.getLogger(TrangChu_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -426,21 +439,25 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mniChamCongCongNhanActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        cccn = new FrmChamCongCN();
+        try {
+            cccn = new FrmChamCongCongNhan();
+        } catch (Exception ex) {
+            Logger.getLogger(TrangChu_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Chấm công công nhân", cccn);
         tabNoiDung.setSelectedComponent(cccn);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void mniTinhLuongCongNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTinhLuongCongNhanActionPerformed
-        tlcn = new FrmTinhLuongCN();
+        tlcn = new FrmTinhLuongCongNhan();
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Thống kê lương công nhân", tlcn);
         tabNoiDung.setSelectedComponent(tlcn);
     }//GEN-LAST:event_mniTinhLuongCongNhanActionPerformed
 
     private void mniTimKiemCongNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTimKiemCongNhanActionPerformed
-        tkcn = new FrmTimKiemCN();
+        tkcn = new FrmTimKiemCongNhan();
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Tìm kiếm công nhân", tkcn);
         tabNoiDung.setSelectedComponent(tkcn);
@@ -454,7 +471,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_mniTimKiemSanPhamActionPerformed
 
     private void mniThongKeCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniThongKeCNActionPerformed
-        tklcn = new FrmThongKeCN();
+        tklcn = new FrmThongKeCongNhan();
         tabNoiDung.removeAll();
         tabNoiDung.addTab("Thống kê lương công nhân", tklcn);
         tabNoiDung.setSelectedComponent(tklcn);
@@ -474,6 +491,14 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         tabNoiDung.setSelectedComponent(frmThayDoiMatKhau);
     }//GEN-LAST:event_mniDoiMatKhauActionPerformed
 
+    private void mniChamCongNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniChamCongNhanVienActionPerformed
+        frmChamCongNhanVien = new FrmChamCongNhanVien();
+        tabNoiDung.removeAll();
+        tabNoiDung.addTab("Trang chủ", lblTenChuongTrinh);
+        tabNoiDung.addTab("Chấm công nhân viên", frmChamCongNhanVien);
+        tabNoiDung.setSelectedComponent(frmChamCongNhanVien);
+    }//GEN-LAST:event_mniChamCongNhanVienActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -491,14 +516,15 @@ public class TrangChu_GUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TrangChu_GUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TrangChu_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TrangChu_GUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TrangChu_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TrangChu_GUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TrangChu_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TrangChu_GUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TrangChu_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
